@@ -1,52 +1,31 @@
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import { Session } from "@supabase/supabase-js";
-import supabase from "../../shared/lib/supabase";
+import { createContext, useCallback, useContext, useMemo } from "react";
 
 interface AuthContextType {
-  session: Session | null;
   signUp: () => Promise<void>;
+  signIn: () => Promise<void>;
   signOut: () => Promise<void>;
 }
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [session, setSession] = useState<Session | null>(null);
 
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-    });
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
-
-    return () => subscription.unsubscribe();
+  const signOut = useCallback(async () => {
   }, []);
 
-  const signOut = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) {
-      console.error("Error signing out:", error);
-    }
-  };
+  const signUp = useCallback(async () => {
+  }, []);
 
-  const signUp = async () => {
-    await supabase.auth.signInWithOAuth({
-      provider: "google",
-    });
-  };
+  const signIn = useCallback(async () => {
+  }, []);
 
   const value = useMemo<AuthContextType>(
     () => ({
-      session,
       signUp,
+      signIn,
       signOut,
     }),
-    [session, signUp, signOut]
+    [signUp, signIn, signOut]
   );
 
   return (

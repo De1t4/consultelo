@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
@@ -8,13 +7,135 @@ datasource db {
   provider = "postgresql"
 }
 
+// 1. Tipos de datos personalizados (Enums)
+
+enum UserRole {
+  admin
+  owner
+  user
+
+  @@map("user_role")
+}
+
+enum ConsultationCategory {
+  software
+  IA
+  business
+  company
+  strategy
+  privacy
+  other
+
+  @@map("consultation_category")
+}
+
+enum ConsultationStatus {
+  draft
+  active
+  closed
+  archived
+
+  @@map("consultation_status")
+}
+
+enum PrivacyType {
+  public
+  private
+
+  @@map("privacy_type")
+}
+
+enum QuestionType {
+  open_question
+  multiple_choice
+  binary
+
+  @@map("question_type")
+}
+
+enum AnalyticsAction {
+  view
+  vote
+  comment
+
+  @@map("analytics_action")
+}
+
+// 2. Tablas (Models)
+
 model User {
-  id  String @id @default(uuid()) @db.Uuid
-  email String @unique @db.VarChar(255)
-  password String @db.VarChar(255)
-  name String @db.VarChar(100)
-  lastName String @db.VarChar(100)
-  phone String? @db.VarChar(50)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid()
+  username  String   @unique @db.VarChar(255)
+  email     String   @unique @db.VarChar(255)
+  password  String   @db.VarChar(255)
+  phone     String?  @db.VarChar(50)
+  role      UserRole @default(user)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz
+
+  consultations Consultation[]
+  comments      Comment[]
+  // Note: Analytics does not have a direct user_id in the provided SQL
+
+  @@map("users")
+}
+
+model Consultation {
+  id         String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid()
+  title      String               @db.VarChar(100)
+  body       String               @db.Text
+  userId     String               @map("user_id") @db.Uuid()
+  categories ConsultationCategory @default(other)
+  status     ConsultationStatus   @default(draft)
+  createdAt  DateTime             @default(now()) @map("created_at") @db.Timestamptz
+  expiresAt  DateTime?            @map("expires_at") @db.Timestamptz
+
+  user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  settings   Settings?
+  comments   Comment[]
+  analytics  Analytics[]
+  settingsId String      @db.Uuid()
+
+  @@map("consultations")
+}
+
+model Settings {
+  id             String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid()
+  consultationId String       @unique @map("consultation_id") @db.Uuid()
+  privacy        PrivacyType  @default(public)
+  accessCode     String?      @map("access_code") @db.VarChar(255)
+  allowAnonymous Boolean?     @default(true) @map("allow_anonymous")
+  type           QuestionType @default(open_question)
+  viewComments   Boolean?     @default(true) @map("view_comments")
+
+  consultation Consultation @relation(fields: [consultationId], references: [id], onDelete: Cascade)
+
+  @@map("settings")
+}
+
+model Comment {
+  id             String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid()
+  message        String   @db.Text
+  consultationId String   @map("consultation_id") @db.Uuid()
+  userId         String?  @map("user_id") @db.Uuid()
+  authorName     String?  @map("author_name") @db.VarChar(255)
+  isApproved     Boolean? @default(true) @map("is_approved")
+  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  consultation Consultation @relation(fields: [consultationId], references: [id], onDelete: Cascade)
+  user         User?        @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@map("comments")
+}
+
+model Analytics {
+  id             String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid()
+  ipAddress      String?         @map("ip_address") @db.VarChar(45)
+  consultationId String          @map("consultation_id") @db.Uuid()
+  action         AnalyticsAction
+  createdAt      DateTime        @default(now()) @map("created_at") @db.Timestamptz
+
+  consultation Consultation @relation(fields: [consultationId], references: [id], onDelete: Cascade)
+
+  @@map("analytics")
 }

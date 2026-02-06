@@ -1,12 +1,15 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 // Definición del esquema de validación con Zod
 const schema = z.object({
   email: z.string().email({ message: 'Ingrese un email válido' }),
+  username: z.string().min(3, { message: 'El nombre de usuario debe tener al menos 3 caracteres' }),
+  phone: z.string().min(6, { message: 'El teléfono debe tener al menos 6 caracteres' }),
   password: z.string().min(6, { message: 'La contraseña debe tener al menos 6 caracteres' }),
   repeatPassword: z.string().min(6, { message: 'La contraseña debe tener al menos 6 caracteres' }),
 }).refine((data) => data.password === data.repeatPassword, {
@@ -17,6 +20,7 @@ const schema = z.object({
 export type FormDataRegister = z.infer<typeof schema>;
 
 export default function RegisterForm() {
+  const router = useRouter()
   const {
     register,
     handleSubmit,
@@ -25,9 +29,20 @@ export default function RegisterForm() {
     resolver: zodResolver(schema),
   });
 
-
   const onSubmit = async (data: FormDataRegister) => {
-    console.log(data)
+    const res = await fetch('/api/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!res.ok) {
+      throw new Error('Error al registrar el usuario');
+    }
+    router.push("/dashboard")
+
   };
 
   return (
@@ -55,7 +70,40 @@ export default function RegisterForm() {
               <p className="text-xs text-red-500">{errors.email.message}</p>
             )}
           </div>
-
+          {/*Username*/}
+          <div className="space-y-2">
+            <label htmlFor="username" className="text-sm font-medium text-gray-700">
+              Nombre de Usuario
+            </label>
+            <input
+              id="username"
+              type="text"
+              {...register('username')}
+              className={`w-full rounded-lg border px-4 py-2.5 text-gray-700 placeholder-gray-400 outline-none transition-all focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 ${errors.username ? 'border-red-500 focus:ring-red-200' : 'border-gray-300'
+                }`}
+              placeholder="juan.perez"
+            />
+            {errors.username && (
+              <p className="text-xs text-red-500">{errors.username.message}</p>
+            )}
+          </div>
+          {/*Phone*/}
+          <div className="space-y-2">
+            <label htmlFor="phone" className="text-sm font-medium text-gray-700">
+              Teléfono
+            </label>
+            <input
+              id="phone"
+              type="text"
+              {...register('phone')}
+              className={`w-full rounded-lg border px-4 py-2.5 text-gray-700 placeholder-gray-400 outline-none transition-all focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 ${errors.phone ? 'border-red-500 focus:ring-red-200' : 'border-gray-300'
+                }`}
+              placeholder="123456789"
+            />
+            {errors.phone && (
+              <p className="text-xs text-red-500">{errors.phone.message}</p>
+            )}
+          </div>
           {/* Contraseña */}
           <div className="space-y-2">
             <label htmlFor="password" className="text-sm font-medium text-gray-700">
@@ -95,7 +143,7 @@ export default function RegisterForm() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="mt-6 w-full rounded-lg bg-indigo-600 px-4 py-3 font-semibold text-white shadow-md transition-all hover:bg-indigo-700 hover:shadow-lg disabled:cursor-not-allowed disabled:bg-indigo-400"
+            className="mt-6 w-full rounded-lg cursor-pointer bg-indigo-600 px-4 py-3 font-semibold text-white shadow-md transition-all hover:bg-indigo-700 hover:shadow-lg disabled:cursor-not-allowed disabled:bg-indigo-400"
           >
             {isSubmitting ? (
               <span className="flex items-center justify-center gap-2">

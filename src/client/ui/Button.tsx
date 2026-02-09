@@ -21,10 +21,10 @@ export function Button({
   disabled = false
 }: ActionButtonProps) {
   const variants = {
-    primary: "bg-teal-500 hover:bg-teal-600 text-white shadow-sm",
-    secondary: "bg-slate-600 hover:bg-slate-700 text-white",
-    outline: "border-2 border-teal-500 text-teal-600 bg-white hover:bg-teal-500 hover:text-white",
-    ghost: "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+    primary: "bg-primary hover:bg-primary/90 text-white shadow-sm",
+    secondary: "bg-slate-600 hover:bg-slate-700 text-white dark:bg-slate-700 dark:hover:bg-slate-600",
+    outline: "border-2 border-primary text-primary bg-transparent hover:bg-primary hover:text-white",
+    ghost: "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white"
   }
 
   return (

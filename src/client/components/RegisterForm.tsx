@@ -17,7 +17,7 @@ const schema = z.object({
   path: ['repeatPassword'],
 });
 
-export type FormDataRegister = z.infer<typeof schema>;
+type FormDataRegister = z.infer<typeof schema>;
 
 export default function RegisterForm() {
   const router = useRouter()
@@ -30,7 +30,7 @@ export default function RegisterForm() {
   });
 
   const onSubmit = async (data: FormDataRegister) => {
-    const res = await fetch('/api/register', {
+    const res = await fetch('/api/auth/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

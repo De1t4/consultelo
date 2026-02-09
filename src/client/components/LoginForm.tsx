@@ -79,6 +79,7 @@ export default function LoginForm() {
               id="password"
               type="password"
               {...register('password')}
+              autoComplete='off'
               className={`w-full rounded-lg border px-4 py-2.5 text-gray-700 placeholder-gray-400 outline-none transition-all focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 ${errors.password ? 'border-red-500 focus:ring-red-200' : 'border-gray-300'
                 }`}
               placeholder="••••••••"

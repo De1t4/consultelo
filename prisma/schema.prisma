@@ -69,7 +69,7 @@ model User {
   email     String   @unique @db.VarChar(255)
   password  String   @db.VarChar(255)
   phone     String?  @db.VarChar(50)
-  role      UserRole @default(user)
+  role      UserRole @default(owner)
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz
 

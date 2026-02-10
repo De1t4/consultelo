@@ -1,7 +1,7 @@
 import { UserCreateInput } from "@/generated/prisma/models/User";
 import prisma from "@/shared/lib/prisma";
 import { NextResponse } from "next/server";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 export async function POST(request: Request) {
   try {

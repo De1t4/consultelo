@@ -28,14 +28,16 @@ export default function Header() {
                 )}
               </button> */}
             <div className="flex items-center gap-4">
-              <Link href="/login">
+              <Link href="/account?auth=login">
                 <Button variant="ghost" className="flex items-center gap-2 w-32 max-md:w-28 cursor-pointer text-gray-800 border-gray-50 dark:border-gray-800 border-2 font-semibold">
                   Sign In
                 </Button>
               </Link>
-              <Button variant="primary" className="flex items-center gap-2 w-32 max-md:w-28 cursor-pointer font-semibold ">
-                Register
-              </Button>
+              <Link href="/account?auth=register">
+                <Button variant="primary" className="flex items-center gap-2 w-32 max-md:w-28 cursor-pointer font-semibold ">
+                  Register
+                </Button>
+              </Link>
             </div>
           </div>
         </div>

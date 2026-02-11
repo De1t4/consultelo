@@ -6,7 +6,7 @@ import { authOptions } from "./shared/lib/auth";
 export async function proxy(request: NextRequest) {
   const session = await getServerSession(authOptions);
   if (!session) {
-    return NextResponse.redirect(new URL("/login", request.url));
+    return NextResponse.redirect(new URL("/", request.url));
   }
 
   return NextResponse.next();

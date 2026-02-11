@@ -32,7 +32,7 @@ export async function POST(request: Request) {
       data: {
         email: data.email,
         username: data.username,
-        phone: data.phone,
+        phone: data.phone as string,
         password: hashPassword,
       },
     });

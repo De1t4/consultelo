@@ -1,5 +1,6 @@
 import { Button } from "@/client/ui/Button";
 import { ChartNoAxesCombined } from "lucide-react";
+import Link from "next/link";
 
 export default function Hero() {
   return (
@@ -15,9 +16,11 @@ export default function Hero() {
               Connect with top experts and data-driven communities to solve challenges faster. Access specialized knowledge and actionable insights immediately.
             </p>
             <div className="flex gap-4 justify-center ">
-              <Button variant="primary" className="flex items-center gap-2 w-60 max-md:w-48 text-lg max-md:text-base font-semibold  h-14 max-md:h-12 cursor-pointer text-white">
-                Register with Email
-              </Button>
+              <Link href="/account?auth=register">
+                <Button variant="primary" className="flex items-center gap-2 w-60 max-md:w-48 text-lg max-md:text-base font-semibold  h-14 max-md:h-12 cursor-pointer text-white">
+                  Register with Email
+                </Button>
+              </Link>
             </div>
           </div>
           {/* Right Visual */}

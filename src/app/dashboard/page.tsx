@@ -1,6 +1,6 @@
-import SectionDashboard from '@/client/components/SectionDashboard'
+import SectionDashboard from '@components/dashboard/SectionDashboard'
 
-export default function page() {
+export default function Page() {
 
 	return (
 		<section className="h-[calc(100vh-7rem)] flex justify-center items-center">

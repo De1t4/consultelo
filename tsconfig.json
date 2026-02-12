@@ -29,8 +29,11 @@
       "@client/*": [
         "./src/client/*"
       ],
-      "@server/*": [
-        "./src/server/*"
+      "@components/*": [
+        "./src/components/*"
+      ],
+      "@ui/*": [
+        "./src/components/ui/*"
       ],
       "@shared/*": [
         "./src/shared/*"

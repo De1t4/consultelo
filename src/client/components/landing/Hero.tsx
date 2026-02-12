@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <section className=" bg-linear-to-br my-12 from-teal-50 via-teal-25 to-background max-md:h-auto">
+    <section className=" bg-linear-to-br mt-24 mb-12 from-teal-50 via-teal-25 to-background max-md:h-auto">
       <div className="max-w-6xl mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}

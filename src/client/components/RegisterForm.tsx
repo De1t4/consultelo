@@ -1,25 +1,11 @@
 'use client';
 
+import { FormDataRegister, SchemaRegister } from '@/client/schemas/schema-register';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-
-// Definición del esquema de validación con Zod
-const schema = z.object({
-  email: z.string().email({ message: 'Ingrese un email válido' }),
-  username: z.string().min(3, { message: 'El nombre de usuario debe tener al menos 3 caracteres' }),
-  phone: z.string().min(6, { message: 'El teléfono debe tener al menos 6 caracteres' }),
-  password: z.string().min(6, { message: 'La contraseña debe tener al menos 6 caracteres' }),
-  repeatPassword: z.string().min(6, { message: 'La contraseña debe tener al menos 6 caracteres' }),
-}).refine((data) => data.password === data.repeatPassword, {
-  message: 'Las contraseñas no coinciden',
-  path: ['repeatPassword'],
-});
-
-type FormDataRegister = z.infer<typeof schema>;
 
 export default function RegisterForm() {
   const router = useRouter()
@@ -28,7 +14,7 @@ export default function RegisterForm() {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<FormDataRegister>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(SchemaRegister),
   });
 
   const onSubmit = async (data: FormDataRegister) => {
@@ -43,7 +29,7 @@ export default function RegisterForm() {
     if (!res.ok) {
       throw new Error('Error al registrar el usuario');
     }
-    router.push("/dashboard")
+    router.push("/account?auth=login")
 
   };
 

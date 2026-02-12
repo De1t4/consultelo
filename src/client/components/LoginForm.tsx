@@ -1,5 +1,6 @@
 'use client'
 
+import { FormDataLogin, SchemaLogin } from '@/client/schemas/schema-login';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2 } from 'lucide-react';
 import { signIn } from 'next-auth/react';
@@ -7,14 +8,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import z from 'zod';
-
-const schema = z.object({
-  email: z.string().email({ message: 'Ingrese un email válido' }),
-  password: z.string().min(6, { message: 'La contraseña debe tener al menos 6 caracteres' }),
-})
-
-export type FormDataLogin = z.infer<typeof schema>;
 
 export default function LoginForm() {
   const [error, setError] = useState<string | undefined>(undefined);
@@ -23,7 +16,7 @@ export default function LoginForm() {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<FormDataLogin>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(SchemaLogin),
   });
   const router = useRouter();
   const onSubmit = async (data: FormDataLogin) => {

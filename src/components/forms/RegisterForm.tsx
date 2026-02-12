@@ -1,6 +1,6 @@
 'use client';
 
-import { FormDataRegister, SchemaRegister } from '@/client/schemas/schema-register';
+import { FormDataRegister, SchemaRegister } from '@/schemas/schema-register';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2 } from 'lucide-react';
 import Link from 'next/link';

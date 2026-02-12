@@ -1,4 +1,4 @@
-import SectionDashboard from '@/client/components/SectionDashboard'
+import SectionDashboard from '@components/dashboard/SectionDashboard'
 
 export default function Page() {
 

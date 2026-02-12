@@ -1,7 +1,7 @@
-import Choose from "@/client/components/landing/Choose";
-import Footer from "@/client/components/landing/Footer";
-import Header from "@/client/components/landing/Header";
-import Hero from "@/client/components/landing/Hero";
+import Choose from "@components/landing/Choose";
+import Footer from "@components/landing/Footer";
+import Header from "@components/landing/Header";
+import Hero from "@components/landing/Hero";
 
 export default function Home() {
   // const { theme, toggleTheme } = useTheme();

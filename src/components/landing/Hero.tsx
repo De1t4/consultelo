@@ -1,4 +1,4 @@
-import { Button } from "@/client/ui/Button";
+import { Button } from "@ui/Button";
 import { ChartNoAxesCombined } from "lucide-react";
 import Link from "next/link";
 

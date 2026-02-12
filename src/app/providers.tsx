@@ -2,8 +2,8 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactNode, useState } from 'react';
 import { SessionProvider } from "next-auth/react"
-import { ThemeProvider } from '@/client/context/ThemeContext';
 import { Session } from 'next-auth';
+import { ThemeProvider } from '@/hooks/context/ThemeContext';
 
 export function Providers({ children, session }: { children: ReactNode, session?: Session | null }) {
 

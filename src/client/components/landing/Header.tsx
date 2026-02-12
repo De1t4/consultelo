@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 export default function Header() {
   return (
-    <header className="border-b shadow-md w-full border-gray-100 dark:border-gray-800 bg-background fixed top-0 z-50">
+    <header className="border-b shadow-md w-full border-gray-100  bg-background fixed top-0 z-50">
       <div className="max-w-6xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
@@ -29,7 +29,7 @@ export default function Header() {
               </button> */}
             <div className="flex items-center gap-4">
               <Link href="/account?auth=login">
-                <Button variant="ghost" className="flex items-center gap-2 w-32 max-md:w-28 cursor-pointer text-gray-800 border-gray-50 dark:border-gray-800 border-2 font-semibold">
+                <Button variant="ghost" className="flex items-center gap-2 w-32 max-md:w-28 cursor-pointer text-gray-800 border-gray-50 border-2 font-semibold">
                   Sign In
                 </Button>
               </Link>

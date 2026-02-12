@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext } from 'react';
 
 type Theme = 'light' | 'dark';
 
@@ -12,36 +12,36 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>('light');
+  const theme: Theme = 'light';
 
   // Sync theme with document class
-  useEffect(() => {
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, [theme]);
+  // useEffect(() => {
+  //   if (theme === 'dark') {
+  //     document.documentElement.classList.add('dark');
+  //   } else {
+  //     document.documentElement.classList.remove('dark');
+  //   }
+  // }, [theme]);
 
-  // Initial load from local storage
-  useEffect(() => {
-    const storedTheme = localStorage.getItem('theme') as Theme | null;
+  // // Initial load from local storage
+  // useEffect(() => {
+  //   const storedTheme = localStorage.getItem('theme') as Theme | null;
 
-    // Only update state if different from default 'light' to avoid unnecessary re-renders
-    if (storedTheme === 'dark') {
-      // eslint-disable-next-line
-      setTheme('dark');
-    } else if (!storedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      setTheme('dark');
-    }
-  }, []);
+  //   // Only update state if different from default 'light' to avoid unnecessary re-renders
+  //   if (storedTheme === 'dark') {
+  //     // eslint-disable-next-line
+  //     setTheme('dark');
+  //   } else if (!storedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+  //     setTheme('dark');
+  //   }
+  // }, []);
 
   const toggleTheme = () => {
-    setTheme((prevTheme) => {
-      const newTheme = prevTheme === 'light' ? 'dark' : 'light';
-      localStorage.setItem('theme', newTheme);
-      return newTheme;
-    });
+    // setTheme((prevTheme) => {
+    //   const newTheme = prevTheme === 'light' ? 'dark' : 'light';
+    //   localStorage.setItem('theme', newTheme);
+    //   return newTheme;
+    // });
   };
 
   return (

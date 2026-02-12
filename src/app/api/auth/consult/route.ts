@@ -1,10 +1,16 @@
-import { cookies } from "next/headers";
+import { authOptions } from "@/shared/lib/auth";
+import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
-  const cookieStore = cookies();
-  const accessToken = (await cookieStore).get("next-auth.session-token")?.value;
+  const session = await getServerSession(authOptions);
 
-  console.log(accessToken);
-  return NextResponse.json({ message: "Hello" });
+  if (session?.user) {
+    console.log("User ID on server:", session.user.id);
+  }
+
+  return NextResponse.json({
+    message: "Hello",
+    session,
+  });
 }

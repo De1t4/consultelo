@@ -13,24 +13,33 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
+        if (!credentials?.email || !credentials?.password) {
+          throw new Error("Email y contraseña son requeridos");
+        }
+
         const user = await prisma.user.findUnique({
           where: {
-            email: credentials?.email,
+            email: credentials.email,
           },
         });
+
         if (!user) throw new Error("Usuario o contraseña incorrectos");
+
         const isPasswordValid = await bcrypt.compare(
-          credentials?.password || "",
+          credentials.password,
           user.password || "",
         );
+
         if (!isPasswordValid)
           throw new Error("Usuario o contraseña incorrectos");
+
         return {
-          id: user.id,
+          id: user.id.toString(),
           email: user.email,
           username: user.username,
           phone: user.phone,
           role: user.role,
+          name: user.username, // Mapping username to name for consistency
         };
       },
     }),
@@ -38,11 +47,26 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: "/login",
   },
-  jwt: {
-    maxAge: 14 * 24 * 60 * 60, // 14 days
-  },
   session: {
     strategy: "jwt",
     maxAge: 14 * 24 * 60 * 60, // 14 days
+  },
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+        token.role = user.role;
+        token.name = user.name;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (session.user) {
+        session.user.id = token.id;
+        session.user.role = token.role;
+        session.user.name = token.name;
+      }
+      return session;
+    },
   },
 };

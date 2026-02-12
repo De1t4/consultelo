@@ -2,11 +2,19 @@
 import { signOut, useSession } from "next-auth/react"
 import { Button } from "../ui/Button";
 import { Modal } from "../ui/Modal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function SectionDashboard() {
   const [isOpen, setIsOpen] = useState(false)
   const { data: session } = useSession()
+
+  useEffect(() => {
+    const fetchSession = async () => {
+      const test = await fetch("/api/auth/consult").then(res => res.json())
+      console.log(test);
+    }
+    fetchSession()
+  }, [])
   return (
     <div>
       {

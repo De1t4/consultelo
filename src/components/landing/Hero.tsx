@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <section className=" bg-linear-to-br mt-24 mb-12 from-teal-50 via-teal-25 to-background max-md:h-auto">
+    <section className=" bg-linear-to-br pt-24 pb-12 from-teal-50 via-teal-25 to-background max-md:h-auto">
       <div className="max-w-6xl mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
@@ -13,7 +13,7 @@ export default function Hero() {
               Get answers to your most <span className="text-teal-600">complex questions</span>
             </h1>
             <p className="text-lg text-gray-600 mb-8 max-w-xl leading-relaxed">
-              Connect with top experts and data-driven communities to solve challenges faster. Access specialized knowledge and actionable insights immediately.
+              Connect with your prospects or customers with the goal of obtaining answers to your questions. Make the decision on how your organization will move forward.
             </p>
             <div className="flex gap-4 justify-center ">
               <Link href="/account?auth=register">
@@ -33,7 +33,7 @@ export default function Hero() {
                     <ChartNoAxesCombined className="text-2xl text-zinc-300" />
                   </div>
                   <span className="text-xs font-medium text-green-600 bg-green-50 px-2 py-1 rounded">
-                    +26% Growth
+                    +25% Growth
                   </span>
                 </div>
                 <div className="flex items-end gap-3 h-32">
@@ -43,8 +43,8 @@ export default function Hero() {
                   <div className="bg-teal-500 rounded-t-lg w-full h-32 hover:h-34 transition-all duration-200 cursor-pointer"></div>
                 </div>
               </div>
-              <p className=" text-gray-400 max-w-xl leading-relaxed">
-                Improve decision-making thanks to quick responses from your customers and employees.
+              <p className=" text-gray-500 max-w-xl leading-5 text-sm">
+                Boost your operational performance, get immediate answers, and accelerate your business growth.
               </p>
             </div>
           </div>

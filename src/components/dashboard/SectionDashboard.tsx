@@ -2,6 +2,7 @@
 import { signOut, useSession } from "next-auth/react";
 
 import { Button } from "@ui/Button";
+import Link from "next/link";
 import { useEffect } from "react";
 
 export default function SectionDashboard() {
@@ -20,6 +21,7 @@ export default function SectionDashboard() {
         session ? (
           <>
             <p>Bienvenido {session.user.email}</p>
+            <Link href="/consultation"><Button className="cursor-pointer" >Crear Consulta</Button></Link>
             <Button className="cursor-pointer" onClick={() => signOut()}>Cerrar sesión</Button>
           </>
         ) : (

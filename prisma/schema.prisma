@@ -94,7 +94,7 @@ model Consultation {
   settings   Settings?
   comments   Comment[]
   analytics  Analytics[]
-  settingsId String      @db.Uuid()
+  settingsId String?     @db.Uuid()
 
   @@map("consultations")
 }

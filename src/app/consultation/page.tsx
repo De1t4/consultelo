@@ -1,7 +1,8 @@
-import React from 'react'
+import WrappedForms from '@/components/consultation/WrappedForms'
 
 export default function page() {
+
   return (
-    <div>page</div>
+    <WrappedForms />
   )
 }

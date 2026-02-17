@@ -10,6 +10,7 @@ interface ActionButtonProps {
   onClick?: () => void
   className?: string
   disabled?: boolean
+  type?: "button" | "submit" | "reset"
 }
 
 export function Button({
@@ -18,7 +19,8 @@ export function Button({
   icon: Icon,
   onClick,
   className = "",
-  disabled = false
+  disabled = false,
+  type = "button"
 }: ActionButtonProps) {
   const variants = {
     primary: "bg-primary hover:bg-primary/90 text-white shadow-sm",
@@ -31,6 +33,7 @@ export function Button({
     <button
       onClick={onClick}
       disabled={disabled}
+      type={type}
       className={`
         inline-flex items-center justify-center px-4 py-2 
         font-medium rounded-lg transition-all duration-200

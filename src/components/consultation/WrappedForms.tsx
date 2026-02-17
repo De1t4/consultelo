@@ -7,7 +7,6 @@ import SettingsForm from '../forms/SettingsForm'
 export default function WrappedForms() {
   const { currentStep, handleSubmit, onSubmit } = useFormConsult()
 
-
   return (
     <>
       <div className="max-w-7xl mx-auto px-6 py-8">

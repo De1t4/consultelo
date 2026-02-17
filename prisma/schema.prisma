@@ -47,7 +47,6 @@ enum PrivacyType {
 enum QuestionType {
   open_question
   multiple_choice
-  binary
 
   @@map("question_type")
 }
@@ -73,7 +72,7 @@ model User {
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz
 
   consultations Consultation[]
-  // comments      Comment[]
+  comments      Comment[]
   // Note: Analytics does not have a direct user_id in the provided SQL
 
   @@map("users")
@@ -115,13 +114,13 @@ model Comment {
   id             String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid()
   message        String       @db.Text
   consultationId String       @map("consultation_id") @db.Uuid()
-  // userId         String?      @map("user_id") @db.Uuid()
+  userId         String?      @map("user_id") @db.Uuid()
   authorName     String?      @map("author_name") @db.VarChar(255)
   isApproved     Boolean?     @default(true) @map("is_approved")
   createdAt      DateTime     @default(now()) @map("created_at") @db.Timestamptz
   ipAddress      String       @map("ip_address") @db.VarChar(45)
   consultation   Consultation @relation(fields: [consultationId], references: [id], onDelete: Cascade)
-  // user         User?        @relation(fields: [userId], references: [id], onDelete: SetNull)
+  user           User?        @relation(fields: [userId], references: [id], onDelete: SetNull)
 
   @@map("comments")
 }

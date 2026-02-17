@@ -3,7 +3,7 @@ import { useFormConsult } from "@/hooks/context/FormConsultContext"
 import { Bold, Italic, LinkIcon, List } from "lucide-react"
 
 export default function ConsultationForm() {
-  const { currentStep, register, getValues } = useFormConsult()
+  const { currentStep, register, getValues, errors } = useFormConsult()
 
   const title = getValues("title")
   const body = getValues("body")
@@ -23,9 +23,15 @@ export default function ConsultationForm() {
                 type="text"
                 id="title"
                 {...register("title")}
+                maxLength={100}
                 placeholder="e.g. Market Entry Strategy for Fintech in SE Asia"
-                className="w-full px-4 py-3 border-b-2 border-gray-200 focus:border-teal-500 outline-none text-lg transition-colors placeholder:text-gray-300"
+                className={`w-full px-4 py-3 border-b-2 ${errors.title ? "border-red-500 focus:border-red-500" : "border-gray-200 focus:border-teal-500"}  outline-none text-lg transition-colors placeholder:text-gray-300`}
               />
+              {errors.title && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.title.message}
+                </p>
+              )}
             </div>
 
             {/* Description & Context */}
@@ -70,7 +76,7 @@ export default function ConsultationForm() {
               <select
                 id="categories"
                 {...register("categories")}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                className="w-full px-3 py-2 border  border-gray-200 rounded-lg text-sm outline-none focus:border-teal-500 transition-colors"
               >
                 <option value="">Seleccione...</option>
                 <option value="software">Software</option>
@@ -81,11 +87,11 @@ export default function ConsultationForm() {
                 <option value="other">Other</option>
               </select>
 
-              <div className="flex items-start gap-2 text-xs text-gray-500">
-                <div className="h-4 w-4 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+              <div className="flex items-start gap-2 text-xs text-gray-500 mt-2">
+                <div className="h-4 w-4 rounded-full bg-blue-100 flex items-center justify-center shrink-0 mt-0.5">
                   <span className="text-blue-600 text-xs font-bold">i</span>
                 </div>
-                <p>Helps match you with the right experts. Up to 5 allowed.</p>
+                <p>Helps your prospects have more context for their answers</p>
               </div>
             </div>
           </div>

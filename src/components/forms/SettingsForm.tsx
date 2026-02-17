@@ -1,14 +1,16 @@
 'use client'
 
 import { useFormConsult } from '@/hooks/context/FormConsultContext'
-import { Check, Edit, Eye, EyeOff, GraduationCap, Menu, Users } from 'lucide-react'
+import { Check, Edit, Eye, HatGlasses, Menu, MessageSquareLock, Users } from 'lucide-react'
 import { Button } from '../ui/Button'
 import { Toggle } from '../ui/Toggle'
 
 export default function SettingsForm() {
-  const { currentStep, setCurrentStep, setValue, watch } = useFormConsult()
+  const { currentStep, setValue, watch, setCurrentStep } = useFormConsult()
   const isAnonymous = watch("allowAnonymous")
   const isPrivate = watch("privacy")
+  const isViewComments = watch("viewComments")
+
   return (
     <div className="lg:col-span-1">
       <div className="bg-white rounded-lg border border-gray-200 p-6 sticky top-24">
@@ -33,43 +35,44 @@ export default function SettingsForm() {
               </p>
             </div>
 
-            {/* How others see you */}
             <div className="mb-6">
               <label className="block font-semibold text-gray-900 text-sm mb-3">
-                How others see you
+                How do others respond?
               </label>
               <div className="grid grid-cols-2 gap-3">
                 <button
                   onClick={() => setValue("allowAnonymous", false)}
+                  type='button'
                   className={`
-                          flex flex-col items-center justify-center p-4 rounded-lg border-2 transition-all
+                          flex flex-col items-center justify-center p-4 rounded-lg border-2 transition-all cursor-pointer hover:brightness-105
                           ${!isAnonymous
                       ? "border-teal-500 bg-teal-50"
                       : "border-gray-200 bg-white hover:border-gray-300"}
                         `}
                 >
-                  <EyeOff className={`h-5 w-5 mb-2 ${!isAnonymous ? "text-teal-600" : "text-gray-400"}`} />
+                  <HatGlasses className={`h-5 w-5 mb-2 ${!isAnonymous ? "text-teal-600" : "text-gray-400"}`} />
                   <span className={`text-sm font-medium ${!isAnonymous ? "text-gray-900" : "text-gray-600"}`}>
                     Anonymous
                   </span>
                 </button>
                 <button
                   onClick={() => setValue("allowAnonymous", true)}
+                  type='button'
                   className={`
-                          flex flex-col items-center justify-center p-4 rounded-lg border-2 transition-all
+                          flex flex-col items-center justify-center p-4 rounded-lg border-2 transition-all cursor-pointer hover:brightness-105
                           ${isAnonymous
                       ? "border-teal-500 bg-teal-50"
                       : "border-gray-200 bg-white hover:border-gray-300"}
                         `}
                 >
-                  <Eye className={`h-5 w-5 mb-2 ${isAnonymous ? "text-teal-600" : "text-gray-400"}`} />
+                  <Users className={`h-5 w-5 mb-2 ${isAnonymous ? "text-teal-600" : "text-gray-400"}`} />
                   <span className={`text-sm font-medium ${isAnonymous ? "text-gray-900" : "text-gray-600"}`}>
-                    Public
+                    Registered
                   </span>
                 </button>
               </div>
               <div className="flex items-start gap-2 mt-3 p-2 bg-teal-50 rounded-lg">
-                <div className="h-4 w-4 rounded-full bg-teal-500 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <div className="h-4 w-4 rounded-full bg-teal-500 flex items-center justify-center shrink-0 mt-0.5">
                   <Check className="h-3 w-3 text-white" />
                 </div>
                 <p className="text-xs text-teal-800">
@@ -79,19 +82,20 @@ export default function SettingsForm() {
             </div>
 
             {/* Knowledge Sharing */}
-            <div className="mb-6 pb-6 border-b border-gray-200">
+            <div className="mb-6  border-gray-200 p-2 bg-teal-50/50 rounded-lg">
               <div className="flex items-start gap-3">
-                <div className="h-10 w-10 rounded-lg bg-teal-50 flex items-center justify-center flex-shrink-0">
-                  <GraduationCap className="h-5 w-5 text-teal-600" />
+                <div className="h-10 w-10 rounded-lg bg-teal-50 flex items-center justify-center shrink-0">
+                  <MessageSquareLock className="h-5 w-5 text-teal-600" />
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center justify-between mb-1">
                     <label className="font-semibold text-gray-900 text-sm">
-                      Knowledge Sharing
+                      Shared responses
                     </label>
+                    <Toggle checked={isViewComments} onChange={(checked) => setValue("viewComments", checked)} />
                   </div>
                   <p className="text-xs text-gray-500">
-                    Allow community to view anonymized responses for learning.
+                    Allow users to view other users{"'"} responses.
                   </p>
                 </div>
               </div>
@@ -100,28 +104,26 @@ export default function SettingsForm() {
             {/* Service Tier */}
             <div className="mb-6">
               <label className="block font-semibold text-gray-900 text-sm mb-3">
-                Service Tier
+                Type of consultation
               </label>
               <select
-                // value={serviceTier}
-                // onChange={(e) => setServiceTier(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm outline-none focus:border-teal-500 transition-colors"
+                disabled
+                className="w-full px-3 py-2 border disabled:text-gray-400 disabled:cursor-not-allowed  border-gray-200 rounded-lg text-sm outline-none focus:border-teal-500 transition-colors"
               >
-                <option value="expert-review">Expert Review (Standard)</option>
-                <option value="expert-premium">Expert Review (Premium)</option>
-                <option value="team-consultation">Team Consultation</option>
+                <option value="expert-review">Open Question</option>
+                <option value="expert-premium">Multiple Choice</option>
               </select>
             </div>
 
             {/* Continue Button */}
             <Button
-              className="w-full justify-center"
+              className="w-full justify-center cursor-pointer"
               type="submit"
             >
               Continue to Review
             </Button>
             <p className="text-xs text-center text-gray-500 mt-3">
-              Step 2 involves confirming details & payment
+              Step 2 involves confirming details.
             </p>
           </>
         ) : (
@@ -138,12 +140,12 @@ export default function SettingsForm() {
             <div className="mb-6">
               <div className="flex items-center justify-between mb-3">
                 <h4 className="font-semibold text-gray-900 text-sm">Visibility</h4>
-                <button className="text-xs text-teal-600 hover:underline font-medium">
+                <button type='button' className="text-xs text-teal-600 hover:underline font-medium">
                   Change
                 </button>
               </div>
               <div className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg">
-                <div className="h-8 w-8 rounded-full bg-white border border-gray-200 flex items-center justify-center flex-shrink-0">
+                <div className="h-8 w-8 rounded-full bg-white border border-gray-200 flex items-center justify-center shrink-0">
                   <Eye className="h-4 w-4 text-teal-600" />
                 </div>
                 <div>
@@ -157,12 +159,12 @@ export default function SettingsForm() {
             <div className="mb-6">
               <div className="flex items-center justify-between mb-3">
                 <h4 className="font-semibold text-gray-900 text-sm">Access Control</h4>
-                <button className="text-xs text-teal-600 hover:underline font-medium">
+                <button type='button' className="text-xs text-teal-600 hover:underline font-medium">
                   Change
                 </button>
               </div>
               <div className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg">
-                <div className="h-8 w-8 rounded-full bg-white border border-gray-200 flex items-center justify-center flex-shrink-0">
+                <div className="h-8 w-8 rounded-full bg-white border border-gray-200 flex items-center justify-center shrink-0">
                   <Users className="h-4 w-4 text-gray-600" />
                 </div>
                 <div>
@@ -176,13 +178,13 @@ export default function SettingsForm() {
             <div className="mb-6 pb-6 border-b border-gray-200">
               <div className="flex items-center justify-between mb-3">
                 <h4 className="font-semibold text-gray-900 text-sm">Community</h4>
-                <button className="text-xs text-teal-600 hover:underline font-medium">
+                <button type='button' className="text-xs text-teal-600 hover:underline font-medium">
                   Change
                 </button>
               </div>
               <div className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg">
-                <div className="h-8 w-8 rounded-full bg-white border border-gray-200 flex items-center justify-center flex-shrink-0">
-                  <GraduationCap className="h-4 w-4 text-indigo-600" />
+                <div className="h-8 w-8 rounded-full bg-white border border-gray-200 flex items-center justify-center shrink-0">
+                  <MessageSquareLock className="h-4 w-4 text-indigo-600" />
                 </div>
                 <div>
                   <p className="font-medium text-gray-900 text-sm">Knowledge Sharing On</p>
@@ -192,7 +194,7 @@ export default function SettingsForm() {
             </div>
 
             {/* Pricing */}
-            <div className="mb-6">
+            {/* <div className="mb-6">
               <div className="flex items-center justify-between mb-2">
                 <p className="text-sm text-gray-600">Service Tier</p>
                 <p className="text-sm font-semibold text-gray-900">Expert Review</p>
@@ -201,7 +203,7 @@ export default function SettingsForm() {
                 <p className="text-sm text-gray-600">Estimated Fee</p>
                 <p className="text-xl font-bold text-teal-600">$250 - $500</p>
               </div>
-            </div>
+            </div> */}
 
             {/* Action Buttons */}
             <div className="space-y-3">
@@ -214,6 +216,8 @@ export default function SettingsForm() {
               <Button
                 icon={Edit}
                 variant="outline"
+                type='button'
+                onClick={() => setCurrentStep("drafting")}
                 className="w-full justify-center"
               >
                 Edit Information

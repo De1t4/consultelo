@@ -8,25 +8,11 @@ export default function Header() {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
-              <span className="text-white font-bold text-lg">C</span>
-            </div>
-            <span className="font-bold text-xl text-foreground">Consultalo</span>
+            <span className="font-bold text-3xl text-primary">Consultelo</span>
           </Link>
           {/* Navigation */}
 
           <div className="flex items-center gap-4">
-            {/* <button
-                onClick={toggleTheme}
-                className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer text-foreground"
-                aria-label="Toggle theme"
-              >
-                {theme === 'light' ? (
-                  <Sun className="h-5 w-5 text-gray-900" />
-                ) : (
-                  <Moon className="h-5 w-5 text-white" />
-                )}
-              </button> */}
             <div className="flex items-center gap-4">
               <Link href="/account?auth=login">
                 <Button variant="ghost" className="flex items-center gap-2 w-32 max-md:w-28 cursor-pointer text-gray-800 border-gray-50 border-2 font-semibold">

@@ -42,7 +42,7 @@ export default function RegisterForm() {
         </div>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
           {/* Email */}
-          <div className="space-y-2">
+          <div className="flex flex-col gap-1">
             <label htmlFor="email" className="text-sm font-medium text-gray-700">
               Correo Electrónico
             </label>
@@ -50,7 +50,7 @@ export default function RegisterForm() {
               id="email"
               type="email"
               {...register('email')}
-              className={`w-full rounded-lg border px-4 py-2.5 text-gray-700 placeholder-gray-400 outline-none transition-all focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 ${errors.email ? 'border-red-500 focus:ring-red-200' : 'border-gray-300'
+              className={`w-full rounded-lg border px-4 py-2.5 text-gray-700 placeholder-gray-400 outline-none transition-all focus:border-primary/20 focus:ring-2 focus:ring-primary ${errors.email ? 'border-red-500 focus:ring-red-400' : 'border-gray-300'
                 }`}
               placeholder="juan.perez@ejemplo.com"
             />
@@ -59,7 +59,7 @@ export default function RegisterForm() {
             )}
           </div>
           {/*Username*/}
-          <div className="space-y-2">
+          <div className="flex flex-col gap-1">
             <label htmlFor="username" className="text-sm font-medium text-gray-700">
               Nombre de Usuario
             </label>
@@ -67,7 +67,7 @@ export default function RegisterForm() {
               id="username"
               type="text"
               {...register('username')}
-              className={`w-full rounded-lg border px-4 py-2.5 text-gray-700 placeholder-gray-400 outline-none transition-all focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 ${errors.username ? 'border-red-500 focus:ring-red-200' : 'border-gray-300'
+              className={`w-full rounded-lg border px-4 py-2.5 text-gray-700 placeholder-gray-400 outline-none transition-all focus:border-primary/20 focus:ring-2 focus:ring-primary ${errors.username ? 'border-red-500 focus:ring-red-400' : 'border-gray-300'
                 }`}
               placeholder="juan.perez"
             />
@@ -76,7 +76,7 @@ export default function RegisterForm() {
             )}
           </div>
           {/*Phone*/}
-          <div className="space-y-2">
+          <div className="flex flex-col gap-1">
             <label htmlFor="phone" className="text-sm font-medium text-gray-700">
               Teléfono
             </label>
@@ -84,7 +84,7 @@ export default function RegisterForm() {
               id="phone"
               type="number"
               {...register('phone')}
-              className={`w-full rounded-lg border px-4 py-2.5 text-gray-700 placeholder-gray-400 outline-none transition-all focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 ${errors.phone ? 'border-red-500 focus:ring-red-200' : 'border-gray-300'
+              className={`w-full rounded-lg border px-4 py-2.5 text-gray-700 placeholder-gray-400 outline-none transition-all focus:border-primary/20 focus:ring-2 focus:ring-primary ${errors.phone ? 'border-red-500 focus:ring-red-400' : 'border-gray-300'
                 }`}
               placeholder="123456789"
             />
@@ -93,7 +93,7 @@ export default function RegisterForm() {
             )}
           </div>
           {/* Contraseña */}
-          <div className="space-y-2">
+          <div className="flex flex-col gap-1">
             <label htmlFor="password" className="text-sm font-medium text-gray-700">
               Contraseña
             </label>
@@ -101,7 +101,7 @@ export default function RegisterForm() {
               id="password"
               type="password"
               {...register('password')}
-              className={`w-full rounded-lg border px-4 py-2.5 text-gray-700 placeholder-gray-400 outline-none transition-all focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 ${errors.password ? 'border-red-500 focus:ring-red-200' : 'border-gray-300'
+              className={`w-full rounded-lg border px-4 py-2.5 text-gray-700 placeholder-gray-400 outline-none transition-all focus:border-primary/20 focus:ring-2 focus:ring-primary ${errors.password ? 'border-red-500 focus:ring-red-400' : 'border-gray-300'
                 }`}
               placeholder="••••••••"
             />
@@ -110,7 +110,7 @@ export default function RegisterForm() {
             )}
           </div>
 
-          <div className="space-y-2">
+          <div className="flex flex-col gap-1">
             <label htmlFor="repeatPassword" className="text-sm font-medium text-gray-700">
               Repetir Contraseña
             </label>
@@ -118,7 +118,7 @@ export default function RegisterForm() {
               id="repeatPassword"
               type="password"
               {...register('repeatPassword')}
-              className={`w-full rounded-lg border px-4 py-2.5 text-gray-700 placeholder-gray-400 outline-none transition-all focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 ${errors.password ? 'border-red-500 focus:ring-red-200' : 'border-gray-300'
+              className={`w-full rounded-lg border px-4 py-2.5 text-gray-700 placeholder-gray-400 outline-none transition-all focus:border-primary/20 focus:ring-2 focus:ring-primary ${errors.password ? 'border-red-500 focus:ring-red-400' : 'border-gray-300'
                 }`}
               placeholder="••••••••"
             />
@@ -144,7 +144,7 @@ export default function RegisterForm() {
           </button>
         </form>
         <p className='mt-4 text-gray-700 text-center'>Have an account?{' '}
-          <Link href="/account?auth=login" className='underline text-gray-700 hover:text-gray-800 link-underline-offset-2'>
+          <Link href="/account?auth=login" className='underline text-primary font-medium hover:text-primary/80 link-underline-offset-2'>
             Sign in
           </Link>
         </p>

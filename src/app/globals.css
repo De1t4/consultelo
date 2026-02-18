@@ -17,6 +17,7 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-inter: var(--font-inter);
   --color-primary: var(--primary);
   --animate-rotate-border: border-rotate 3s linear infinite;
   @keyframes border-rotate {
@@ -36,5 +37,32 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), sans-serif;
+}
+
+/* Tiptap / Editor Styles */
+.tiptap ul,
+.tiptap-content ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.tiptap ol,
+.tiptap-content ol {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.tiptap li,
+.tiptap-content li {
+  margin-bottom: 0.25em;
+}
+
+.tiptap p,
+.tiptap-content p {
+  margin-bottom: 0.75em;
 }

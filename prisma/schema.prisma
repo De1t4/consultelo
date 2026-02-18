@@ -23,7 +23,6 @@ enum ConsultationCategory {
   business
   company
   strategy
-  privacy
   other
 
   @@map("consultation_category")
@@ -48,7 +47,6 @@ enum PrivacyType {
 enum QuestionType {
   open_question
   multiple_choice
-  binary
 
   @@map("question_type")
 }
@@ -83,18 +81,18 @@ model User {
 model Consultation {
   id         String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid()
   title      String               @db.VarChar(100)
-  body       String               @db.Text
+  body       Json                 @db.Json
   userId     String               @map("user_id") @db.Uuid()
   categories ConsultationCategory @default(other)
-  status     ConsultationStatus   @default(draft)
+  status     ConsultationStatus   @default(active)
   createdAt  DateTime             @default(now()) @map("created_at") @db.Timestamptz
   expiresAt  DateTime?            @map("expires_at") @db.Timestamptz
 
-  user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   settings   Settings?
   comments   Comment[]
-  analytics  Analytics[]
-  settingsId String      @db.Uuid()
+  // analytics  Analytics[]
+  settingsId String?   @db.Uuid()
 
   @@map("consultations")
 }
@@ -104,38 +102,37 @@ model Settings {
   consultationId String       @unique @map("consultation_id") @db.Uuid()
   privacy        PrivacyType  @default(public)
   accessCode     String?      @map("access_code") @db.VarChar(255)
-  allowAnonymous Boolean?     @default(true) @map("allow_anonymous")
+  allowAnonymous Boolean      @default(true) @map("allow_anonymous")
   type           QuestionType @default(open_question)
-  viewComments   Boolean?     @default(true) @map("view_comments")
-
-  consultation Consultation @relation(fields: [consultationId], references: [id], onDelete: Cascade)
+  viewComments   Boolean      @default(true) @map("view_comments")
+  consultation   Consultation @relation(fields: [consultationId], references: [id], onDelete: Cascade)
 
   @@map("settings")
 }
 
 model Comment {
-  id             String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid()
-  message        String   @db.Text
-  consultationId String   @map("consultation_id") @db.Uuid()
-  userId         String?  @map("user_id") @db.Uuid()
-  authorName     String?  @map("author_name") @db.VarChar(255)
-  isApproved     Boolean? @default(true) @map("is_approved")
-  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz
-
-  consultation Consultation @relation(fields: [consultationId], references: [id], onDelete: Cascade)
-  user         User?        @relation(fields: [userId], references: [id], onDelete: SetNull)
+  id             String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid()
+  message        String       @db.Text
+  consultationId String       @map("consultation_id") @db.Uuid()
+  userId         String?      @map("user_id") @db.Uuid()
+  authorName     String?      @map("author_name") @db.VarChar(255)
+  isApproved     Boolean?     @default(true) @map("is_approved")
+  createdAt      DateTime     @default(now()) @map("created_at") @db.Timestamptz
+  ipAddress      String       @map("ip_address") @db.VarChar(45)
+  consultation   Consultation @relation(fields: [consultationId], references: [id], onDelete: Cascade)
+  user           User?        @relation(fields: [userId], references: [id], onDelete: SetNull)
 
   @@map("comments")
 }
 
-model Analytics {
-  id             String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid()
-  ipAddress      String?         @map("ip_address") @db.VarChar(45)
-  consultationId String          @map("consultation_id") @db.Uuid()
-  action         AnalyticsAction
-  createdAt      DateTime        @default(now()) @map("created_at") @db.Timestamptz
+// model Analytics {
+//   id             String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid()
+//   ipAddress      String?         @map("ip_address") @db.VarChar(45)
+//   consultationId String          @map("consultation_id") @db.Uuid()
+//   action         AnalyticsAction @default(comment)
+//   createdAt      DateTime        @default(now()) @map("created_at") @db.Timestamptz
 
-  consultation Consultation @relation(fields: [consultationId], references: [id], onDelete: Cascade)
+//   consultation Consultation @relation(fields: [consultationId], references: [id], onDelete: Cascade)
 
-  @@map("analytics")
-}
+//   @@map("analytics")
+// }

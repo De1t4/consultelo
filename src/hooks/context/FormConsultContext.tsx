@@ -5,7 +5,7 @@ import { FormDataConsultation, SchemaConsultation, initialValuesConsultation } f
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { createContext, useContext, useState } from 'react';
-import { FieldErrors, UseFormGetValues, UseFormHandleSubmit, UseFormRegister, UseFormSetValue, UseFormWatch, useForm } from 'react-hook-form';
+import { FieldErrors, UseFormGetValues, UseFormHandleSubmit, UseFormRegister, UseFormSetValue, UseFormTrigger, UseFormWatch, useForm } from 'react-hook-form';
 
 type Step = "drafting" | "review"
 
@@ -20,6 +20,7 @@ interface ConsultContextType {
   getValues: UseFormGetValues<FormDataConsultation>
   setValue: UseFormSetValue<FormDataConsultation>
   watch: UseFormWatch<FormDataConsultation>
+  trigger: UseFormTrigger<FormDataConsultation>
 }
 
 const FormConsultContext = createContext<ConsultContextType | undefined>(undefined);
@@ -33,18 +34,17 @@ export function FormConsultProvider({ children }: { children: React.ReactNode })
     handleSubmit,
     getValues,
     setValue,
-    watch
-    , formState: { errors, isSubmitting },
+    watch,
+    trigger,
+    formState: { errors, isSubmitting },
   } = useForm<FormDataConsultation>({
     resolver: zodResolver(SchemaConsultation),
     defaultValues: { ...initialValuesConsultation, privacy: "private" }
   })
 
   const onSubmit = async (data: FormDataConsultation) => {
-    console.log(data)
     setCurrentStep("review")
     mutation.mutate(data)
-
   }
 
 
@@ -59,7 +59,8 @@ export function FormConsultProvider({ children }: { children: React.ReactNode })
       isSubmitting,
       getValues,
       setValue,
-      watch
+      watch,
+      trigger
     }}>
       {children}
     </FormConsultContext.Provider>

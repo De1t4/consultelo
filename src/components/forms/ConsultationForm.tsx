@@ -1,9 +1,10 @@
 'use client'
 import { useFormConsult } from "@/hooks/context/FormConsultContext"
-import { Bold, Italic, LinkIcon, List } from "lucide-react"
+import EditorText from "../consultation/EditorText"
+import RichTextDisplay from "../consultation/RichTextDisplay"
 
 export default function ConsultationForm() {
-  const { currentStep, register, getValues, errors } = useFormConsult()
+  const { currentStep, register, getValues, errors, setValue } = useFormConsult()
 
   const title = getValues("title")
   const body = getValues("body")
@@ -39,33 +40,12 @@ export default function ConsultationForm() {
               <label className="block text-sm font-semibold text-gray-900 mb-3">
                 Description & Context
               </label>
-              <div className="border border-gray-200 rounded-lg overflow-hidden">
-                {/* Toolbar */}
-                <div className="flex items-center gap-1 px-3 py-2 bg-gray-50 border-b border-gray-200">
-                  <button className="p-2 hover:bg-gray-200 rounded transition-colors">
-                    <Bold className="h-4 w-4 text-gray-600" />
-                  </button>
-                  <button className="p-2 hover:bg-gray-200 rounded transition-colors">
-                    <Italic className="h-4 w-4 text-gray-600" />
-                  </button>
-                  <div className="h-6 w-px bg-gray-300 mx-1"></div>
-                  <button className="p-2 hover:bg-gray-200 rounded transition-colors">
-                    <List className="h-4 w-4 text-gray-600" />
-                  </button>
-                  <button className="p-2 hover:bg-gray-200 rounded transition-colors">
-                    <LinkIcon className="h-4 w-4 text-gray-600" />
-                  </button>
-                </div>
-
-                {/* Text Area */}
-                <textarea
-                  {...register("body")}
-                  id='body'
-                  placeholder="Tell us about your challenges, specific goals, and what you hope to achieve..."
-                  rows={12}
-                  className="w-full px-4 py-4 outline-none resize-none text-gray-600 placeholder:text-gray-300"
-                />
-              </div>
+              <EditorText body={body} setValue={(value) => setValue("body", value)} />
+              {errors.body && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.body.message}
+                </p>
+              )}
             </div>
 
             {/* Industry Categories */}
@@ -112,9 +92,7 @@ export default function ConsultationForm() {
               <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
                 DESCRIPTION & CONTEXT
               </p>
-              <div className="text-gray-700 space-y-4 whitespace-pre-line">
-                {body}
-              </div>
+              <RichTextDisplay content={body} />
             </div>
 
             {/* Industry Categories */}

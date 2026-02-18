@@ -6,7 +6,7 @@ import { Button } from '../ui/Button'
 import { Toggle } from '../ui/Toggle'
 
 export default function SettingsForm() {
-  const { currentStep, setValue, watch, setCurrentStep } = useFormConsult()
+  const { currentStep, setValue, watch, setCurrentStep, isSubmitting, trigger } = useFormConsult()
   const isAnonymous = watch("allowAnonymous")
   const isPrivate = watch("privacy")
   const isViewComments = watch("viewComments")
@@ -118,7 +118,13 @@ export default function SettingsForm() {
             {/* Continue Button */}
             <Button
               className="w-full justify-center cursor-pointer"
-              type="submit"
+              type='button'
+              onClick={async () => {
+                const isValid = await trigger(["title", "body"])
+                if (isValid) {
+                  setCurrentStep("review")
+                }
+              }}
             >
               Continue to Review
             </Button>
@@ -192,24 +198,13 @@ export default function SettingsForm() {
                 </div>
               </div>
             </div>
-
-            {/* Pricing */}
-            {/* <div className="mb-6">
-              <div className="flex items-center justify-between mb-2">
-                <p className="text-sm text-gray-600">Service Tier</p>
-                <p className="text-sm font-semibold text-gray-900">Expert Review</p>
-              </div>
-              <div className="flex items-center justify-between">
-                <p className="text-sm text-gray-600">Estimated Fee</p>
-                <p className="text-xl font-bold text-teal-600">$250 - $500</p>
-              </div>
-            </div> */}
-
             {/* Action Buttons */}
             <div className="space-y-3">
               <Button
                 icon={Check}
-                className="w-full justify-center"
+                disabled={isSubmitting}
+                type='submit'
+                className="w-full justify-center disabled:cursor-not-allowed"
               >
                 Confirm & Publish
               </Button>

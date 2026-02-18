@@ -2,10 +2,17 @@
 import { useFormConsult } from '@/hooks/context/FormConsultContext'
 import ConsultationForm from '../forms/ConsultationForm'
 import SettingsForm from '../forms/SettingsForm'
+import SuccessConsultPage from './SuccessPage'
 
 
 export default function WrappedForms() {
-  const { currentStep, handleSubmit, onSubmit } = useFormConsult()
+  const { currentStep, handleSubmit, onSubmit, isSuccess, consult } = useFormConsult()
+
+  if (isSuccess && consult) {
+    return (
+      <SuccessConsultPage consult={consult} />
+    )
+  }
 
   return (
     <>

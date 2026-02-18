@@ -1,7 +1,7 @@
 'use client'
 
 import { useFormConsult } from '@/hooks/context/FormConsultContext'
-import { Check, Edit, Eye, HatGlasses, Menu, MessageSquareLock, Users } from 'lucide-react'
+import { Check, Edit, Eye, HatGlasses, Loader2, Menu, MessageSquareLock, Users } from 'lucide-react'
 import { Button } from '../ui/Button'
 import { Toggle } from '../ui/Toggle'
 
@@ -142,11 +142,11 @@ export default function SettingsForm() {
               <h3 className="font-semibold text-gray-900">Summary & Settings</h3>
             </div>
 
-            {/* Visibility */}
+            {/* Privacy */}
             <div className="mb-6">
               <div className="flex items-center justify-between mb-3">
-                <h4 className="font-semibold text-gray-900 text-sm">Visibility</h4>
-                <button type='button' className="text-xs text-teal-600 hover:underline font-medium">
+                <h4 className="font-semibold text-gray-900 text-sm">Privacy</h4>
+                <button type='button' className="text-xs text-teal-600 cursor-pointer hover:underline font-medium" onClick={() => setCurrentStep("drafting")}>
                   Change
                 </button>
               </div>
@@ -155,17 +155,17 @@ export default function SettingsForm() {
                   <Eye className="h-4 w-4 text-teal-600" />
                 </div>
                 <div>
-                  <p className="font-medium text-gray-900 text-sm">Public Profile</p>
-                  <p className="text-xs text-gray-500">Visible to all experts</p>
+                  <p className="font-medium text-gray-900 text-sm">{isPrivate.charAt(0).toUpperCase() + isPrivate.slice(1)} Mode</p>
+                  <p className="text-xs text-gray-500">{isPrivate === "private" ? "Only you and users invited can see this consultation" : "Visible to all users"}</p>
                 </div>
               </div>
             </div>
 
-            {/* Access Control */}
+            {/* Users */}
             <div className="mb-6">
               <div className="flex items-center justify-between mb-3">
-                <h4 className="font-semibold text-gray-900 text-sm">Access Control</h4>
-                <button type='button' className="text-xs text-teal-600 hover:underline font-medium">
+                <h4 className="font-semibold text-gray-900 text-sm">Users</h4>
+                <button type='button' className="text-xs text-teal-600 cursor-pointer hover:underline font-medium" onClick={() => setCurrentStep("drafting")}>
                   Change
                 </button>
               </div>
@@ -174,17 +174,17 @@ export default function SettingsForm() {
                   <Users className="h-4 w-4 text-gray-600" />
                 </div>
                 <div>
-                  <p className="font-medium text-gray-900 text-sm">Open Access</p>
-                  <p className="text-xs text-gray-500">Not restricted to invite-only</p>
+                  <p className="font-medium text-gray-900 text-sm">{isAnonymous ? "Anonymous" : "Registered"} Users</p>
+                  <p className="text-xs text-gray-500">{isAnonymous ? "Response only anonymous users" : "Response only registered users"}</p>
                 </div>
               </div>
             </div>
 
-            {/* Community */}
+            {/* Visibility */}
             <div className="mb-6 pb-6 border-b border-gray-200">
               <div className="flex items-center justify-between mb-3">
-                <h4 className="font-semibold text-gray-900 text-sm">Community</h4>
-                <button type='button' className="text-xs text-teal-600 hover:underline font-medium">
+                <h4 className="font-semibold text-gray-900 text-sm">Visibility</h4>
+                <button type='button' className="text-xs text-teal-600 cursor-pointer hover:underline font-medium" onClick={() => setCurrentStep("drafting")}>
                   Change
                 </button>
               </div>
@@ -193,19 +193,19 @@ export default function SettingsForm() {
                   <MessageSquareLock className="h-4 w-4 text-indigo-600" />
                 </div>
                 <div>
-                  <p className="font-medium text-gray-900 text-sm">Knowledge Sharing On</p>
-                  <p className="text-xs text-gray-500">Responses anonymized for learning</p>
+                  <p className="font-medium text-gray-900 text-sm">Response {isViewComments ? "Visible" : "Hidden"}</p>
+                  <p className="text-xs text-gray-500">Responses {isViewComments ? "Allow users to view other users' responses." : "Users cannot see other users' responses."}</p>
                 </div>
               </div>
             </div>
             {/* Action Buttons */}
             <div className="space-y-3">
               <Button
-                icon={Check}
                 disabled={isSubmitting}
                 type='submit'
-                className="w-full justify-center disabled:cursor-not-allowed"
+                className={`w-full flex justify-center items-center gap-1 ${isSubmitting ? "cursor-not-allowed opacity-50" : "cursor-pointer"}`}
               >
+                {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-4 w-4" />}
                 Confirm & Publish
               </Button>
               <Button

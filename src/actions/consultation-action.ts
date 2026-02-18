@@ -59,9 +59,12 @@ export async function createConsultationAction(data: FormDataConsultation) {
       return newConsultation;
     });
     revalidatePath(`/consultation/${consultation.id}`);
-
     // Opcional: Retornar el objeto creado o un success: true
-    return { success: true, consultationId: consultation.id };
+    return {
+      success: true,
+      consultationId: consultation.id,
+      title: consultation.title,
+    };
   } catch (error) {
     console.error("Error creating consultation:", error);
     // 3. Manejo de errores seguro (no exponer error interno al cliente)

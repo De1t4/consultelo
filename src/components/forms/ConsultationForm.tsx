@@ -1,7 +1,7 @@
 'use client'
 import { useFormConsult } from "@/hooks/context/FormConsultContext"
-import EditorText from "../consultation/EditorText"
-import RichTextDisplay from "../consultation/RichTextDisplay"
+import EditorText from "@/components/consultation/EditorText"
+import RichTextDisplay from "@/components/ui/RichTextDisplay"
 
 export default function ConsultationForm() {
   const { currentStep, register, getValues, errors, setValue } = useFormConsult()
@@ -15,7 +15,6 @@ export default function ConsultationForm() {
       <div className="lg:col-span-2">
         {currentStep === "drafting" ? (
           <div className="bg-white rounded-lg border border-gray-200 p-8 space-y-8">
-            {/* Consultation Title */}
             <div>
               <label htmlFor='title' className="block text-sm font-semibold text-gray-900 mb-3">
                 Consultation Title

@@ -1,6 +1,6 @@
 import { EditorContent, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import MenuBar from './MenuBar'
+import MenuBar from '@/components/ui/MenuBar'
 
 export default function EditorText({ body, setValue }: { body: string, setValue: (value: string) => void }) {
   const editor = useEditor({

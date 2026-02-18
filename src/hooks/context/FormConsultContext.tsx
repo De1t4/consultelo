@@ -2,6 +2,7 @@
 
 import { createConsultationAction } from '@/actions/consultation-action';
 import { FormDataConsultation, SchemaConsultation, initialValuesConsultation } from '@/schemas/schema-consultation';
+import { ResponseConsult } from '@/shared/types/response-consult';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { createContext, useContext, useState } from 'react';
@@ -21,13 +22,16 @@ interface ConsultContextType {
   setValue: UseFormSetValue<FormDataConsultation>
   watch: UseFormWatch<FormDataConsultation>
   trigger: UseFormTrigger<FormDataConsultation>
+  isSuccess: boolean
+  consult: ResponseConsult | null
 }
 
 const FormConsultContext = createContext<ConsultContextType | undefined>(undefined);
 
 export function FormConsultProvider({ children }: { children: React.ReactNode }) {
   const [currentStep, setCurrentStep] = useState<Step>("drafting")
-  const mutation = useMutation({ mutationFn: createConsultationAction })
+  const { mutateAsync: createConsultation, isPending: isSubmitting, isSuccess } = useMutation({ mutationFn: createConsultationAction })
+  const [consult, setConsult] = useState<ResponseConsult | null>(null)
 
   const {
     register,
@@ -36,7 +40,7 @@ export function FormConsultProvider({ children }: { children: React.ReactNode })
     setValue,
     watch,
     trigger,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<FormDataConsultation>({
     resolver: zodResolver(SchemaConsultation),
     defaultValues: { ...initialValuesConsultation, privacy: "private" }
@@ -44,7 +48,8 @@ export function FormConsultProvider({ children }: { children: React.ReactNode })
 
   const onSubmit = async (data: FormDataConsultation) => {
     setCurrentStep("review")
-    mutation.mutate(data)
+    const res = await createConsultation(data)
+    setConsult(res)
   }
 
 
@@ -60,7 +65,9 @@ export function FormConsultProvider({ children }: { children: React.ReactNode })
       getValues,
       setValue,
       watch,
-      trigger
+      isSuccess,
+      trigger,
+      consult
     }}>
       {children}
     </FormConsultContext.Provider>

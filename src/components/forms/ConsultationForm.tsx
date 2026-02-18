@@ -36,7 +36,7 @@ export default function ConsultationForm() {
 
             {/* Description & Context */}
             <div>
-              <label className="block text-sm font-semibold text-gray-900 mb-3">
+              <label htmlFor="body" className="block text-sm font-semibold text-gray-900 mb-3">
                 Description & Context
               </label>
               <EditorText body={body} setValue={(value) => setValue("body", value)} />
@@ -50,7 +50,7 @@ export default function ConsultationForm() {
             {/* Industry Categories */}
             <div>
               <label htmlFor='categories' className="block text-sm font-semibold text-gray-900 mb-3">
-                Industry Categories
+                Industry Categorie
               </label>
               <select
                 id="categories"

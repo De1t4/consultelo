@@ -39,6 +39,7 @@ export default function EditorText({ body, setValue }: { body: string, setValue:
       <MenuBar editor={editor} />
       <EditorContent
         editor={editor}
+        id="body"
         className="min-h-[200px] cursor-text"
       />
     </div>

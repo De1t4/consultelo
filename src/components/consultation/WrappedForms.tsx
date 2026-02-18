@@ -1,12 +1,26 @@
 'use client'
+import { createConsultationAction } from '@/actions/consultation-action'
 import { useFormConsult } from '@/hooks/context/FormConsultContext'
+import { FormDataConsultation } from '@/schemas/schema-consultation'
+import { ResponseConsult } from '@/shared/types/response-consult'
+import { useMutation } from '@tanstack/react-query'
+import { useState } from 'react'
 import ConsultationForm from '../forms/ConsultationForm'
 import SettingsForm from '../forms/SettingsForm'
 import SuccessConsultPage from './SuccessPage'
 
 
 export default function WrappedForms() {
-  const { currentStep, handleSubmit, onSubmit, isSuccess, consult } = useFormConsult()
+  const [consult, setConsult] = useState<ResponseConsult | null>(null)
+  const { currentStep, handleSubmit, setCurrentStep } = useFormConsult()
+
+  const { mutateAsync: createConsultation, isPending, isSuccess } = useMutation({ mutationFn: createConsultationAction })
+
+  const onSubmit = async (data: FormDataConsultation) => {
+    setCurrentStep("review")
+    const res = await createConsultation(data)
+    setConsult(res)
+  }
 
   if (isSuccess && consult) {
     return (
@@ -52,7 +66,7 @@ export default function WrappedForms() {
           {/* Left Column - Main Form/Content */}
           <ConsultationForm />
           {/* Right Column - Settings Sidebar */}
-          <SettingsForm />
+          <SettingsForm isPending={isPending} />
         </form>
       </div>
     </>

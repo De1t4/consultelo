@@ -5,11 +5,13 @@ import { Check, Edit, Eye, HatGlasses, Loader2, Menu, MessageSquareLock, Users }
 import { Button } from '../ui/Button'
 import { Toggle } from '../ui/Toggle'
 
-export default function SettingsForm() {
-  const { currentStep, setValue, watch, setCurrentStep, isSubmitting, trigger } = useFormConsult()
+export default function SettingsForm({ isPending }: { isPending: boolean }) {
+  const { currentStep, setValue, watch, setCurrentStep, trigger } = useFormConsult()
+
   const isAnonymous = watch("allowAnonymous")
   const isPrivate = watch("privacy")
   const isViewComments = watch("viewComments")
+
 
   return (
     <div className="lg:col-span-1">
@@ -95,7 +97,7 @@ export default function SettingsForm() {
                     <Toggle checked={isViewComments} onChange={(checked) => setValue("viewComments", checked)} />
                   </div>
                   <p className="text-xs text-gray-500">
-                    Allow users to view other users{"'"} responses.
+                    Optimize decision-making by allowing access to other users{"'"} responses.
                   </p>
                 </div>
               </div>
@@ -194,18 +196,20 @@ export default function SettingsForm() {
                 </div>
                 <div>
                   <p className="font-medium text-gray-900 text-sm">Response {isViewComments ? "Visible" : "Hidden"}</p>
-                  <p className="text-xs text-gray-500">Responses {isViewComments ? "Allow users to view other users' responses." : "Users cannot see other users' responses."}</p>
+                  <p className="text-xs text-gray-500">
+                    Responses {isViewComments ? "Optimize decision-making by allowing access to other users' responses." : "Ensure the objectivity of participants by allowing independent responses, without the influence of prior opinions."}
+                  </p>
                 </div>
               </div>
             </div>
             {/* Action Buttons */}
             <div className="space-y-3">
               <Button
-                disabled={isSubmitting}
+                disabled={isPending}
                 type='submit'
-                className={`w-full flex justify-center items-center gap-1 ${isSubmitting ? "cursor-not-allowed opacity-50" : "cursor-pointer"}`}
+                className={`w-full flex justify-center items-center gap-1 ${isPending ? "cursor-not-allowed opacity-50" : "cursor-pointer"}`}
               >
-                {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-4 w-4" />}
+                {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-4 w-4" />}
                 Confirm & Publish
               </Button>
               <Button

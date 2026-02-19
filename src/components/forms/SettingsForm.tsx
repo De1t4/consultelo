@@ -12,7 +12,6 @@ export default function SettingsForm({ isPending }: { isPending: boolean }) {
   const isPrivate = watch("privacy")
   const isViewComments = watch("viewComments")
 
-
   return (
     <div className="lg:col-span-1">
       <div className="bg-white rounded-lg border border-gray-200 p-6 sticky top-24">

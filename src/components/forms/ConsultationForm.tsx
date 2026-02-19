@@ -50,7 +50,7 @@ export default function ConsultationForm() {
             {/* Industry Categories */}
             <div>
               <label htmlFor='categories' className="block text-sm font-semibold text-gray-900 mb-3">
-                Industry Categorie
+                Industry Category
               </label>
               <select
                 id="categories"
@@ -70,7 +70,7 @@ export default function ConsultationForm() {
                 <div className="h-4 w-4 rounded-full bg-blue-100 flex items-center justify-center shrink-0 mt-0.5">
                   <span className="text-blue-600 text-xs font-bold">i</span>
                 </div>
-                <p>Helps your prospects have more context for their answers</p>
+                <p>Helps users have more context for their answers</p>
               </div>
             </div>
           </div>

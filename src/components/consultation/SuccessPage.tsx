@@ -60,8 +60,8 @@ export default function SuccessConsultPage({ consult }: { consult: ResponseConsu
               Link to your consultation
             </p>
             <div className="flex items-center gap-3 max-md:flex-col">
-              <div className="flex-1 bg-gray-50 border border-gray-200 rounded-lg px-4 py-3">
-                <code className="text-sm text-gray-700 font-mono">
+              <div className="flex-1 min-w-0 bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 ">
+                <code className="text-sm text-gray-700 font-mono break-all whitespace-normal">
                   {consultationUrl}
                 </code>
               </div>
@@ -79,6 +79,7 @@ export default function SuccessConsultPage({ consult }: { consult: ResponseConsu
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 mb-16">
           <Link
+            target="_blank"
             href={`/consultation/${consult.consultationId}`}
             className="flex-1 flex items-center justify-center gap-2 px-6 py-3.5 bg-primary hover:bg-primary/80 text-white rounded-lg transition-colors font-semibold text-center shadow-sm"
           >
@@ -87,6 +88,7 @@ export default function SuccessConsultPage({ consult }: { consult: ResponseConsu
           </Link>
           <Link
             href="/dashboard"
+            target="_blank"
             className="flex-1 px-6 py-3.5 bg-white border-2 border-gray-200 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-semibold text-center"
           >
             Back to Dashboard

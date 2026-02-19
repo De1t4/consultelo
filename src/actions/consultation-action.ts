@@ -34,32 +34,23 @@ export async function createConsultationAction(data: FormDataConsultation) {
         data: {
           title: data.title,
           body: bodyObj,
-          categories: data.categories, // Asegúrate que data sea seguro
+          categories: data.categories,
           userId: session.user.id,
+          settings: {
+            create: {
+              privacy: data.privacy,
+              allowAnonymous: data.allowAnonymous,
+              viewComments: data.viewComments,
+            },
+          },
         },
-      });
-      // Crear Settings asociados usando la misma transacción (tx)
-      const settings = await tx.settings.create({
-        data: {
-          consultationId: newConsultation.id,
-          privacy: data.privacy,
-          allowAnonymous: data.allowAnonymous,
-          viewComments: data.viewComments,
-        },
-      });
-
-      await tx.consultation.update({
-        where: {
-          id: newConsultation.id,
-        },
-        data: {
-          settingsId: settings.id,
+        include: {
+          settings: true,
         },
       });
       return newConsultation;
     });
     revalidatePath(`/consultation/${consultation.id}`);
-    // Opcional: Retornar el objeto creado o un success: true
     return {
       success: true,
       consultationId: consultation.id,
@@ -67,7 +58,6 @@ export async function createConsultationAction(data: FormDataConsultation) {
     };
   } catch (error) {
     console.error("Error creating consultation:", error);
-    // 3. Manejo de errores seguro (no exponer error interno al cliente)
     throw new Error(
       "Hubo un error al procesar tu solicitud. Por favor intenta nuevamente.",
     );

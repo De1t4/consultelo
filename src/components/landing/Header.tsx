@@ -12,7 +12,7 @@ export default function Header() {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <span className="font-bold text-3xl text-primary">Consultelo</span>
+            <span className="font-bold text-3xl text-primary max-md:text-2xl">Consultelo</span>
           </Link>
           {/* Navigation */}
 

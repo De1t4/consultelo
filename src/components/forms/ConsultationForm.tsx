@@ -57,7 +57,7 @@ export default function ConsultationForm() {
                 {...register("categories")}
                 className="w-full px-3 py-2 border  border-gray-200 rounded-lg text-sm outline-none focus:border-teal-500 transition-colors"
               >
-                <option value="">Seleccione...</option>
+                <option value="">Select...</option>
                 <option value="software">Software</option>
                 <option value="IA">IA</option>
                 <option value="business">Business</option>

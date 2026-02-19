@@ -42,7 +42,7 @@ export default function WrappedForms() {
           <h1 className="text-4xl font-bold text-gray-900 mb-2">
             {currentStep === "drafting" ? "Create Consultation" : "Review Inquiry"}
           </h1>
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between max-md:flex-col max-md:items-start max-md:gap-2">
             <p className="text-gray-600">
               {currentStep === "drafting"
                 ? "Detailed inquiry for expert analysis and strategic feedback."

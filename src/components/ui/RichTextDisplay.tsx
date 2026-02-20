@@ -30,7 +30,7 @@ const RichTextDisplay = ({ content }: RichTextDisplayProps) => {
 
   return (
     <div
-      className="tiptap-content text-gray-700 space-y-4 prose prose-sm max-w-none"
+      className="tiptap-content text-gray-700 space-y-4 prose prose-sm max-w-none dark:text-gray-300"
       dangerouslySetInnerHTML={{ __html: output }}
     />
   )

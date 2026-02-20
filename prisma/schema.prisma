@@ -70,6 +70,7 @@ model User {
   role      UserRole @default(owner)
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz
+  isActive  Boolean  @default(true)
 
   consultations Consultation[]
   comments      Comment[]
@@ -88,11 +89,10 @@ model Consultation {
   createdAt  DateTime             @default(now()) @map("created_at") @db.Timestamptz
   expiresAt  DateTime?            @map("expires_at") @db.Timestamptz
 
-  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  settings   Settings?
-  comments   Comment[]
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  settings Settings?
+  comments Comment[]
   // analytics  Analytics[]
-  settingsId String?   @db.Uuid()
 
   @@map("consultations")
 }

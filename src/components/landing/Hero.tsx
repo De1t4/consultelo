@@ -4,12 +4,12 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <section className=" bg-linear-to-br pt-24 pb-12 from-teal-50 via-teal-25 to-background max-md:h-auto">
+    <section className=" bg-linear-to-br pt-24 pb-12 from-teal-50 via-teal-25 to-[#ffffff] max-md:h-auto">
       <div className="max-w-6xl mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
           <div>
-            <h1 className="text-5xl lg:text-6xl max-md:text-4xl font-bold text-foreground mb-6 leading-tight">
+            <h1 className="text-5xl lg:text-6xl max-md:text-4xl font-bold text-neutral-900 mb-6 leading-tight">
               Get answers to your most <span className="text-teal-600">complex questions</span>
             </h1>
             <p className="text-lg text-gray-600 mb-8 max-w-xl leading-relaxed">

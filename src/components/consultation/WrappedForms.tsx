@@ -35,15 +35,15 @@ export default function WrappedForms() {
         <div className="mb-8">
           <div className="flex items-center gap-2 mb-4">
             <div className="h-2 w-2 rounded-full bg-primary animate-ping"></div>
-            <span className="text-sm font-medium text-gray-600">
+            <span className="text-sm font-medium text-muted-foreground">
               STEP {currentStep === "drafting" ? "1" : "2"} OF 2
             </span>
           </div>
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">
+          <h1 className="text-4xl font-bold text-foreground mb-2">
             {currentStep === "drafting" ? "Create Consultation" : "Review Inquiry"}
           </h1>
           <div className="flex items-center justify-between max-md:flex-col max-md:items-start max-md:gap-2">
-            <p className="text-gray-600">
+            <p className="text-muted-foreground">
               {currentStep === "drafting"
                 ? "Detailed inquiry for expert analysis and strategic feedback."
                 : "Please review the details before publishing your consultation request."}
@@ -51,11 +51,11 @@ export default function WrappedForms() {
 
             {/* Breadcrumb */}
             <div className="flex items-center gap-2 text-sm">
-              <span className={currentStep === "drafting" ? "text-teal-600 font-medium" : "text-gray-400"}>
+              <span className={currentStep === "drafting" ? "text-primary font-medium" : "text-muted-foreground"}>
                 Drafting
               </span>
-              <span className="text-gray-300">{"›"}</span>
-              <span className={currentStep === "review" ? "text-teal-600 font-medium" : "text-gray-400"}>
+              <span className="text-muted-foreground">{"›"}</span>
+              <span className={currentStep === "review" ? "text-primary font-medium" : "text-muted-foreground"}>
                 Review
               </span>
             </div>

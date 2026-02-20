@@ -35,12 +35,12 @@ export default function EditorText({ body, setValue }: { body: string, setValue:
   })
 
   return (
-    <div className="border border-gray-200 rounded-lg overflow-hidden focus-within:ring-2 focus-within:ring-teal-500 focus-within:border-transparent transition-all">
+    <div className="border border-border rounded-lg overflow-hidden focus-within:ring-2 focus-within:ring-teal-500 focus-within:border-transparent transition-all">
       <MenuBar editor={editor} />
       <EditorContent
         editor={editor}
         id="body"
-        className="min-h-[200px] cursor-text"
+        className="min-h-[200px] cursor-text dark:text-gray-300"
       />
     </div>
   )

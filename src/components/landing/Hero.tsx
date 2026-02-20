@@ -9,7 +9,7 @@ export default function Hero() {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
           <div>
-            <h1 className="text-5xl lg:text-6xl max-md:text-4xl font-bold text-foreground mb-6 leading-tight">
+            <h1 className="text-5xl lg:text-6xl max-md:text-4xl font-bold text-neutral-900 mb-6 leading-tight">
               Get answers to your most <span className="text-teal-600">complex questions</span>
             </h1>
             <p className="text-lg text-gray-600 mb-8 max-w-xl leading-relaxed">

@@ -8,16 +8,17 @@ export default function SectionDashboard() {
   const { data: session } = useSession()
 
   return (
-    <div>
+    <div className="">
       {
         session ? (
           <>
-            <p>Bienvenido {session.user.email}</p>
+            <h2 className="text-foreground text-5xl font-bold tracking-tight">Welcome {session.user.name}</h2>
+            <p className="text-accent-foreground text-2xl font-medium">Start a new consultation.</p>
             <Link href="/consultation"><Button className="cursor-pointer" >Crear Consulta</Button></Link>
             <Button className="cursor-pointer" onClick={() => signOut()}>Cerrar sesión</Button>
           </>
         ) : (
-          <p>No has iniciado sesión</p>
+          <p>You are not logged in</p>
         )
       }
     </div>

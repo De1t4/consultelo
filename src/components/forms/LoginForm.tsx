@@ -18,7 +18,9 @@ export default function LoginForm() {
   } = useForm<FormDataLogin>({
     resolver: zodResolver(SchemaLogin),
   });
+
   const router = useRouter();
+
   const onSubmit = async (data: FormDataLogin) => {
     const res = await signIn('credentials', {
       email: data.email,
@@ -33,7 +35,7 @@ export default function LoginForm() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-linear-gradient-to-br from-primaryto-blue-100 p-4">
+    <div className="flex min-h-screen items-center justify-center bg-linear-gradient-to-br from-primary to-blue-100 p-4">
       <div className="w-full max-w-md rounded-2xl border-2  border-gray-300 bg-white p-8 shadow-xl transition-all hover:shadow-2xl">
         <div className="mb-8 text-center">
           <h2 className="text-3xl font-bold text-gray-800">Iniciar Sesión</h2>

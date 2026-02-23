@@ -1,13 +1,16 @@
 import SectionDashboard from '@components/dashboard/SectionDashboard'
+import { getMyConsultationsAction } from '@/actions/consultation-action'
+import ConsultationList from '@/components/dashboard/ConsultationList'
 
-export default function Page() {
+export default async function Page() {
+	const initialData = await getMyConsultationsAction()
 
 	return (
-		<section className="h-[calc(100vh-7rem)] flex justify-center items-center">
-			<div>
-				<h1 className="text-white text-5xl">Dashboard</h1>
+		<>
+			<section className='w-full '>
 				<SectionDashboard />
-			</div>
-		</section>
+				<ConsultationList consultations={initialData} />
+			</section>
+		</>
 	)
 }

@@ -1,6 +1,9 @@
 import { FormDataConsultation } from "@/schemas/schema-consultation";
 import prisma from "@/shared/lib/prisma";
-import { ResponseConsultList } from "@/shared/types/response-consult";
+import {
+  ResponseConsultDetail,
+  ResponseConsultList,
+} from "@/shared/types/response-consult";
 import { InputJsonValue } from "@prisma/client/runtime/client";
 
 export const createConsultation = async (
@@ -39,4 +42,18 @@ export const getMyConsultations = async (userId: string) => {
   });
 
   return res;
+};
+
+export const getConsultationById = async (id: string) => {
+  const res = await prisma.consultation.findUnique({
+    where: {
+      id: id,
+    },
+    include: {
+      user: true,
+      settings: true,
+      comments: true,
+    },
+  });
+  return res as ResponseConsultDetail;
 };

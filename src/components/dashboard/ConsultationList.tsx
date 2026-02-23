@@ -16,7 +16,7 @@ export default function ConsultationList({ consultations }: { consultations: Res
   return (
     <>
       <h2 className='text-foreground text-3xl font-bold tracking-tight'>Mis Consultas</h2>
-      <ol className='grid grid-cols-4 max-md:grid-cols-2 max-sm:grid-cols-1 gap-4 w-full mt-4'>
+      <ol className='grid grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 gap-4 w-full mt-4'>
         {data.map((consultation) => {
           return (
             <li className='border border-border p-4 rounded-lg w-full bg-card shadow-md' key={consultation.id}>

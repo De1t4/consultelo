@@ -3,12 +3,12 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --primary: #00bba8e8;
+  --primary: #007a7a;
   --muted-foreground: #6b7280;
   --border: #e5e7eb;
   --card: #ffffff;
   --accent: #f0fdfa;
-  --accent-foreground: #00bba8e8;
+  --accent-foreground: #007a7a;
   --input: #e5e7eb;
 }
 

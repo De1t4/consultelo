@@ -1,7 +1,7 @@
 'use client'
 import { useFormConsult } from "@/hooks/context/FormConsultContext"
-import EditorText from "@/components/consultation/EditorText"
 import RichTextDisplay from "@/components/ui/RichTextDisplay"
+import EditorText from "../create-consultation/EditorText"
 
 export default function ConsultationForm() {
   const { currentStep, register, getValues, errors, setValue } = useFormConsult()

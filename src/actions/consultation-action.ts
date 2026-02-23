@@ -3,41 +3,31 @@
 import { FormDataConsultation } from "@/schemas/schema-consultation";
 import {
   createConsultation,
+  getConsultationById,
   getMyConsultations,
 } from "@/services/consultation-service";
 import { authOptions } from "@/shared/lib/auth";
-import { JsonValue } from "@prisma/client/runtime/client";
+import { InputJsonValue } from "@prisma/client/runtime/client";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
-
-function validateBody(body: string) {
-  try {
-    const parsed: JsonValue = JSON.parse(body);
-    if (typeof parsed !== "object" || parsed === null) {
-      throw new Error("El cuerpo no es un objeto JSON válido");
-    }
-    return parsed;
-  } catch (error) {
-    console.error("Error al parsear el JSON de Tiptap", error);
-    throw new Error("El cuerpo no es un objeto JSON válido");
-  }
-}
 
 export async function createConsultationAction(data: FormDataConsultation) {
   const session = await getServerSession(authOptions);
   if (!session?.user?.id) {
     throw new Error("Usuario no autenticado o ID inválido");
   }
-  const bodyObj = validateBody(data.body);
+
+  // Ahora el body está validado por Zod antes de llegar aquí,
+  // pero lo parseamos para Prisma
+  const bodyParsed: InputJsonValue = JSON.parse(data.body);
 
   try {
-    // Esto asegura que si falla settings, NO se crea la consulta
     const consultation = await createConsultation(
       data,
       session.user.id,
-      bodyObj,
+      bodyParsed,
     );
-    revalidatePath(`/consultation/${consultation.id}`);
+    revalidatePath("/dashboard");
     return {
       success: true,
       consultationId: consultation.id,
@@ -57,12 +47,18 @@ export async function getMyConsultationsAction() {
     throw new Error("Usuario no autenticado o ID inválido");
   }
   try {
-    const consultations = await getMyConsultations(session.user.id);
-    return consultations;
+    return await getMyConsultations(session.user.id);
   } catch (error) {
     console.error("Error getting consultations:", error);
-    throw new Error(
-      "Hubo un error al procesar tu solicitud. Por favor intenta nuevamente.",
-    );
+    throw new Error("No se pudieron cargar tus consultas.");
+  }
+}
+
+export async function getConsultationByIdAction(id: string) {
+  try {
+    return await getConsultationById(id);
+  } catch (error) {
+    console.error("Error getting consultation:", error);
+    throw new Error("No se pudo cargar la consulta.");
   }
 }

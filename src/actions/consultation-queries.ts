@@ -32,6 +32,6 @@ export async function getConsultationByIdAction(id: string) {
     return consultation;
   } catch (error) {
     console.error("Error getting consultation:", error);
-    throw error;
+    throw new Error("No se pudo obtener la consulta.");
   }
 }

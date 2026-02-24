@@ -14,7 +14,7 @@ export default function PrincipalConsult({ consultation }: { consultation: Respo
 
   return (
     <article className="bg-card border-border rounded-lg border p-6">
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-4 max-md:flex-col max-md:items-start gap-2">
         <div className="flex items-center gap-2">
           <span className="text-xs font-medium text-primary bg-teal-50 px-2 py-1 rounded">
             {consultation.status === 'active' ? 'Open Request' : consultation.status}
@@ -24,8 +24,8 @@ export default function PrincipalConsult({ consultation }: { consultation: Respo
           </span>
         </div>
         <div className="flex items-center gap-2">
-          <Button variant='outline' className='flex justify-center gap-2 items-center'>
-            <CheckCircle className="h-4 w-4" />
+          <Button variant='outline' className='flex justify-center gap-2 items-center max-md:w-full max-md:h-10'>
+            <CheckCircle className="h-4 w-4 max-md:h-5 max-md:w-5" />
             Submit Proposal
           </Button>
         </div>
@@ -54,7 +54,6 @@ export default function PrincipalConsult({ consultation }: { consultation: Respo
         className="prose prose-slate max-w-none mb-4" // 'prose' de Tailwind Typography le da el estilo
         dangerouslySetInnerHTML={{ __html: output }}
       />
-
 
       {/* Tags */}
       <div className="flex items-center gap-4 pt-4 border-t border-gray-200">

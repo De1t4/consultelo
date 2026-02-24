@@ -5,16 +5,29 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
 import { Info } from 'lucide-react'
 import { useForm } from 'react-hook-form'
+import { sileo } from 'sileo'
 import { Button } from '../ui/Button'
-
 
 export default function FeedbackConsult({ consultation }: { consultation: ResponseConsultDetail }) {
   const { register, handleSubmit, formState: { errors } } = useForm<FormDataComment>({
     resolver: zodResolver(SchemaComment),
   })
 
-  const { mutateAsync: createComment, isPending } =
-    useMutation({ mutationFn: createCommentAction })
+  const { mutateAsync: createComment, isPending } = useMutation({
+    mutationFn: createCommentAction,
+    onSuccess: () => {
+      sileo.success({
+        title: "Comment created successfully",
+        description: "Your comment has been added to the consultation.",
+      });
+    },
+    onError: (error) => {
+      sileo.error({
+        title: "Failed to create comment",
+        description: error.message,
+      });
+    }
+  })
 
   const onSubmit = async (data: FormDataComment) => {
     const res = await createComment({
@@ -45,12 +58,12 @@ export default function FeedbackConsult({ consultation }: { consultation: Respon
               {errors.message.message}
             </p>
           )}
-          <div className="flex items-center justify-between  pt-4">
+          <div className="flex items-center justify-between  pt-4 max-md:flex-col max-md:items-start gap-2">
             <div className="flex items-center gap-2 text-xs text-muted-foreground">
               <Info className="h-4 w-4" />
               <span>All contributions are subject to professional review guidelines.</span>
             </div>
-            <Button disabled={isPending} type='submit' variant="primary" >
+            <Button disabled={isPending} type='submit' variant="primary" className='max-md:w-full max-md:items-end max-md:h-10' >
               {isPending ? 'Submitting...' : 'Submit Answer'}
             </Button>
           </div>

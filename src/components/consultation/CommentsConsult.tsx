@@ -4,9 +4,9 @@ import { useSession } from 'next-auth/react'
 
 export default function CommentsConsult({ consultation }: { consultation: ResponseConsultDetail }) {
 
-  const comments = consultation.comments
   const { data: session } = useSession()
 
+  const comments = consultation.comments
   const isOwner = consultation.userId === session?.user.id
 
   if (!isOwner && !consultation.settings?.viewComments) {

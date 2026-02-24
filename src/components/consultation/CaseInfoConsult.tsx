@@ -26,22 +26,23 @@ export default function CaseInfoConsult({ consultation }: { consultation: Respon
           </div>
           <div className="flex items-center justify-between">
             <span className="text-muted-foreground">Type</span>
-            <span className="text-foreground capitalize">{consultation.settings?.type}</span>
+            <span className="text-foreground capitalize">{consultation.settings?.type == "open_question" ? "Open Question" : "Closed Question"}</span>
           </div>
           <div className="flex items-center justify-between">
             <span className="text-muted-foreground">View Comments</span>
             <span className="text-foreground capitalize">{consultation.settings?.viewComments ? 'Yes' : 'No'}</span>
           </div>
+          <div className="flex items-center justify-between">
+            <span className="text-muted-foreground">Users</span>
+            <span className="text-foreground capitalize">{consultation.settings?.allowAnonymous ? 'Anonymous' : 'Registered Users'}</span>
+          </div>
         </div>
 
         {/* Engagement Score */}
         <div className="mt-4 pt-4 border-t border-gray-200">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-medium text-teal-600">COMMENTS</span>
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-medium text-teal-600">TOTAL COMMENTS</span>
             <span className="text-sm font-semibold text-gray-900">{consultation.comments.length}</span>
-          </div>
-          <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
-            <div className="h-full w-[20%] bg-linear-to-r from-cyan-400 to-teal-500"></div>
           </div>
         </div>
       </div>

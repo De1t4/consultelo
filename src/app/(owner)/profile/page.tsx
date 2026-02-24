@@ -41,7 +41,7 @@ export default function Page() {
       <div className="flex gap-6 max-md:flex-col">
         {/* Sidebar */}
         <aside className="w-64 shrink-0">
-          <div className="bg-background rounded-lg border border-border p-2">
+          <div className="bg-card rounded-lg border border-border p-2">
             {tabs.map((tab) => {
               const Icon = tab.icon
               return (

@@ -101,7 +101,6 @@ model Settings {
   id             String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid()
   consultationId String       @unique @map("consultation_id") @db.Uuid()
   privacy        PrivacyType  @default(public)
-  accessCode     String?      @map("access_code") @db.VarChar(255)
   allowAnonymous Boolean      @default(true) @map("allow_anonymous")
   type           QuestionType @default(open_question)
   viewComments   Boolean      @default(true) @map("view_comments")

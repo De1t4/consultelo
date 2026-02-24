@@ -13,7 +13,6 @@ export default async function Page() {
 	}
 
 	const initialData = await getMyConsultations(session.user.id)
-
 	return (
 		<>
 			<section className='w-full '>

@@ -25,6 +25,9 @@ export interface ResponseConsultList {
   createdAt: Date;
   expiresAt: Date | null;
   settings: Settings | null;
+  _count: {
+    comments: number;
+  };
 }
 
 export interface ResponseConsultDetail {
@@ -55,7 +58,6 @@ interface Settings {
   privacy: PrivacyType;
   allowAnonymous: boolean;
   viewComments: boolean;
-  accessCode: string | null;
   consultationId: string;
 }
 

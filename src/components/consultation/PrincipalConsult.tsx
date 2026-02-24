@@ -3,9 +3,8 @@
 import { ResponseConsultDetail } from '@/shared/types/response-consult';
 import { generateHTML } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-import { CheckCircle, MoreHorizontal, Share2, User } from 'lucide-react';
+import { MoreHorizontal, Share2, User } from 'lucide-react';
 import { useMemo } from 'react';
-import { Button } from '../ui/Button';
 
 export default function PrincipalConsult({ consultation }: { consultation: ResponseConsultDetail }) {
   const output = useMemo(() => {
@@ -22,12 +21,6 @@ export default function PrincipalConsult({ consultation }: { consultation: Respo
           <span className="text-xs text-muted-foreground">
             ID: #{consultation.id.slice(0, 8).toUpperCase()} • Created {new Date(consultation.createdAt).toLocaleDateString()}
           </span>
-        </div>
-        <div className="flex items-center gap-2">
-          <Button variant='outline' className='flex justify-center gap-2 items-center max-md:w-full max-md:h-10'>
-            <CheckCircle className="h-4 w-4 max-md:h-5 max-md:w-5" />
-            Submit Proposal
-          </Button>
         </div>
       </div>
 
@@ -51,7 +44,7 @@ export default function PrincipalConsult({ consultation }: { consultation: Respo
 
       {/* Description */}
       <div
-        className="prose prose-slate max-w-none mb-4" // 'prose' de Tailwind Typography le da el estilo
+        className="prose prose-slate max-w-none mb-4 " // 'prose' de Tailwind Typography le da el estilo
         dangerouslySetInnerHTML={{ __html: output }}
       />
 

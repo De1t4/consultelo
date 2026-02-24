@@ -9,7 +9,7 @@ import { sileo } from 'sileo'
 import { Button } from '../ui/Button'
 
 export default function FeedbackConsult({ consultation }: { consultation: ResponseConsultDetail }) {
-  const { register, handleSubmit, formState: { errors } } = useForm<FormDataComment>({
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<FormDataComment>({
     resolver: zodResolver(SchemaComment),
   })
 
@@ -20,13 +20,16 @@ export default function FeedbackConsult({ consultation }: { consultation: Respon
         title: "Comment created successfully",
         description: "Your comment has been added to the consultation.",
       });
+      reset()
     },
     onError: (error) => {
       sileo.error({
         title: "Failed to create comment",
         description: error.message,
       });
-    }
+      reset()
+    },
+
   })
 
   const onSubmit = async (data: FormDataComment) => {

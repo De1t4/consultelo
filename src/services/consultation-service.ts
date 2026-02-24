@@ -38,6 +38,11 @@ export const getMyConsultations = async (userId: string) => {
     },
     include: {
       settings: true,
+      _count: {
+        select: {
+          comments: true,
+        },
+      },
     },
   });
 

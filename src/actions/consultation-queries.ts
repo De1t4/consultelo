@@ -10,13 +10,13 @@ import { getServerSession } from "next-auth";
 export async function getMyConsultationsAction() {
   const session = await getServerSession(authOptions);
   if (!session?.user?.id) {
-    return { error: "Usuario no autenticado o ID inválido" };
+    throw new Error("Usuario no autenticado o ID inválido");
   }
   try {
     return await getMyConsultations(session.user.id);
   } catch (error) {
     console.error("Error getting consultations:", error);
-    return { error: "No se pudieron cargar tus consultas." };
+    throw new Error("No se pudieron cargar tus consultas.");
   }
 }
 

@@ -1,11 +1,17 @@
 import { ResponseConsultDetail } from '@/shared/types/response-consult'
 import { User } from 'lucide-react'
-
-
+import { useSession } from 'next-auth/react'
 
 export default function CommentsConsult({ consultation }: { consultation: ResponseConsultDetail }) {
 
   const comments = consultation.comments
+  const { data: session } = useSession()
+
+  const isOwner = consultation.userId === session?.user.id
+
+  if (!isOwner && !consultation.settings?.viewComments) {
+    return null
+  }
 
   return (
     <>

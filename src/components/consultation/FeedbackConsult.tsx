@@ -13,7 +13,7 @@ export default function FeedbackConsult({ consultation }: { consultation: Respon
     resolver: zodResolver(SchemaComment),
   })
 
-  const { mutateAsync: createComment } =
+  const { mutateAsync: createComment, isPending } =
     useMutation({ mutationFn: createCommentAction })
 
   const onSubmit = async (data: FormDataComment) => {
@@ -24,8 +24,6 @@ export default function FeedbackConsult({ consultation }: { consultation: Respon
     })
     console.log(res)
   }
-
-
 
   return (
     <>
@@ -52,13 +50,11 @@ export default function FeedbackConsult({ consultation }: { consultation: Respon
               <Info className="h-4 w-4" />
               <span>All contributions are subject to professional review guidelines.</span>
             </div>
-            <Button type='submit' variant="primary">
-              Submit Answer
+            <Button disabled={isPending} type='submit' variant="primary" >
+              {isPending ? 'Submitting...' : 'Submit Answer'}
             </Button>
           </div>
         </form>
-
-
       </article>
     </>
   )

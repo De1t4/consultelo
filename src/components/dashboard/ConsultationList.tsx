@@ -15,9 +15,9 @@ export default function ConsultationList({ consultations }: { consultations: Res
 
   return (
     <>
-      <h2 className='text-foreground text-3xl font-bold tracking-tight'>Mis Consultas</h2>
+      <h2 className='text-foreground text-3xl font-bold tracking-tight'>My Consultations</h2>
       {data.length === 0 && (
-        <p className='text-foreground'>No tienes consultas</p>
+        <p className='text-foreground'>You don{`'`}t have any consultations</p>
       )}
       <ol className='grid grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 gap-4 w-full mt-4'>
         {data.map((consultation) => {
@@ -29,7 +29,7 @@ export default function ConsultationList({ consultations }: { consultations: Res
               <p className='text-foreground'>{consultation.settings?.privacy}</p>
               <Link href={`/consultation/${consultation.id}`}>
                 <Button variant='outline' className='w-full'>
-                  Ver
+                  View
                 </Button>
               </Link>
             </li>

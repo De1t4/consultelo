@@ -16,7 +16,7 @@ export const SchemaConsultation = z.object({
       } catch {
         return false;
       }
-    }, "El cuerpo debe ser un JSON válido"),
+    }, "The body must be a valid JSON"),
   categories: z.enum([
     "software",
     "IA",

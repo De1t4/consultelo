@@ -38,8 +38,8 @@ export default function LoginForm() {
     <div className="flex min-h-screen items-center justify-center bg-linear-gradient-to-br from-primary to-blue-100 p-4">
       <div className="w-full max-w-md rounded-2xl border-2  border-gray-300 bg-white p-8 shadow-xl transition-all hover:shadow-2xl">
         <div className="mb-8 text-center">
-          <h2 className="text-3xl font-bold text-gray-800">Iniciar Sesión</h2>
-          <p className="mt-2 text-gray-500">Ingresa tus datos para iniciar sesión</p>
+          <h2 className="text-3xl font-bold text-gray-800">Sign In</h2>
+          <p className="mt-2 text-gray-500">Enter your details to sign in</p>
         </div>
         {
           error && (
@@ -52,7 +52,7 @@ export default function LoginForm() {
           {/* Email */}
           <div className="flex flex-col gap-1">
             <label htmlFor="email" className="text-sm font-medium text-gray-700 ">
-              Correo Electrónico
+              Email Address
             </label>
             <input
               id="email"
@@ -70,7 +70,7 @@ export default function LoginForm() {
           {/* Contraseña */}
           <div className="flex flex-col gap-1">
             <label htmlFor="password" className="text-sm font-medium text-gray-700">
-              Contraseña
+              Password
             </label>
             <input
               id="password"
@@ -95,10 +95,10 @@ export default function LoginForm() {
             {isSubmitting ? (
               <span className="flex items-center justify-center gap-2">
                 <Loader2 className="h-5 w-5 animate-spin text-white" />
-                Procesando...
+                Processing...
               </span>
             ) : (
-              'Iniciar Sesión'
+              'Sign In'
             )}
           </button>
         </form>

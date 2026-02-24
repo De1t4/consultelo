@@ -79,7 +79,7 @@ export const getConsultationById = async (id: string) => {
     });
 
     if (!res) {
-      throw new Error("La consulta solicitada no existe.");
+      throw new Error("The requested consultation does not exist.");
     }
 
     return res as unknown as ResponseConsultDetail;
@@ -87,12 +87,12 @@ export const getConsultationById = async (id: string) => {
     // If it's an error we already handled, rethrow it
     if (
       error instanceof Error &&
-      (error.message.includes("no existe") ||
-        error.message.includes("no es válido"))
+      (error.message.includes("does not exist") ||
+        error.message.includes("is invalid"))
     ) {
       throw error;
     }
 
-    throw new Error("Ocurrió un error al procesar tu solicitud.");
+    throw new Error("An error occurred while processing your request.");
   }
 };

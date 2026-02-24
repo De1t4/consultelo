@@ -10,7 +10,7 @@ import { revalidatePath } from "next/cache";
 export async function createConsultationAction(data: FormDataConsultation) {
   const session = await getServerSession(authOptions);
   if (!session?.user?.id) {
-    throw new Error("Usuario no autenticado o ID inválido");
+    throw new Error("User not authenticated or invalid ID");
   }
   const bodyParsed: InputJsonValue = JSON.parse(data.body);
   try {
@@ -28,7 +28,7 @@ export async function createConsultationAction(data: FormDataConsultation) {
   } catch (error) {
     console.error("Error creating consultation:", error);
     throw new Error(
-      "Hubo un error al procesar tu solicitud. Por favor intenta nuevamente.",
+      "There was an error processing your request. Please try again.",
     );
   }
 }

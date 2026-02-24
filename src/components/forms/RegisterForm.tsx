@@ -27,7 +27,7 @@ export default function RegisterForm() {
     });
 
     if (!res.ok) {
-      throw new Error('Error al registrar el usuario');
+      throw new Error('Error registering the user');
     }
     router.push("/account?auth=login")
 
@@ -37,14 +37,14 @@ export default function RegisterForm() {
     <div className="flex min-h-screen items-center justify-center bg-linear-gradient-to-br from-indigo-50 to-blue-100 p-4">
       <div className="w-full max-w-md rounded-2xl border-2 border-gray-300 bg-white p-8 shadow-xl transition-all hover:shadow-2xl">
         <div className="mb-8 text-center">
-          <h2 className="text-3xl font-bold text-gray-800">Crear Cuenta</h2>
-          <p className="mt-2 text-gray-500">Ingresa tus datos para registrarte</p>
+          <h2 className="text-3xl font-bold text-gray-800">Create Account</h2>
+          <p className="mt-2 text-gray-500">Enter your details to register</p>
         </div>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
           {/* Email */}
           <div className="flex flex-col gap-1">
             <label htmlFor="email" className="text-sm font-medium text-gray-700">
-              Correo Electrónico
+              Email Address
             </label>
             <input
               id="email"
@@ -61,7 +61,7 @@ export default function RegisterForm() {
           {/*Username*/}
           <div className="flex flex-col gap-1">
             <label htmlFor="username" className="text-sm font-medium text-gray-700">
-              Nombre de Usuario
+              Username
             </label>
             <input
               id="username"
@@ -78,7 +78,7 @@ export default function RegisterForm() {
           {/*Phone*/}
           <div className="flex flex-col gap-1">
             <label htmlFor="phone" className="text-sm font-medium text-gray-700">
-              Teléfono
+              Phone Number
             </label>
             <input
               id="phone"
@@ -95,7 +95,7 @@ export default function RegisterForm() {
           {/* Contraseña */}
           <div className="flex flex-col gap-1">
             <label htmlFor="password" className="text-sm font-medium text-gray-700">
-              Contraseña
+              Password
             </label>
             <input
               id="password"
@@ -112,7 +112,7 @@ export default function RegisterForm() {
 
           <div className="flex flex-col gap-1">
             <label htmlFor="repeatPassword" className="text-sm font-medium text-gray-700">
-              Repetir Contraseña
+              Repeat Password
             </label>
             <input
               id="repeatPassword"
@@ -136,10 +136,10 @@ export default function RegisterForm() {
             {isSubmitting ? (
               <span className="flex items-center justify-center gap-2">
                 <Loader2 className="h-5 w-5 animate-spin text-white" />
-                Procesando...
+                Processing...
               </span>
             ) : (
-              'Registrarse'
+              'Register'
             )}
           </button>
         </form>

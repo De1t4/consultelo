@@ -1,9 +1,9 @@
-import SectionDashboard from '@components/dashboard/SectionDashboard'
 import ConsultationList from '@/components/dashboard/ConsultationList'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/shared/lib/auth'
-import { redirect } from 'next/navigation'
 import { getMyConsultations } from '@/services/consultation-service'
+import { authOptions } from '@/shared/lib/auth'
+import SectionDashboard from '@components/dashboard/SectionDashboard'
+import { getServerSession } from 'next-auth'
+import { redirect } from 'next/navigation'
 
 export default async function Page() {
 	const session = await getServerSession(authOptions)

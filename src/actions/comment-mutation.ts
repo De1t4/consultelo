@@ -11,16 +11,16 @@ export async function createCommentAction(data: FormDataComment) {
   const cookieName = `has_commented_${data.consultationId}`;
 
   if (!data.consultationId) {
-    throw new Error("No se proporcionó un ID de consulta.");
+    throw new Error("No consultation ID was provided.");
   }
 
   if (cookieStore.has(cookieName)) {
-    throw new Error("Ya has dejado un comentario en esta consulta.");
+    throw new Error("You have already left a comment on this consultation.");
   }
   if (data.isAnonymous) {
     const session = await getServerSession(authOptions);
     if (!session?.user?.id) {
-      throw new Error("Usuario no autenticado o ID inválido");
+      throw new Error("User not authenticated or invalid ID");
     }
     data.userId = session.user.id;
     const commented = await isCommentedByUser(
@@ -28,7 +28,7 @@ export async function createCommentAction(data: FormDataComment) {
       data.consultationId,
     );
     if (commented) {
-      throw new Error("Ya has dejado un comentario en esta consulta.");
+      throw new Error("You have already left a comment on this consultation.");
     }
   }
 
@@ -41,11 +41,11 @@ export async function createCommentAction(data: FormDataComment) {
       httpOnly: true,
       secure: true,
       maxAge: 60 * 60 * 24 * 30,
-      path: "/", // Disponible en toda la web
+      path: "/", // Available on the entire web
     });
 
     return { success: true };
   } catch (error) {
-    throw new Error("Error al guardar el comentario." + error);
+    throw new Error("Error saving the comment: " + error);
   }
 }

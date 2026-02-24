@@ -10,13 +10,13 @@ import { getServerSession } from "next-auth";
 export async function getMyConsultationsAction() {
   const session = await getServerSession(authOptions);
   if (!session?.user?.id) {
-    throw new Error("Usuario no autenticado o ID inválido");
+    throw new Error("User not authenticated or invalid ID");
   }
   try {
     return await getMyConsultations(session.user.id);
   } catch (error) {
     console.error("Error getting consultations:", error);
-    throw new Error("No se pudieron cargar tus consultas.");
+    throw new Error("Could not load your consultations.");
   }
 }
 
@@ -24,7 +24,7 @@ export async function getConsultationByIdAction(id: string) {
   const uuidRegex =
     /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
   if (!uuidRegex.test(id)) {
-    throw new Error("El formato del ID de la consulta no es válido.");
+    throw new Error("The consultation ID format is invalid.");
   }
 
   try {
@@ -32,6 +32,6 @@ export async function getConsultationByIdAction(id: string) {
     return consultation;
   } catch (error) {
     console.error("Error getting consultation:", error);
-    throw new Error("No se pudo obtener la consulta.");
+    throw new Error("Could not retrieve the consultation.");
   }
 }

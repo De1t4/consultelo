@@ -45,15 +45,54 @@ export const getMyConsultations = async (userId: string) => {
 };
 
 export const getConsultationById = async (id: string) => {
-  const res = await prisma.consultation.findUnique({
-    where: {
-      id: id,
-    },
-    include: {
-      user: true,
-      settings: true,
-      comments: true,
-    },
-  });
-  return res as ResponseConsultDetail;
+  try {
+    const res = await prisma.consultation.findUnique({
+      where: {
+        id: id,
+      },
+      include: {
+        user: {
+          select: {
+            id: true,
+            username: true,
+            email: true,
+            role: true,
+            createdAt: true,
+            updatedAt: true,
+            isActive: true,
+          },
+        },
+        settings: true,
+        comments: {
+          select: {
+            id: true,
+            message: true,
+            createdAt: true,
+            userId: true,
+            authorName: true,
+          },
+          orderBy: {
+            createdAt: "desc",
+          },
+        },
+      },
+    });
+
+    if (!res) {
+      throw new Error("La consulta solicitada no existe.");
+    }
+
+    return res as unknown as ResponseConsultDetail;
+  } catch (error) {
+    // If it's an error we already handled, rethrow it
+    if (
+      error instanceof Error &&
+      (error.message.includes("no existe") ||
+        error.message.includes("no es válido"))
+    ) {
+      throw error;
+    }
+
+    throw new Error("Ocurrió un error al procesar tu solicitud.");
+  }
 };

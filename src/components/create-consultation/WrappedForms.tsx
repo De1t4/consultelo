@@ -1,5 +1,5 @@
 'use client'
-import { createConsultationAction } from '@/actions/consultation-action'
+import { createConsultationAction } from '@/actions/consultation-mutation'
 import { useFormConsult } from '@/hooks/context/FormConsultContext'
 import { FormDataConsultation } from '@/schemas/schema-consultation'
 import { ResponseConsult } from '@/shared/types/response-consult'
@@ -8,7 +8,6 @@ import { useState } from 'react'
 import ConsultationForm from '../forms/ConsultationForm'
 import SettingsForm from '../forms/SettingsForm'
 import SuccessConsultPage from './SuccessPage'
-
 
 export default function WrappedForms() {
   const [consult, setConsult] = useState<ResponseConsult | null>(null)
@@ -19,6 +18,7 @@ export default function WrappedForms() {
   const onSubmit = async (data: FormDataConsultation) => {
     setCurrentStep("review")
     const res = await createConsultation(data)
+    if (res.error) return
     setConsult(res)
   }
 

@@ -1,6 +1,6 @@
 'use client'
 
-import { getMyConsultationsAction } from '@/actions/consultation-action'
+import { getMyConsultationsAction } from '@/actions/consultation-queries'
 import { ResponseConsultList } from '@/shared/types/response-consult'
 import { useQuery } from '@tanstack/react-query'
 import { Button } from '../ui/Button'
@@ -16,6 +16,9 @@ export default function ConsultationList({ consultations }: { consultations: Res
   return (
     <>
       <h2 className='text-foreground text-3xl font-bold tracking-tight'>Mis Consultas</h2>
+      {data.length === 0 && (
+        <p className='text-foreground'>No tienes consultas</p>
+      )}
       <ol className='grid grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 gap-4 w-full mt-4'>
         {data.map((consultation) => {
           return (

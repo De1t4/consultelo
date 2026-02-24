@@ -1,10 +1,10 @@
 'use client'
 
 import { ResponseConsultDetail } from '@/shared/types/response-consult';
-import { CheckCircle, MoreHorizontal, Printer, Share2, User } from 'lucide-react';
-import { useMemo } from 'react';
 import { generateHTML } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
+import { CheckCircle, MoreHorizontal, Share2, User } from 'lucide-react';
+import { useMemo } from 'react';
 import { Button } from '../ui/Button';
 
 export default function PrincipalConsult({ consultation }: { consultation: ResponseConsultDetail }) {
@@ -66,9 +66,6 @@ export default function PrincipalConsult({ consultation }: { consultation: Respo
         <div className="flex items-center gap-2 ml-auto">
           <button className="p-2 text-gray-400 hover:text-gray-600">
             <Share2 className="h-4 w-4" />
-          </button>
-          <button className="p-2 text-gray-400 hover:text-gray-600">
-            <Printer className="h-4 w-4" />
           </button>
           <button className="p-2 text-gray-400 hover:text-gray-600">
             <MoreHorizontal className="h-4 w-4" />

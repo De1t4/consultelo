@@ -9,9 +9,10 @@ import { JsonValue } from "@prisma/client/runtime/client";
 import { JSONContent } from "@tiptap/react";
 
 export interface ResponseConsult {
-  success: boolean;
-  consultationId: string;
-  title: string;
+  success?: boolean;
+  consultationId?: string;
+  title?: string;
+  error?: string;
 }
 
 export interface ResponseConsultList {
@@ -64,8 +65,6 @@ interface User {
   role: UserRole;
   username: string;
   email: string;
-  password: string;
-  phone: string | null;
   updatedAt: Date;
   isActive: boolean;
 }

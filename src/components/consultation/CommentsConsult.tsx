@@ -1,5 +1,5 @@
 import { ResponseConsultDetail } from '@/shared/types/response-consult'
-import { ThumbsUp, User } from 'lucide-react'
+import { User } from 'lucide-react'
 
 
 
@@ -34,17 +34,8 @@ export default function CommentsConsult({ consultation }: { consultation: Respon
                     Posted on {new Date(comment.createdAt).toLocaleDateString()}
                   </p>
 
-                  <div className="prose prose-sm max-w-none text-gray-700 mb-4">
+                  <div className="prose prose-sm max-w-none text-foreground mb-4">
                     <p>{comment.message}</p>
-                  </div>
-
-                  <div className="flex items-center gap-4 text-sm">
-                    <div className="ml-auto flex items-center gap-2">
-                      <span className="text-gray-600">Was this helpful?</span>
-                      <button className="flex items-center gap-1 text-gray-600 hover:text-teal-600">
-                        <ThumbsUp className="h-4 w-4" />
-                      </button>
-                    </div>
                   </div>
                 </div>
               </div>

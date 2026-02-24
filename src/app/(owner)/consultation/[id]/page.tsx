@@ -1,5 +1,5 @@
 'use client'
-import { getConsultationByIdAction } from "@/actions/consultation-action"
+import { getConsultationByIdAction } from "@/actions/consultation-queries"
 import CaseInfoConsult from "@/components/consultation/CaseInfoConsult"
 import CommentsConsult from "@/components/consultation/CommentsConsult"
 import FeedbackConsult from "@/components/consultation/FeedbackConsult"

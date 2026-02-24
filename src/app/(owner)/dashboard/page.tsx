@@ -1,13 +1,24 @@
+import ConsultationList from '@/components/dashboard/ConsultationList'
+import { getMyConsultations } from '@/services/consultation-service'
+import { authOptions } from '@/shared/lib/auth'
 import SectionDashboard from '@components/dashboard/SectionDashboard'
+import { getServerSession } from 'next-auth'
+import { redirect } from 'next/navigation'
 
-export default function Page() {
+export default async function Page() {
+	const session = await getServerSession(authOptions)
 
+	if (!session?.user?.id) {
+		redirect('/login')
+	}
+
+	const initialData = await getMyConsultations(session.user.id)
 	return (
-		<section className="h-[calc(100vh-7rem)] flex justify-center items-center">
-			<div>
-				<h1 className="text-white text-5xl">Dashboard</h1>
+		<>
+			<section className='w-full '>
 				<SectionDashboard />
-			</div>
-		</section>
+				<ConsultationList consultations={initialData} />
+			</section>
+		</>
 	)
 }

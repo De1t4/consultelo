@@ -2,22 +2,22 @@ import { z } from "zod";
 
 export const SchemaRegister = z
   .object({
-    email: z.string().email({ message: "Ingrese un email válido" }),
+    email: z.string().email({ message: "Enter a valid email" }),
     username: z.string().min(3, {
-      message: "El nombre de usuario debe tener al menos 3 caracteres",
+      message: "Username must be at least 3 characters",
     }),
     phone: z
       .string()
-      .min(6, { message: "El teléfono debe tener al menos 6 caracteres" }),
+      .min(6, { message: "Phone must be at least 6 characters" }),
     password: z
       .string()
-      .min(6, { message: "La contraseña debe tener al menos 6 caracteres" }),
+      .min(6, { message: "Password must be at least 6 characters" }),
     repeatPassword: z
       .string()
-      .min(6, { message: "La contraseña debe tener al menos 6 caracteres" }),
+      .min(6, { message: "Password must be at least 6 characters" }),
   })
   .refine((data) => data.password === data.repeatPassword, {
-    message: "Las contraseñas no coinciden",
+    message: "Passwords do not match",
     path: ["repeatPassword"],
   });
 

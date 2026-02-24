@@ -57,7 +57,7 @@ export function FormConsultProvider({ children }: { children: React.ReactNode })
 export function useFormConsult() {
   const context = useContext(FormConsultContext);
   if (context === undefined) {
-    throw new Error('useFormConsultContext must be used within a ThemeProvider');
+    throw new Error('useFormConsultContext must be used within a FormConsultProvider');
   }
   return context;
 }

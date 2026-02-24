@@ -1,0 +1,54 @@
+import { ResponseConsultDetail } from '@/shared/types/response-consult'
+import { User } from 'lucide-react'
+import { useSession } from 'next-auth/react'
+
+export default function CommentsConsult({ consultation }: { consultation: ResponseConsultDetail }) {
+
+  const { data: session } = useSession()
+
+  const comments = consultation.comments
+  const isOwner = consultation.userId === session?.user.id
+
+  if (!isOwner && !consultation.settings?.viewComments) {
+    return null
+  }
+
+  return (
+    <>
+      <article className="bg-card rounded-lg border border-border p-6">
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-2">
+            <h2 className="text-lg font-semibold text-foreground">Comments</h2>
+            <span className="text-sm text-muted-foreground">({comments.length})</span>
+          </div>
+        </div>
+
+        <div className="space-y-6">
+          {comments.length === 0 ? (
+            <p className="text-sm text-muted-foreground text-center py-4">No comments yet. Be the first to participate!</p>
+          ) : (
+            comments.map((comment, index) => (
+              <div key={comment.id} className={`${index > 0 ? 'pt-6 border-t border-gray-200' : ''} flex items-start gap-4`}>
+                <div className="h-10 w-10 bg-teal-500 rounded-full flex items-center justify-center text-white font-semibold">
+                  {comment.authorName?.slice(0, 2).toUpperCase() || <User size={20} />}
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-1">
+                    <h4 className="font-semibold text-foreground">{comment.authorName || 'Anonymous'}</h4>
+                  </div>
+                  <p className="text-xs text-muted-foreground mb-3">
+                    Posted on {new Date(comment.createdAt).toLocaleDateString()}
+                  </p>
+
+                  <div className="prose prose-sm max-w-none text-foreground mb-4">
+                    <p>{comment.message}</p>
+                  </div>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+      </article>
+    </>
+  )
+}

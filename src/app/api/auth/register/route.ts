@@ -21,7 +21,7 @@ export async function POST(request: Request) {
 
     if (userEmailFound || userUsernameFound) {
       return NextResponse.json(
-        { error: "El usuario ya existe o el email ya esta en uso" },
+        { error: "The user already exists or the email is already in use" },
         { status: 400 },
       );
     }
@@ -40,12 +40,12 @@ export async function POST(request: Request) {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, ...userWithoutPassword } = user;
     return NextResponse.json(
-      { userWithoutPassword, message: "Usuario creado exitosamente" },
+      { userWithoutPassword, message: "User created successfully" },
       { status: 201 },
     );
   } catch (e) {
     return NextResponse.json(
-      { error: "Error al crear el usuario " + e },
+      { error: "Error creating user " + e },
       { status: 500 },
     );
   }

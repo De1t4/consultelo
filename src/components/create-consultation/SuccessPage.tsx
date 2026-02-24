@@ -1,9 +1,9 @@
 "use client"
 
+import { ResponseConsult } from "@/shared/types/response-consult"
 import { ArrowRight, Check, Copy, Share2 } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
-import { ResponseConsult } from "@/shared/types/response-consult"
 
 export default function SuccessConsultPage({ consult }: { consult: ResponseConsult }) {
   const [copied, setCopied] = useState(false)
@@ -16,9 +16,9 @@ export default function SuccessConsultPage({ consult }: { consult: ResponseConsu
   }
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-accent/30 to-background  from-background">
+    <div className="min-h-screen bg-linear-to-b to-background  from-background">
       {/* Main Content */}
-      <main className="max-w-3xl mx-auto px-6 py-32">
+      <main className="max-w-3xl mx-auto px-6 py-12">
         {/* Success Icon */}
         <div className="flex justify-center mb-12">
           <div className="relative">
@@ -79,7 +79,6 @@ export default function SuccessConsultPage({ consult }: { consult: ResponseConsu
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 mb-16">
           <Link
-            target="_blank"
             href={`/consultation/${consult.consultationId}`}
             className="flex-1 flex items-center justify-center gap-2 px-6 py-3.5 bg-primary hover:bg-primary/80 text-white rounded-lg transition-colors font-semibold text-center shadow-sm"
           >
@@ -88,7 +87,6 @@ export default function SuccessConsultPage({ consult }: { consult: ResponseConsu
           </Link>
           <Link
             href="/dashboard"
-            target="_blank"
             className="cursor-pointer flex-1 px-6 py-3.5 bg-card border-2 border-border text-foreground rounded-lg hover:bg-accent/20 transition-colors font-semibold text-center"
           >
             Back to Dashboard

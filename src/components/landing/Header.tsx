@@ -1,13 +1,13 @@
 'use client'
-import Link from 'next/link'
 import { Button } from '@ui/Button'
 import { useSession } from 'next-auth/react'
+import Link from 'next/link'
 
 export default function Header() {
   const { data: session } = useSession()
 
   return (
-    <header className="border-b shadow-md w-full border-gray-100  bg-[#ffffff] fixed top-0 z-50">
+    <header className="border-b shadow-xs w-full border-gray-100  bg-white fixed top-0 z-10">
       <div className="max-w-6xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}

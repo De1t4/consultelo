@@ -172,7 +172,7 @@ export default function SettingsForm({ isPending }: { isPending: boolean }) {
               </div>
               <div className="flex items-start gap-3 p-3 bg-accent/20 rounded-lg">
                 <div className="h-8 w-8 rounded-full bg-card border border-border flex items-center justify-center shrink-0">
-                  <Users className="h-4 w-4 text-foreground" />
+                  <Users className="h-4 w-4 text-primary" />
                 </div>
                 <div>
                   <p className="font-medium text-foreground text-sm">{isAnonymous ? "Anonymous" : "Registered"} Users</p>

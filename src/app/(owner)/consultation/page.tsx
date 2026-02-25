@@ -1,4 +1,4 @@
-import WrappedForms from "@/components/create-consultation/WrappedForms";
+import WrappedForms from "@/app/(owner)/consultation/components/WrappedForms";
 
 export default function page() {
 

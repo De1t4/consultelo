@@ -38,23 +38,23 @@ const visibilityIcon: Record<PrivacyType, React.ReactNode> = {
 
 };
 
-export default function Card({ inquiry }: { inquiry: ResponseConsultList }) {
+export default function CardConsult({ consultation }: { consultation: ResponseConsultList }) {
   const output = useMemo(() => {
-    return generateHTML(inquiry.body as JSONContent, [StarterKit])
-  }, [inquiry.body])
+    return generateHTML(consultation.body as JSONContent, [StarterKit])
+  }, [consultation.body])
 
   return (
 
-    <Link href={`/consultation/${inquiry.id}`}>
+    <Link href={`/consultation/${consultation.id}`}>
       <li className="bg-card border border-border rounded-xl p-5 hover:shadow-md transition-shadow flex flex-col gap-3">
         {/* Top row */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className={`text-xs font-bold tracking-wide px-2 py-1 rounded-full ${categoryStyles[inquiry.categories]}`}>
-              {inquiry.categories.toUpperCase()}
+            <span className={`text-xs font-bold tracking-wide px-2 py-1 rounded-full ${categoryStyles[consultation.categories]}`}>
+              {consultation.categories.toUpperCase()}
             </span>
             <span className="text-gray-300">•</span>
-            <span className="text-xs text-foreground">{inquiry.id}</span>
+            <span className="text-xs text-foreground">{consultation.id}</span>
           </div>
           <button className="p-1 rounded hover:bg-gray-100 transition-colors text-gray-400">
             <MoreVertical className="h-4 w-4" />
@@ -62,7 +62,7 @@ export default function Card({ inquiry }: { inquiry: ResponseConsultList }) {
         </div>
         {/* Title */}
         <h3 className="font-semibold text-primary leading-snug text-lg">
-          {inquiry.title}
+          {consultation.title}
         </h3>
         {/* Description */}
         <div
@@ -73,20 +73,20 @@ export default function Card({ inquiry }: { inquiry: ResponseConsultList }) {
         <div className="flex items-center gap-3 pt-1 border-t border-gray-100 flex-wrap">
           <div className="flex items-center gap-1.5 text-xs text-gray-400">
             <Calendar className="h-3.5 w-3.5" />
-            {inquiry.createdAt.toDateString()}
+            {consultation.createdAt.toDateString()}
           </div>
           <div className="flex items-center gap-1.5 text-xs text-gray-400">
-            {visibilityIcon[inquiry.settings?.privacy || 'private']}
-            {inquiry.settings?.privacy}
+            {visibilityIcon[consultation.settings?.privacy || 'private']}
+            {consultation.settings?.privacy}
           </div>
           <div className="flex items-center gap-1.5 text-xs text-gray-400">
             <MessageSquare className="h-3.5 w-3.5" />
-            {inquiry._count.comments} comments
+            {consultation._count.comments} comments
           </div>
           <div className="ml-auto">
-            <span className={`flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full ${statusStyles[inquiry.status]}`}>
-              <span className={`h-1.5 w-1.5 rounded-full ${statusDot[inquiry.status]}`} />
-              {inquiry.status.toUpperCase()}
+            <span className={`flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full ${statusStyles[consultation.status]}`}>
+              <span className={`h-1.5 w-1.5 rounded-full ${statusDot[consultation.status]}`} />
+              {consultation.status.toUpperCase()}
             </span>
           </div>
         </div>

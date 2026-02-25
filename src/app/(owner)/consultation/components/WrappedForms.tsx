@@ -4,8 +4,8 @@ import { useCreateConsultation } from '@/hooks/use/use-consult-mutation'
 import { FormDataConsultation } from '@/schemas/schema-consultation'
 import { ResponseConsult } from '@/shared/types/response-consult'
 import { useState } from 'react'
-import ConsultationForm from '../forms/ConsultationForm'
-import SettingsForm from '../forms/SettingsForm'
+import ConsultationForm from './form/ConsultationForm'
+import SettingsForm from './form/SettingsForm'
 import SuccessConsultPage from './SuccessPage'
 
 export default function WrappedForms() {

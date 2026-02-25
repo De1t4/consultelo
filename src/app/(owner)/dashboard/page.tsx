@@ -1,7 +1,7 @@
-import ConsultationList from '@/components/dashboard/ConsultationList'
+import ConsultationList from '@/app/(owner)/dashboard/components/ConsultationList'
 import { getMyConsultations } from '@/services/consultation-service'
 import { authOptions } from '@/shared/lib/auth'
-import SectionDashboard from '@components/dashboard/SectionDashboard'
+import SectionDashboard from '@/app/(owner)/dashboard/components/SectionDashboard'
 import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
 

@@ -1,9 +1,9 @@
 'use client'
 import { getConsultationByIdAction } from "@/actions/consultation-queries"
-import CaseInfoConsult from "@/components/consultation/CaseInfoConsult"
-import CommentsConsult from "@/components/consultation/CommentsConsult"
-import FeedbackConsult from "@/components/consultation/FeedbackConsult"
-import PrincipalConsult from "@/components/consultation/PrincipalConsult"
+import CaseInfoConsult from "@/app/(owner)/consultation/[id]/components/CaseInfoConsult"
+import CommentsConsult from "@/app/(owner)/consultation/[id]/components/CommentsConsult"
+import FeedbackConsult from "@/app/(owner)/consultation/[id]/components/FeedbackConsult"
+import PrincipalConsult from "@/app/(owner)/consultation/[id]/components/PrincipalConsult"
 import { useQuery } from "@tanstack/react-query"
 import { useParams } from "next/navigation"
 

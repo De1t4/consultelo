@@ -6,7 +6,7 @@ import { ResponseConsultDetail } from '@/shared/types/response-consult'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Info } from 'lucide-react'
 import { useForm } from 'react-hook-form'
-import { Button } from '../ui/Button'
+import { Button } from '../../../../../components/ui/Button'
 
 export default function FeedbackConsult({ consultation }: { consultation: ResponseConsultDetail }) {
   const { register, handleSubmit, formState: { errors }, reset } = useForm<FormDataComment>({

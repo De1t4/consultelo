@@ -1,4 +1,5 @@
 import { useTheme } from "@/hooks/context/ThemeContext";
+
 type Theme = 'light' | 'dark';
 
 export default function Others() {

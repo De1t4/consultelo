@@ -3,7 +3,7 @@
 import { getMyConsultationsAction } from '@/actions/consultation-queries'
 import { ResponseConsultList } from '@/shared/types/response-consult'
 import { useQuery } from '@tanstack/react-query'
-import Card from '../ui/Card'
+import CardConsult from '../../../../components/ui/CardConsult'
 
 export default function ConsultationList({ consultations }: { consultations: ResponseConsultList[] }) {
   const { data } = useQuery({
@@ -21,7 +21,7 @@ export default function ConsultationList({ consultations }: { consultations: Res
       <ol className='grid grid-cols-2 max-md:grid-cols-1 gap-4 w-full mt-4'>
         {data.map((consultation) => {
           return (
-            <Card key={consultation.id} inquiry={consultation} />
+            <CardConsult key={consultation.id} consultation={consultation} />
           )
         }
         )}

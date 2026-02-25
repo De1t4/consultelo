@@ -1,6 +1,6 @@
 import { useSession } from 'next-auth/react'
 import { useState } from 'react'
-import { Button } from '../ui/Button'
+import { Button } from '@/components/ui/Button'
 
 export default function Account() {
   const [isEdit, setIsEdit] = useState(false)

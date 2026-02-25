@@ -35,7 +35,6 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-inter: var(--font-inter);
-  --font-google-sans: var(--font-google-sans);
   --sidebar-border: var(--sidebar-border);
   --sidebar-background: var(--sidebar-background);
 
@@ -66,7 +65,7 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-google-sans), "Open Sans", sans-serif;
+  font-family: var(--font-inter), "Open Sans", sans-serif;
 }
 
 /* Tiptap / Editor Styles */

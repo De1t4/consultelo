@@ -91,14 +91,12 @@ export function Sidebar() {
         <div className="mt-auto border-t border-border px-3 py-3">
           <ul className="flex flex-col gap-0.5">
             <li>
-              <Link href="/profile">
-                <SidebarNavItem
-                  item={{ label: "Settings", icon: <Settings className="size-5" />, href: "/settings" }}
-                  expanded={expanded}
-                  isActive={false}
-                  onClick={() => { }}
-                />
-              </Link>
+              <SidebarNavItem
+                item={{ label: "Settings", icon: <Settings className="size-5" />, href: "/profile" }}
+                expanded={expanded}
+                isActive={false}
+                onClick={() => { }}
+              />
             </li>
           </ul>
         </div>

@@ -10,6 +10,9 @@
   --accent: #f0fdfa;
   --accent-foreground: #007a7a;
   --input: #e5e7eb;
+  --sidebar-accent: #f0fdfa;
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-background: oklch(0.985 0 0);
 }
 
 @property --border-angle {
@@ -28,9 +31,13 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-input: var(--input);
+  --color-sidebar-accent: var(--sidebar-accent);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-inter: var(--font-inter);
+  --font-google-sans: var(--font-google-sans);
+  --sidebar-border: var(--sidebar-border);
+  --sidebar-background: var(--sidebar-background);
 
   --animate-rotate-border: border-rotate 3s linear infinite;
   @keyframes border-rotate {
@@ -51,12 +58,15 @@
   --accent: #404040;
   --accent-foreground: #e8eaed;
   --input: #374151;
+  --sidebar-accent: #2e3033;
+  --sidebar-border: oklch(0.269 0 0);
+  --sidebar-background: oklch(0.145 0 0);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-inter), sans-serif;
+  font-family: var(--font-google-sans), "Open Sans", sans-serif;
 }
 
 /* Tiptap / Editor Styles */

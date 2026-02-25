@@ -1,6 +1,6 @@
 'use client'
-import LoginForm from '@components/forms/LoginForm';
-import RegisterForm from '@components/forms/RegisterForm';
+import LoginForm from '@/app/(auth)/components/LoginForm';
+import RegisterForm from '@/app/(auth)/components/RegisterForm';
 import { useSearchParams } from 'next/navigation';
 
 export default function Page() {

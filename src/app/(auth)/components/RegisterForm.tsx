@@ -1,6 +1,6 @@
 'use client';
 
-import { FormDataRegister, SchemaRegister } from '@/schemas/schema-register';
+import { FormDataRegister, SchemaRegister } from '@/app/(auth)/schemas/schema-register';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2 } from 'lucide-react';
 import Link from 'next/link';
@@ -30,7 +30,6 @@ export default function RegisterForm() {
       throw new Error('Error registering the user');
     }
     router.push("/account?auth=login")
-
   };
 
   return (

@@ -10,32 +10,34 @@ export async function createCommentAction(data: FormDataComment) {
   const cookieStore = await cookies();
   const cookieName = `has_commented_${data.consultationId}`;
 
+  // const headerList = await headers();
+  // const ip = headerList.get("x-forwarded-for")?.split(",")[0] || "127.0.0.1";
   if (!data.consultationId) {
     throw new Error("No consultation ID was provided.");
   }
 
-  if (cookieStore.has(cookieName)) {
-    throw new Error("You have already left a comment on this consultation.");
-  }
-  if (data.isAnonymous) {
-    const session = await getServerSession(authOptions);
-    if (!session?.user?.id) {
-      throw new Error("User not authenticated or invalid ID");
-    }
-    data.userId = session.user.id;
-    const commented = await isCommentedByUser(
-      session.user.id,
-      data.consultationId,
-    );
-    if (commented) {
+  try {
+    if (cookieStore.has(cookieName)) {
       throw new Error("You have already left a comment on this consultation.");
     }
-  }
 
-  // const headerList = await headers();
-  // const ip = headerList.get("x-forwarded-for")?.split(",")[0] || "127.0.0.1";
+    if (data.isAnonymous) {
+      const session = await getServerSession(authOptions);
+      if (!session?.user?.id) {
+        throw new Error("User not authenticated or invalid ID");
+      }
+      data.userId = session.user.id;
+      const commented = await isCommentedByUser(
+        session.user.id,
+        data.consultationId,
+      );
+      if (commented) {
+        throw new Error(
+          "You have already left a comment on this consultation.",
+        );
+      }
+    }
 
-  try {
     await createComment(data, data.consultationId);
     cookieStore.set(cookieName, "true", {
       httpOnly: true,
@@ -46,6 +48,6 @@ export async function createCommentAction(data: FormDataComment) {
 
     return { success: true };
   } catch (error) {
-    throw new Error("Error saving the comment: " + error);
+    throw error;
   }
 }

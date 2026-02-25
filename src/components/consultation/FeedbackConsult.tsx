@@ -20,25 +20,23 @@ export default function FeedbackConsult({ consultation }: { consultation: Respon
         title: "Comment created successfully",
         description: "Your comment has been added to the consultation.",
       });
-      reset()
+      reset({ message: "" })
     },
     onError: (error) => {
       sileo.error({
         title: "Failed to create comment",
         description: error.message,
       });
-      reset()
+      reset({ message: "" })
     },
-
   })
 
   const onSubmit = async (data: FormDataComment) => {
-    const res = await createComment({
+    await createComment({
       ...data,
       consultationId: consultation.id,
       isAnonymous: consultation.settings?.allowAnonymous,
     })
-    console.log(res)
   }
 
   return (

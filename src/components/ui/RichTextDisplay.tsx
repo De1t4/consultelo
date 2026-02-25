@@ -2,11 +2,8 @@ import { generateHTML } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import { useMemo } from 'react'
 
-interface RichTextDisplayProps {
-  content: string
-}
 
-const RichTextDisplay = ({ content }: RichTextDisplayProps) => {
+const RichTextDisplay = ({ content, classname }: { content: string, classname?: string }) => {
   const output = useMemo(() => {
     try {
       if (!content) return ''
@@ -30,7 +27,7 @@ const RichTextDisplay = ({ content }: RichTextDisplayProps) => {
 
   return (
     <div
-      className="tiptap-content text-gray-700 space-y-4 prose prose-sm max-w-none dark:text-gray-300"
+      className={`${classname} tiptap-content text-gray-700 space-y-4 prose prose-sm max-w-none dark:text-gray-300`}
       dangerouslySetInnerHTML={{ __html: output }}
     />
   )

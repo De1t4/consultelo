@@ -26,8 +26,8 @@
       "@/*": [
         "./src/*"
       ],
-      "@client/*": [
-        "./src/client/*"
+      "@hooks/*": [
+        "./src/hooks/*"
       ],
       "@components/*": [
         "./src/components/*"
@@ -37,7 +37,10 @@
       ],
       "@shared/*": [
         "./src/shared/*"
-      ]
+      ],
+      "@core/*": [
+        "./src/core/*"
+      ],
     }
   },
   "include": [

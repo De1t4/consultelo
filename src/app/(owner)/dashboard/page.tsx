@@ -1,24 +1,10 @@
-import ConsultationList from '@/components/dashboard/ConsultationList'
-import { getMyConsultations } from '@/services/consultation-service'
-import { authOptions } from '@/shared/lib/auth'
-import SectionDashboard from '@components/dashboard/SectionDashboard'
-import { getServerSession } from 'next-auth'
-import { redirect } from 'next/navigation'
+import SectionDashboard from '@/app/(owner)/dashboard/components/SectionDashboard'
 
-export default async function Page() {
-	const session = await getServerSession(authOptions)
+export default function Page() {
 
-	if (!session?.user?.id) {
-		redirect('/login')
-	}
-
-	const initialData = await getMyConsultations(session.user.id)
 	return (
-		<>
-			<section className='w-full '>
-				<SectionDashboard />
-				<ConsultationList consultations={initialData} />
-			</section>
-		</>
+		<section className='w-full'>
+			<SectionDashboard />
+		</section>
 	)
 }

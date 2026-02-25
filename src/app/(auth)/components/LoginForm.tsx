@@ -1,6 +1,6 @@
 'use client'
 
-import { FormDataLogin, SchemaLogin } from '@/schemas/schema-login';
+import { FormDataLogin, SchemaLogin } from '@/app/(auth)/schemas/schema-login';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2 } from 'lucide-react';
 import { signIn } from 'next-auth/react';

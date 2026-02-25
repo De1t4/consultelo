@@ -1,18 +1,12 @@
 "use client"
 
-import Account from "@/components/settings/Account";
-import Others from "@/components/settings/Others";
-import Security from "@/components/settings/Security";
+import Account from "@/app/(owner)/profile/components/Account";
+import Others from "@/app/(owner)/profile/components/Others";
+import Security from "@/app/(owner)/profile/components/Security";
 import { Lock, MonitorCog, User } from "lucide-react";
 import { useState } from "react";
+import { Tab, Tabs } from "./types/tab-types";
 
-type Tab = "account" | "security" | "others"
-
-interface Tabs {
-  id: Tab;
-  label: string;
-  icon: React.ComponentType<{ className?: string }>;
-}
 
 export default function Page() {
   const [activeTab, setActiveTab] = useState<Tab>("account")

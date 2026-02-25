@@ -8,7 +8,7 @@ export const SchemaConsultation = z.object({
     .regex(/^[a-zA-Z0-9 ]+$/, "Only letters and numbers are allowed"),
   body: z
     .string()
-    .min(1, "Context is required")
+    .min(10, "Context is required")
     .refine((val) => {
       try {
         JSON.parse(val);

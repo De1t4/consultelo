@@ -1,44 +1,27 @@
-import { createCommentAction } from '@/actions/comment-mutation'
+export const dynamic = 'force-dynamic';
+
+import { useCreateComment } from '@/hooks/use/use-comment-mutation'
 import { FormDataComment, SchemaComment } from '@/schemas/schema-comment'
 import { ResponseConsultDetail } from '@/shared/types/response-consult'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useMutation } from '@tanstack/react-query'
 import { Info } from 'lucide-react'
 import { useForm } from 'react-hook-form'
-import { sileo } from 'sileo'
-import { Button } from '../ui/Button'
+import { Button } from '../../../../../components/ui/Button'
 
 export default function FeedbackConsult({ consultation }: { consultation: ResponseConsultDetail }) {
   const { register, handleSubmit, formState: { errors }, reset } = useForm<FormDataComment>({
     resolver: zodResolver(SchemaComment),
   })
 
-  const { mutateAsync: createComment, isPending } = useMutation({
-    mutationFn: createCommentAction,
-    onSuccess: () => {
-      sileo.success({
-        title: "Comment created successfully",
-        description: "Your comment has been added to the consultation.",
-      });
-      reset()
-    },
-    onError: (error) => {
-      sileo.error({
-        title: "Failed to create comment",
-        description: error.message,
-      });
-      reset()
-    },
-
-  })
+  const { createComment, isPending } = useCreateComment();
 
   const onSubmit = async (data: FormDataComment) => {
-    const res = await createComment({
+    await createComment({
       ...data,
       consultationId: consultation.id,
       isAnonymous: consultation.settings?.allowAnonymous,
     })
-    console.log(res)
+    reset({ message: "" })
   }
 
   return (

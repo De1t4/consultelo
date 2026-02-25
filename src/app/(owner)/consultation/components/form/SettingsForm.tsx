@@ -2,8 +2,8 @@
 
 import { useFormConsult } from '@/hooks/context/FormConsultContext'
 import { Check, Edit, Eye, HatGlasses, Loader2, Menu, MessageSquareLock, Users } from 'lucide-react'
-import { Button } from '../ui/Button'
-import { Toggle } from '../ui/Toggle'
+import { Button } from '../../../../../components/ui/Button'
+import { Toggle } from '../../../../../components/ui/Toggle'
 
 export default function SettingsForm({ isPending }: { isPending: boolean }) {
   const { currentStep, setValue, watch, setCurrentStep, trigger } = useFormConsult()

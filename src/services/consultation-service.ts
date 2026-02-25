@@ -44,60 +44,69 @@ export const getMyConsultations = async (userId: string) => {
         },
       },
     },
+    orderBy: {
+      createdAt: "desc",
+    },
   });
 
   return res;
 };
 
-export const getConsultationById = async (id: string) => {
-  try {
-    const res = await prisma.consultation.findUnique({
-      where: {
-        id: id,
-      },
-      include: {
-        user: {
-          select: {
-            id: true,
-            username: true,
-            email: true,
-            role: true,
-            createdAt: true,
-            updatedAt: true,
-            isActive: true,
-          },
-        },
-        settings: true,
-        comments: {
-          select: {
-            id: true,
-            message: true,
-            createdAt: true,
-            userId: true,
-            authorName: true,
-          },
-          orderBy: {
-            createdAt: "desc",
-          },
-        },
-      },
-    });
-
-    if (!res) {
-      throw new Error("The requested consultation does not exist.");
-    }
-
-    return res as unknown as ResponseConsultDetail;
-  } catch (error) {
-    // If it's an error we already handled, rethrow it
-    if (
-      error instanceof Error &&
-      (error.message.includes("does not exist") ||
-        error.message.includes("is invalid"))
-    ) {
-      throw error;
-    }
-
-    throw new Error("An error occurred while processing your request.");
+export const getConsultationById = async (
+  id: string,
+): Promise<ResponseConsultDetail | null> => {
+  const isExist = await prisma.consultation.findFirst({
+    where: {
+      id: id,
+    },
+  });
+  if (!isExist) {
+    return isExist;
   }
+
+  const res = await prisma.consultation.findUnique({
+    where: {
+      id: id,
+    },
+    include: {
+      user: {
+        select: {
+          id: true,
+          username: true,
+          email: true,
+          role: true,
+          createdAt: true,
+          updatedAt: true,
+          isActive: true,
+        },
+      },
+      settings: true,
+      comments: {
+        select: {
+          id: true,
+          message: true,
+          createdAt: true,
+          userId: true,
+          authorName: true,
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+      },
+    },
+  });
+  return res as ResponseConsultDetail;
+
+  // } catch (error) {
+  //   // If it's an error we already handled, rethrow it
+  //   if (
+  //     error instanceof Error &&
+  //     (error.message.includes("does not exist") ||
+  //       error.message.includes("is invalid"))
+  //   ) {
+  //     throw error;
+  //   }
+
+  //   throw new Error("An error occurred while processing your request.");
+  // }
 };

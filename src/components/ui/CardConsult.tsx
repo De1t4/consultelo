@@ -2,11 +2,10 @@
 
 import { ConsultationCategory, ConsultationStatus, PrivacyType } from '@/generated/prisma/enums';
 import { ResponseConsultList } from '@/shared/types/response-consult';
-import { JSONContent, generateHTML } from '@tiptap/react';
-import StarterKit from '@tiptap/starter-kit';
-import { Calendar, Globe, Lock, MessageSquare, MoreVertical } from 'lucide-react';
+import { Archive, Calendar, Edit, Globe, Lock, MessageSquare, MoreVertical, Trash2 } from 'lucide-react';
 import Link from 'next/link';
-import { useMemo } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import RichTextDisplay from './RichTextDisplay';
 
 const categoryStyles: Record<ConsultationCategory, string> = {
   'software': 'bg-orange-100 text-orange-600',
@@ -39,14 +38,29 @@ const visibilityIcon: Record<PrivacyType, React.ReactNode> = {
 };
 
 export default function CardConsult({ consultation }: { consultation: ResponseConsultList }) {
-  const output = useMemo(() => {
-    return generateHTML(consultation.body as JSONContent, [StarterKit])
-  }, [consultation.body])
+  const [showMenu, setShowMenu] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setShowMenu(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const toggleMenu = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setShowMenu(!showMenu);
+  };
 
   return (
 
-    <Link href={`/consultation/${consultation.id}`}>
-      <li className="bg-card border border-border rounded-xl p-5 hover:shadow-md transition-shadow flex flex-col gap-3">
+    <li className="w-full h-full">
+      <Link href={`/consultation/${consultation.id}`} className='bg-card border border-border rounded-xl p-5 hover:shadow-md transition-shadow flex flex-col gap-3 h-full relative group'>
         {/* Top row */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -54,21 +68,51 @@ export default function CardConsult({ consultation }: { consultation: ResponseCo
               {consultation.categories.toUpperCase()}
             </span>
             <span className="text-gray-300">•</span>
-            <span className="text-xs text-foreground">{consultation.id}</span>
+            <span className="text-xs text-foreground font-medium opacity-60">#{consultation.id.slice(0, 8)}</span>
           </div>
-          <button className="p-1 rounded hover:bg-gray-100 transition-colors text-gray-400">
-            <MoreVertical className="h-4 w-4" />
-          </button>
+
+          <div className="relative" ref={menuRef}>
+            <button
+              onClick={toggleMenu}
+              className="p-1.5 rounded-full hover:bg-gray-100 transition-all text-gray-400 hover:text-gray-600 cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/20"
+            >
+              <MoreVertical className="h-4 w-4" />
+            </button>
+
+            {showMenu && (
+              <div className="absolute right-0 top-full mt-2 w-44 bg-card border border-border rounded-xl shadow-xl z-50 overflow-hidden py-1.5 animate-in fade-in zoom-in duration-200">
+                <button
+                  onClick={(e) => { e.preventDefault(); e.stopPropagation(); setShowMenu(false); /* Edit logic */ }}
+                  className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-gray-700 hover:bg-accent/90 transition-colors"
+                >
+                  <Edit className="h-4 w-4 text-foreground" />
+                  <span className='text-foreground'>Edit details</span>
+                </button>
+                <button
+                  onClick={(e) => { e.preventDefault(); e.stopPropagation(); setShowMenu(false); /* Archive logic */ }}
+                  className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-gray-700 hover:bg-accent/90 transition-colors"
+                >
+                  <Archive className="h-4 w-4 text-foreground" />
+                  <span className='text-foreground'>Archive</span>
+                </button>
+                <div className="h-px bg-muted-foreground my-1.5" />
+                <button
+                  onClick={(e) => { e.preventDefault(); e.stopPropagation(); setShowMenu(false); /* Delete logic */ }}
+                  className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-red-600 hover:bg-red-50 hover:dark:bg-red-950 transition-colors font-medium"
+                >
+                  <Trash2 className="h-4 w-4" />
+                  <span>Delete</span>
+                </button>
+              </div>
+            )}
+          </div>
         </div>
         {/* Title */}
         <h3 className="font-semibold text-primary leading-snug text-lg">
           {consultation.title}
         </h3>
         {/* Description */}
-        <div
-          className="prose prose-slate max-w-none mb-4 line-clamp-2" // 'prose' de Tailwind Typography le da el estilo
-          dangerouslySetInnerHTML={{ __html: output }}
-        />
+        <RichTextDisplay content={JSON.stringify(consultation.body)} classname='line-clamp-2' />
         {/* Footer */}
         <div className="flex items-center gap-3 pt-1 border-t border-gray-100 flex-wrap">
           <div className="flex items-center gap-1.5 text-xs text-gray-400">
@@ -90,8 +134,8 @@ export default function CardConsult({ consultation }: { consultation: ResponseCo
             </span>
           </div>
         </div>
-      </li>
-    </Link>
+      </Link>
+    </li>
 
   )
 }

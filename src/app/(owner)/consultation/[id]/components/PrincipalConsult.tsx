@@ -1,15 +1,10 @@
 'use client'
 
+import RichTextDisplay from '@/components/ui/RichTextDisplay';
 import { ResponseConsultDetail } from '@/shared/types/response-consult';
-import { generateHTML } from '@tiptap/react';
-import StarterKit from '@tiptap/starter-kit';
 import { MoreHorizontal, Share2, User } from 'lucide-react';
-import { useMemo } from 'react';
 
 export default function PrincipalConsult({ consultation }: { consultation: ResponseConsultDetail }) {
-  const output = useMemo(() => {
-    return generateHTML(consultation.body, [StarterKit])
-  }, [consultation.body])
 
   return (
     <article className="bg-card border-border rounded-lg border p-6">
@@ -43,10 +38,8 @@ export default function PrincipalConsult({ consultation }: { consultation: Respo
       </div>
 
       {/* Description */}
-      <div
-        className="prose prose-slate max-w-none mb-4 " // 'prose' de Tailwind Typography le da el estilo
-        dangerouslySetInnerHTML={{ __html: output }}
-      />
+
+      <RichTextDisplay content={JSON.stringify(consultation.body)} />
 
       {/* Tags */}
       <div className="flex items-center gap-4 pt-4 border-t border-gray-200">

@@ -5,7 +5,7 @@ import CommentsConsult from "@/app/(owner)/consultation/[id]/components/Comments
 import FeedbackConsult from "@/app/(owner)/consultation/[id]/components/FeedbackConsult"
 import PrincipalConsult from "@/app/(owner)/consultation/[id]/components/PrincipalConsult"
 import { useQuery } from "@tanstack/react-query"
-import { useParams } from "next/navigation"
+import { notFound, useParams } from "next/navigation"
 
 export default function Page() {
   const params = useParams<{ id: string }>()
@@ -17,10 +17,11 @@ export default function Page() {
 
   if (isLoading) return <div>Loading...</div>
   if (error) return <div>Error: {error.message}</div>
-  if (!consultation) return <div>Consultation not found</div>
+  if (!consultation) return notFound()
 
   return (
     <>
+      <title>{consultation.title}</title>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left Column - Main Content */}
         <section className="lg:col-span-2 space-y-6">

@@ -5,6 +5,8 @@ import {
   getMyConsultations,
 } from "@/services/consultation-service";
 import { authOptions } from "@/shared/lib/auth";
+import { executeAction } from "@/shared/types/executionAction";
+import { ResponseConsultDetail } from "@/shared/types/response-consult";
 import { getServerSession } from "next-auth";
 
 export async function getMyConsultationsAction() {
@@ -20,18 +22,22 @@ export async function getMyConsultationsAction() {
   }
 }
 
-export async function getConsultationByIdAction(id: string) {
+const isValidId = (id: string) => {
   const uuidRegex =
     /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
   if (!uuidRegex.test(id)) {
     throw new Error("The consultation ID format is invalid.");
   }
+};
 
-  try {
-    const consultation = await getConsultationById(id);
-    return consultation;
-  } catch (error) {
-    console.error("Error getting consultation:", error);
-    throw new Error("Could not retrieve the consultation.");
-  }
+export async function getConsultationByIdAction(
+  id: string,
+): Promise<ResponseConsultDetail | null> {
+  return await executeAction({
+    actionFn: async () => {
+      isValidId(id);
+      const consultation = await getConsultationById(id);
+      return consultation;
+    },
+  });
 }

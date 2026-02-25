@@ -1,11 +1,9 @@
 'use client'
-import { createConsultationAction } from '@/actions/consultation-mutation'
 import { useFormConsult } from '@/hooks/context/FormConsultContext'
+import { useCreateConsultation } from '@/hooks/use/use-consult-mutation'
 import { FormDataConsultation } from '@/schemas/schema-consultation'
 import { ResponseConsult } from '@/shared/types/response-consult'
-import { useMutation } from '@tanstack/react-query'
 import { useState } from 'react'
-import { sileo } from 'sileo'
 import ConsultationForm from '../forms/ConsultationForm'
 import SettingsForm from '../forms/SettingsForm'
 import SuccessConsultPage from './SuccessPage'
@@ -14,26 +12,12 @@ export default function WrappedForms() {
   const [consult, setConsult] = useState<ResponseConsult | null>(null)
   const { currentStep, handleSubmit, setCurrentStep } = useFormConsult()
 
-  const { mutateAsync: createConsultation, isPending, isSuccess } = useMutation({
-    mutationFn: createConsultationAction,
-    onSuccess: (data) => {
-      sileo.success({
-        title: "Consultation created successfully",
-        description: "Your consultation has been published and is now visible to experts."
-      })
-      setConsult(data)
-    },
-    onError: (error) => {
-      sileo.error({
-        title: "Error creating consultation",
-        description: "Your consultation could not be published. Please try again. " + error.message
-      })
-    }
-  })
+  const { createConsultation, isPending, isSuccess } = useCreateConsultation()
 
   const onSubmit = async (data: FormDataConsultation) => {
     setCurrentStep("review")
-    await createConsultation(data)
+    const res = await createConsultation(data)
+    setConsult(res)
   }
 
   if (isSuccess && consult) {

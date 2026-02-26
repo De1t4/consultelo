@@ -15,6 +15,7 @@ export default async function Page() {
 
   return (
     <section className='w-full '>
+      {/* <ConsultationFilters consultations={initialData} /> */}
       <ConsultationList consultations={initialData} />
     </section>
   )

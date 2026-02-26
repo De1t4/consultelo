@@ -4,6 +4,7 @@ import {
   ChevronRight,
   Folder,
   LayoutDashboard,
+  LogOut,
   Menu,
   MenuIcon,
   Plus,
@@ -11,6 +12,7 @@ import {
   User,
   X
 } from "lucide-react"
+import { signOut } from "next-auth/react"
 import Link from "next/link"
 import { useState } from "react"
 
@@ -97,6 +99,24 @@ export function Sidebar() {
                 isActive={false}
                 onClick={() => { }}
               />
+            </li>
+            <li>
+              <button
+                onClick={() => signOut()}
+                className={`flex items-center cursor-pointer rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${expanded ? "justify-start " : "justify-center"} text-sidebar-foreground hover:bg-sidebar-accent`}
+              >
+                <span
+                  className={`shrink-0 transition-colors text-muted-foreground`}
+                >
+                  <LogOut />
+                </span>
+                <span
+                  className={`whitespace-nowrap transition-all duration-300 ${expanded ? "opacity-100 w-auto ml-2" : "opacity-0 w-0 overflow-hidden"}`}
+                >
+                  Log Out
+                </span>
+              </button>
+
             </li>
           </ul>
         </div>

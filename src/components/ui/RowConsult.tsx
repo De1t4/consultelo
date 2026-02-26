@@ -31,8 +31,8 @@ export default function RowConsult({ consultation }: { consultation: ResponseCon
     <div className="bg-card border border-border max-md:flex-col rounded-xl px-5 py-4 hover:shadow-sm transition-shadow flex items-center gap-4">
       <div className="flex-1 min-w-50 max-md:w-full">
         <div className="flex items-center gap-2 mb-0.5">
-          <span className={`text-xs font-bold tracking-wide ${categoryStyles}`}>
-            {consultation.categories}
+          <span className={`text-xs font-bold tracking-wide px-2 py-1 rounded-full ${categoryStyles[consultation.categories]}`}>
+            {consultation.categories.toUpperCase()}
           </span>
           <span className="text-gray-300 text-xs">•</span>
           <span className="text-xs text-gray-400">{consultation.id}</span>

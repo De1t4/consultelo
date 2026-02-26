@@ -32,7 +32,7 @@ const mainNavItems: NavItem[] = [
 export function Sidebar() {
   const [expanded, setExpanded] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
-  const [activeItem, setActiveItem] = useState("Home")
+  const [activeItem, setActiveItem] = useState("Dashboard")
 
   return (
     <>
@@ -106,8 +106,9 @@ export function Sidebar() {
       < nav className="fixed bottom-0 bg-card left-0 right-0 z-50 flex items-center justify-around border-t border-border bg-sidebar px-1 py-1 md:hidden" >
         {
           mainNavItems.slice(0, 4).map((item) => (
-            <button
+            <Link
               key={item.label}
+              href={item.href}
               onClick={() => setActiveItem(item.label)}
               className={`flex flex-1 cursor-pointer hover:bg-sidebar-accent flex-col items-center gap-0.5 rounded-lg py-1.5 text-[10px] transition-colors ${activeItem === item.label ? "text-primary font-semibold" : "text-muted-foreground"}`}
             >
@@ -117,7 +118,7 @@ export function Sidebar() {
                 {item.icon}
               </span>
               {item.label}
-            </button>
+            </Link>
           ))
         }
         < button

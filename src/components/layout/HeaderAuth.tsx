@@ -4,8 +4,8 @@ import Link from 'next/link'
 
 export default function HeaderAuth() {
   return (
-    <header className="w-full  max-w-7xl mx-auto  shadow-xs  bg-background  ">
-      <div className="  px-6 py-4">
+    <header className="w-full  max-w-7xl mx-auto  shadow-xs  bg-background fixed z-20">
+      <div className="  px-12 py-4 max-md:px-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <span></span>
@@ -18,7 +18,7 @@ export default function HeaderAuth() {
             </Link>
           </div> */}
           {/* Navigation */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 ">
             <Link href="/profile" className="border-2 border-primary cursor-pointer w-10 h-10 rounded-full bg-accent flex items-center justify-center hover:bg-gray-200 transition-colors">
               <User className='text-primary' size={24} />
             </Link>

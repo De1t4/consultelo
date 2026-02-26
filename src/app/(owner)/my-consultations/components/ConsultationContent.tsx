@@ -11,16 +11,16 @@ import { useQuery } from '@tanstack/react-query'
 import { FolderOpen, LayoutGrid, List } from 'lucide-react'
 import Link from 'next/link'
 
+export default function ConsultationContent({ consultations }: { consultations: ResponseConsultList[] }) {
 
-export default function ConsultationList({ consultations }: { consultations: ResponseConsultList[] }) {
-  const { setSortedCategory, setSortedStatus, setViewMode, viewMode, filteredConsultations } = useConsults({ consultations })
-
-  const { data: consultation } = useQuery({
+  const { data: consultationsData } = useQuery({
     queryKey: ['consultations'],
     queryFn: getMyConsultationsAction,
     initialData: consultations,
   })
 
+  const { setFilterCategory, setFilterStatus, setViewMode, viewMode, filteredConsultations } =
+    useConsults({ consultations: consultationsData })
 
   return (
     <>
@@ -29,7 +29,7 @@ export default function ConsultationList({ consultations }: { consultations: Res
         <div className="flex items-center gap-2 max-md:flex-col max-md:w-full max-md:items-start">
           {/* Filter Status */}
           <div className="flex justify-center gap-2 items-center max-md:justify-between max-md:w-full">
-            <select disabled={consultations.length === 0} onChange={(e) => setSortedStatus(e.target.value as ConsultationStatus)} defaultValue={""} name="" className='flex w-32 items-center disabled:text-gray-500 disabled:cursor-not-allowed gap-2 px-3 py-2 bg-card border border-border rounded-lg text-sm text-foreground hover:bg-card/10 transition-colors' id="">
+            <select disabled={consultations.length === 0} onChange={(e) => setFilterStatus(e.target.value as ConsultationStatus)} defaultValue={""} name="" className='flex w-32 items-center disabled:text-gray-500 disabled:cursor-not-allowed gap-2 px-3 py-2 bg-card border border-border rounded-lg text-sm text-foreground hover:bg-card/10 transition-colors' id="">
               <option value="" >
                 All Status
               </option>
@@ -47,7 +47,7 @@ export default function ConsultationList({ consultations }: { consultations: Res
               </option>
             </select>
             {/* Category */}
-            <select disabled={consultations.length === 0} onChange={(e) => setSortedCategory(e.target.value as ConsultationCategory)} name="" defaultValue={""} className='flex w-32 items-center disabled:text-gray-500 disabled:cursor-not-allowed gap-2 px-3 py-2 bg-card border border-border rounded-lg text-sm text-foreground hover:bg-card/10 transition-colors' id="">
+            <select disabled={consultations.length === 0} onChange={(e) => setFilterCategory(e.target.value as ConsultationCategory)} name="" defaultValue={""} className='flex w-32 items-center disabled:text-gray-500 disabled:cursor-not-allowed gap-2 px-3 py-2 bg-card border border-border rounded-lg text-sm text-foreground hover:bg-card/10 transition-colors' id="">
               <option value="" >
                 Category
               </option>
@@ -64,14 +64,14 @@ export default function ConsultationList({ consultations }: { consultations: Res
           <div className="flex max-md:hidden items-center border border-border rounded-lg overflow-hidden bg-muted-foreground/20">
             <button
               onClick={() => setViewMode('grid')}
-              disabled={consultation.length == 0}
+              disabled={consultationsData.length == 0}
               className={`p-2 transition-colors disabled:brightness-80 disabled:cursor-not-allowed cursor-pointer ${viewMode === 'grid' ? 'bg-teal-50 text-primary' : 'text-foreground hover:opacity-50'}`}
             >
               <LayoutGrid className="h-4 w-4" />
             </button>
             <button
               onClick={() => setViewMode('list')}
-              disabled={consultation.length == 0}
+              disabled={consultationsData.length == 0}
               className={`p-2 transition-colors disabled:brightness-80 disabled:cursor-not-allowed cursor-pointer ${viewMode === 'list' ? 'bg-teal-50 text-primary' : 'text-foreground hover:opacity-50'}`}
             >
               <List className="h-4 w-4" />

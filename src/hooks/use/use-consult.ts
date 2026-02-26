@@ -13,27 +13,28 @@ export function useConsults({
   consultations: ResponseConsultList[];
 }) {
   const [viewMode, setViewMode] = useState<ViewMode>("grid");
-  const [sortedStatus, setSortedStatus] = useState<ConsultationStatus | "">("");
-  const [sortedCategory, setSortedCategory] = useState<
+  const [filterStatus, setFilterStatus] = useState<ConsultationStatus | "">("");
+  const [filterCategory, setFilterCategory] = useState<
     ConsultationCategory | ""
   >("");
 
   const filteredConsultations = useMemo(() => {
     const data = Array.isArray(consultations) ? consultations : [];
     return data.filter((item) => {
-      const matchesStatus = sortedStatus ? item.status === sortedStatus : true;
-      const matchesCategory = sortedCategory
-        ? item.categories === sortedCategory
+      const matchesStatus = filterStatus ? item.status === filterStatus : true;
+      const matchesCategory = filterCategory
+        ? item.categories === filterCategory
         : true;
       return matchesStatus && matchesCategory;
     });
-  }, [consultations, sortedStatus, sortedCategory]);
+  }, [consultations, filterStatus, filterCategory]);
 
   return {
     filteredConsultations,
     setViewMode,
-    setSortedStatus,
-    setSortedCategory,
+    filterStatus,
+    setFilterStatus,
+    setFilterCategory,
     viewMode,
   };
 }

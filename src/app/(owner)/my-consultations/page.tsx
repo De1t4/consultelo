@@ -1,8 +1,8 @@
-import ConsultationList from '@/app/(owner)/my-consultations/components/ConsultationList'
 import { getMyConsultations } from '@/services/consultation-service'
 import { authOptions } from '@/shared/lib/auth'
 import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
+import ConsultationContent from './components/ConsultationContent'
 
 export default async function Page() {
   const session = await getServerSession(authOptions)
@@ -15,7 +15,8 @@ export default async function Page() {
 
   return (
     <section className='w-full '>
-      <ConsultationList consultations={initialData} />
+      {/* <ConsultationFilters consultations={initialData} /> */}
+      <ConsultationContent consultations={initialData} />
     </section>
   )
 }

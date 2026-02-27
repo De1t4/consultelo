@@ -24,10 +24,10 @@ export async function createCommentAction(data: FormDataComment) {
       }
 
       try {
-        if (data.isAnonymous) {
+        if (!data.isAnonymous) {
           const session = await getServerSession(authOptions);
           if (!session?.user?.id) {
-            throw new Error("User not authenticated or invalid ID");
+            throw new Error("You must be logged in to comment.");
           }
           data.userId = session.user.id;
           const commented = await isCommentedByUser(

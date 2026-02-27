@@ -3,6 +3,8 @@
 import {
   getConsultationById,
   getMyConsultations,
+  getPublicConsultations,
+  getUserStats,
 } from "@/services/consultation-service";
 import { authOptions } from "@/shared/lib/auth";
 import { executeAction } from "@/shared/types/executionAction";
@@ -33,4 +35,27 @@ export async function getConsultationByIdAction(
       return consultation;
     },
   });
+}
+
+export async function getPublicConsultationsAction() {
+  try {
+    const consultations = await getPublicConsultations();
+    return consultations;
+  } catch (error) {
+    console.error("Error getting public consultations:", error);
+    throw new Error("Could not load public consultations.");
+  }
+}
+
+export async function getUserStatsAction() {
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.id) {
+    throw new Error("User not authenticated");
+  }
+  try {
+    return await getUserStats(session.user.id);
+  } catch (error) {
+    console.error("Error getting user stats:", error);
+    throw new Error("Could not load your statistics.");
+  }
 }

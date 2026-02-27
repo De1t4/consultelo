@@ -105,3 +105,52 @@ export const getConsultationById = async (
   });
   return res as ResponseConsultDetail;
 };
+
+export const getPublicConsultations = async () => {
+  const res: ResponseConsultList[] = await prisma.consultation.findMany({
+    where: {
+      settings: {
+        privacy: "public",
+      },
+      status: "active",
+    },
+    include: {
+      settings: true,
+      _count: {
+        select: {
+          comments: true,
+        },
+      },
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+    take: 6,
+  });
+
+  return res;
+};
+
+export const getUserStats = async (userId: string) => {
+  const [activeConsultations, totalComments] = await Promise.all([
+    prisma.consultation.count({
+      where: {
+        userId: userId,
+        status: "active",
+      },
+    }),
+    prisma.comment.count({
+      where: {
+        consultation: {
+          userId: userId,
+        },
+      },
+    }),
+  ]);
+
+  return {
+    activeConsultations,
+    totalResponses: totalComments,
+    communityImpact: "Top 10%",
+  };
+};

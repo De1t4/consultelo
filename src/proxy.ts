@@ -12,13 +12,18 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL("/account?auth=login", request.url));
   }
 
-  if (session && PUBLIC_PATHS.includes(request.nextUrl.pathname)) {
-    return NextResponse.redirect(new URL("/dashboard", request.url));
-  }
+  // if (session && PUBLIC_PATHS.includes(request.nextUrl.pathname)) {
+  //   return NextResponse.redirect(new URL("/dashboard", request.url));
+  // }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/consultation", "/profile", "/account"],
+  matcher: [
+    "/dashboard/:path*",
+    "/consultation",
+    "/profile",
+    "/my-consultations",
+  ],
 };

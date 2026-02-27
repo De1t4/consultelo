@@ -12,7 +12,6 @@ export default function CommentsConsult({ consultation }: { consultation: Respon
   if (!isOwner && !consultation.settings?.viewComments) {
     return null
   }
-
   return (
     <>
       <article className="bg-card rounded-lg border border-border p-6">

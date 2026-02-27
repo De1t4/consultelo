@@ -5,9 +5,13 @@ import CommentsConsult from "@/app/(owner)/consultation/[id]/components/Comments
 import FeedbackConsult from "@/app/(owner)/consultation/[id]/components/FeedbackConsult"
 import PrincipalConsult from "@/app/(owner)/consultation/[id]/components/PrincipalConsult"
 import { useQuery } from "@tanstack/react-query"
+import { useSession } from "next-auth/react"
 import { notFound, useParams } from "next/navigation"
+import ShareConsult from "./components/ShareConsult"
+import SkeletonConsult from "./components/SkeletonConsult"
 
 export default function Page() {
+  const { data: session } = useSession()
   const params = useParams<{ id: string }>()
 
   const { data: consultation, isLoading, error } = useQuery({
@@ -15,9 +19,10 @@ export default function Page() {
     queryFn: () => getConsultationByIdAction(params.id),
   });
 
-  if (isLoading) return <div>Loading...</div>
+  if (isLoading) return <SkeletonConsult />
   if (error) return <div>Error: {error.message}</div>
   if (!consultation) return notFound()
+
 
   return (
     <>
@@ -30,7 +35,10 @@ export default function Page() {
           <FeedbackConsult consultation={consultation} />
         </section>
         {/* Right Sidebar */}
-        <CaseInfoConsult consultation={consultation} />
+        <div className="space-y-6">
+          {session?.user.id === consultation.userId && <ShareConsult consultationId={consultation.id} />}
+          <CaseInfoConsult consultation={consultation} />
+        </div>
       </div>
     </>
   )

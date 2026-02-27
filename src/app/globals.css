@@ -37,7 +37,6 @@
   --font-inter: var(--font-inter);
   --sidebar-border: var(--sidebar-border);
   --sidebar-background: var(--sidebar-background);
-
   --animate-rotate-border: border-rotate 3s linear infinite;
   @keyframes border-rotate {
     to {

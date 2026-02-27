@@ -14,7 +14,8 @@ import {
 } from "lucide-react"
 import { signOut } from "next-auth/react"
 import Link from "next/link"
-import { useState } from "react"
+import { usePathname } from "next/navigation"
+import { useEffect, useState } from "react"
 
 
 interface NavItem {
@@ -27,14 +28,18 @@ interface NavItem {
 const mainNavItems: NavItem[] = [
   { label: "Dashboard", icon: <LayoutDashboard className="size-5" />, href: "/dashboard", active: true },
   { label: "My Consultations", icon: <Folder className="size-5" />, href: "/my-consultations" },
-  // { label: "Datasets", icon: <Database className="size-5" />, href: "/datasets" },
-  // { label: "Models", icon: <Box className="size-5" />, href: "/models" },
 ]
 
 export function Sidebar() {
   const [expanded, setExpanded] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [activeItem, setActiveItem] = useState("Dashboard")
+
+  const pathname = usePathname()
+
+  useEffect(() => {
+    setActiveItem(pathname)
+  }, [pathname])
 
   return (
     <>
@@ -77,12 +82,12 @@ export function Sidebar() {
         <nav className="flex-1 px-3 py-2 overflow-y-auto  ">
           <ul className="flex flex-col gap-0.5 ">
             {mainNavItems.map((item) => (
-              <li key={item.label}>
+              <li key={item.href}>
                 <SidebarNavItem
                   item={item}
                   expanded={expanded}
-                  isActive={activeItem === item.label}
-                  onClick={() => setActiveItem(item.label)}
+                  isActive={activeItem === item.href}
+                  onClick={() => setActiveItem(item.href)}
                 />
               </li>
             ))}
@@ -103,7 +108,7 @@ export function Sidebar() {
             <li>
               <button
                 onClick={() => signOut()}
-                className={`flex items-center cursor-pointer rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${expanded ? "justify-start " : "justify-center"} text-sidebar-foreground hover:bg-sidebar-accent`}
+                className={`flex items-center w-full cursor-pointer rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${expanded ? "justify-start " : "justify-center"} text-sidebar-foreground hover:bg-sidebar-accent`}
               >
                 <span
                   className={`shrink-0 transition-colors text-muted-foreground`}
@@ -116,7 +121,6 @@ export function Sidebar() {
                   Log Out
                 </span>
               </button>
-
             </li>
           </ul>
         </div>
@@ -127,13 +131,13 @@ export function Sidebar() {
         {
           mainNavItems.slice(0, 4).map((item) => (
             <Link
-              key={item.label}
+              key={item.href}
               href={item.href}
-              onClick={() => setActiveItem(item.label)}
-              className={`flex flex-1 cursor-pointer hover:bg-sidebar-accent flex-col items-center gap-0.5 rounded-lg py-1.5 text-[10px] transition-colors ${activeItem === item.label ? "text-primary font-semibold" : "text-muted-foreground"}`}
+              onClick={() => setActiveItem(item.href)}
+              className={`flex flex-1 cursor-pointer hover:bg-sidebar-accent flex-col items-center gap-0.5 rounded-lg py-1.5 text-[10px] transition-colors ${activeItem === item.href ? "text-primary font-semibold" : "text-muted-foreground"}`}
             >
               <span
-                className={`flex items-center justify-center rounded-full px-4 py-1 transition-colors ${activeItem === item.label ? "bg-sidebar-accent" : ""}`}
+                className={`flex items-center justify-center rounded-full px-4 py-1 transition-colors ${activeItem === item.href ? "bg-sidebar-accent" : ""}`}
               >
                 {item.icon}
               </span>
@@ -190,17 +194,17 @@ export function Sidebar() {
               <nav className="flex-1 overflow-y-auto px-3">
                 <ul className="flex flex-col gap-0.5 ">
                   {mainNavItems.map((item) => (
-                    <li key={item.label}>
+                    <li key={item.href}>
                       <Link
                         href={item.href}
                         onClick={() => {
-                          setActiveItem(item.label)
+                          setActiveItem(item.href)
                           setMobileOpen(false)
                         }}
-                        className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${activeItem === item.label ? "bg-primary/15 text-primary" : "text-sidebar-foreground hover:bg-sidebar-accent"}`}
+                        className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${activeItem === item.href ? "bg-primary/15 text-primary" : "text-sidebar-foreground hover:bg-sidebar-accent"}`}
                       >
                         <span
-                          className={activeItem === item.label ? "text-primary" : "text-muted-foreground"}
+                          className={activeItem === item.href ? "text-primary" : "text-muted-foreground"}
                         >
                           {item.icon}
                         </span>
@@ -245,7 +249,7 @@ function SidebarNavItem({
     <Link
       href={item.href}
       onClick={onClick}
-      className={`flex items-center  rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${expanded ? "justify-start " : "justify-center"} ${isActive ? "bg-sidebar-accent text-primary" : "text-sidebar-foreground hover:bg-sidebar-accent"}`}
+      className={`flex items-center rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${expanded ? "justify-start " : "justify-center"} ${isActive ? "bg-sidebar-accent text-primary" : "text-sidebar-foreground hover:bg-sidebar-accent"}`}
     >
       <span
         className={`shrink-0 transition-colors ${isActive ? "text-primary" : "text-muted-foreground"}`}

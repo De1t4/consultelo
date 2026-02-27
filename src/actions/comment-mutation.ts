@@ -17,17 +17,17 @@ export async function createCommentAction(data: FormDataComment) {
       const cookieStore = await cookies();
       const cookieName = `has_commented_${data.consultationId}`;
 
-      try {
-        if (cookieStore.has(cookieName)) {
-          throw new Error(
-            "You have already left a comment on this consultation.",
-          );
-        }
+      if (cookieStore.get(cookieName)) {
+        throw new Error(
+          "You have already left a comment on this consultation.",
+        );
+      }
 
-        if (data.isAnonymous) {
+      try {
+        if (!data.isAnonymous) {
           const session = await getServerSession(authOptions);
           if (!session?.user?.id) {
-            throw new Error("User not authenticated or invalid ID");
+            throw new Error("You must be logged in to comment.");
           }
           data.userId = session.user.id;
           const commented = await isCommentedByUser(

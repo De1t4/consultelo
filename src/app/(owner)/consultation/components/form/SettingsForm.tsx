@@ -2,8 +2,8 @@
 
 import { useFormConsult } from '@/hooks/context/FormConsultContext'
 import { Check, Edit, Eye, HatGlasses, Loader2, Menu, MessageSquareLock, Users } from 'lucide-react'
-import { Button } from '../../../../../components/ui/Button'
-import { Toggle } from '../../../../../components/ui/Toggle'
+import { Button } from '@/components/ui/Button'
+import { Toggle } from '@/components/ui/Toggle'
 
 export default function SettingsForm({ isPending }: { isPending: boolean }) {
   const { currentStep, setValue, watch, setCurrentStep, trigger } = useFormConsult()
@@ -42,21 +42,6 @@ export default function SettingsForm({ isPending }: { isPending: boolean }) {
               </label>
               <div className="grid grid-cols-2 gap-3">
                 <button
-                  onClick={() => setValue("allowAnonymous", false)}
-                  type='button'
-                  className={`
-                          flex flex-col items-center justify-center p-4 rounded-lg border-2 transition-all cursor-pointer hover:brightness-105
-                          ${!isAnonymous
-                      ? "border-primary bg-accent"
-                      : "border-border bg-card hover:border-border/80"}
-                        `}
-                >
-                  <HatGlasses className={`h-5 w-5 mb-2 ${!isAnonymous ? "text-primary" : "text-muted-foreground"}`} />
-                  <span className={`text-sm font-medium ${!isAnonymous ? "text-foreground" : "text-muted-foreground"}`}>
-                    Anonymous
-                  </span>
-                </button>
-                <button
                   onClick={() => setValue("allowAnonymous", true)}
                   type='button'
                   className={`
@@ -66,8 +51,23 @@ export default function SettingsForm({ isPending }: { isPending: boolean }) {
                       : "border-border bg-card hover:border-border/80"}
                         `}
                 >
-                  <Users className={`h-5 w-5 mb-2 ${isAnonymous ? "text-primary" : "text-muted-foreground"}`} />
+                  <HatGlasses className={`h-5 w-5 mb-2 ${isAnonymous ? "text-primary" : "text-muted-foreground"}`} />
                   <span className={`text-sm font-medium ${isAnonymous ? "text-foreground" : "text-muted-foreground"}`}>
+                    Anonymous
+                  </span>
+                </button>
+                <button
+                  onClick={() => setValue("allowAnonymous", false)}
+                  type='button'
+                  className={`
+                          flex flex-col items-center justify-center p-4 rounded-lg border-2 transition-all cursor-pointer hover:brightness-105
+                          ${!isAnonymous
+                      ? "border-primary bg-accent"
+                      : "border-border bg-card hover:border-border/80"}
+                        `}
+                >
+                  <Users className={`h-5 w-5 mb-2 ${!isAnonymous ? "text-primary" : "text-muted-foreground"}`} />
+                  <span className={`text-sm font-medium ${!isAnonymous ? "text-foreground" : "text-muted-foreground"}`}>
                     Registered
                   </span>
                 </button>

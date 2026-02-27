@@ -6,7 +6,8 @@ import { ResponseConsultDetail } from '@/shared/types/response-consult'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Info } from 'lucide-react'
 import { useForm } from 'react-hook-form'
-import { Button } from '../../../../../components/ui/Button'
+import { Button } from '@/components/ui/Button'
+import { useQueryClient } from '@tanstack/react-query';
 
 export default function FeedbackConsult({ consultation }: { consultation: ResponseConsultDetail }) {
   const { register, handleSubmit, formState: { errors }, reset } = useForm<FormDataComment>({
@@ -15,12 +16,15 @@ export default function FeedbackConsult({ consultation }: { consultation: Respon
 
   const { createComment, isPending } = useCreateComment();
 
+  const queryClient = useQueryClient();
+
   const onSubmit = async (data: FormDataComment) => {
     await createComment({
       ...data,
       consultationId: consultation.id,
       isAnonymous: consultation.settings?.allowAnonymous,
     })
+    queryClient.invalidateQueries({ queryKey: ["consultation-detail", consultation.id] })
     reset({ message: "" })
   }
 

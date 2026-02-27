@@ -31,6 +31,14 @@ export const createConsultation = async (
   });
 };
 
+export const deleteConsultation = async (idConsultation: string) => {
+  return await prisma.consultation.delete({
+    where: {
+      id: idConsultation,
+    },
+  });
+};
+
 export const getMyConsultations = async (userId: string) => {
   const res: ResponseConsultList[] = await prisma.consultation.findMany({
     where: {
@@ -96,17 +104,53 @@ export const getConsultationById = async (
     },
   });
   return res as ResponseConsultDetail;
+};
 
-  // } catch (error) {
-  //   // If it's an error we already handled, rethrow it
-  //   if (
-  //     error instanceof Error &&
-  //     (error.message.includes("does not exist") ||
-  //       error.message.includes("is invalid"))
-  //   ) {
-  //     throw error;
-  //   }
+export const getPublicConsultations = async () => {
+  const res: ResponseConsultList[] = await prisma.consultation.findMany({
+    where: {
+      settings: {
+        privacy: "public",
+      },
+      status: "active",
+    },
+    include: {
+      settings: true,
+      _count: {
+        select: {
+          comments: true,
+        },
+      },
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+    take: 6,
+  });
 
-  //   throw new Error("An error occurred while processing your request.");
-  // }
+  return res;
+};
+
+export const getUserStats = async (userId: string) => {
+  const [activeConsultations, totalComments] = await Promise.all([
+    prisma.consultation.count({
+      where: {
+        userId: userId,
+        status: "active",
+      },
+    }),
+    prisma.comment.count({
+      where: {
+        consultation: {
+          userId: userId,
+        },
+      },
+    }),
+  ]);
+
+  return {
+    activeConsultations,
+    totalResponses: totalComments,
+    communityImpact: "Top 10%",
+  };
 };

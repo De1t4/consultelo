@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 export default function HeaderAuth() {
   return (
-    <header className="w-full  max-w-7xl mx-auto  shadow-xs  bg-background fixed z-20">
+    <header className="w-full  max-w-7xl mx-auto border-b border-border shadow-xs  bg-background sticky top-0  z-20">
       <div className="  px-12 py-4 max-md:px-4">
         <div className="flex items-center justify-between">
           {/* Logo */}

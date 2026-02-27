@@ -11,7 +11,7 @@ export default function Page() {
   const params = useParams<{ id: string }>()
 
   const { data: consultation, isLoading, error } = useQuery({
-    queryKey: ["consultation", params.id],
+    queryKey: ["consultation-detail", params.id],
     queryFn: () => getConsultationByIdAction(params.id),
   });
 

@@ -8,9 +8,12 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { sileo } from 'sileo';
 
 export default function LoginForm() {
   const [error, setError] = useState<string | undefined>(undefined);
+  const [attempt, setAttempt] = useState(0);
+
   const {
     register,
     handleSubmit,
@@ -22,6 +25,10 @@ export default function LoginForm() {
   const router = useRouter();
 
   const onSubmit = async (data: FormDataLogin) => {
+    if (attempt >= 3) {
+      setError("Too many attempts. Please try again later.");
+      return;
+    }
     const res = await signIn('credentials', {
       email: data.email,
       password: data.password,
@@ -29,13 +36,19 @@ export default function LoginForm() {
     })
     if (!res?.ok) {
       setError(res?.error?.toString())
+      setAttempt(attempt + 1)
       return
     }
+
+    sileo.success({
+      title: "User logged in successfully",
+    });
+
     router.push("/dashboard")
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-linear-gradient-to-br from-primary to-blue-100 p-4">
+    <div className="flex min-h-screen items-center justify-center bg-linear-gradient-to-br from-primary to-blue-100 p-4 ">
       <div className="w-full max-w-md rounded-2xl border-2  border-gray-300 bg-white p-8 shadow-xl transition-all hover:shadow-2xl">
         <div className="mb-8 text-center">
           <h2 className="text-3xl font-bold text-gray-800">Sign In</h2>

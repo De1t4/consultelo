@@ -5,9 +5,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { sileo } from 'sileo';
 
 export default function RegisterForm() {
+  const [error, setError] = useState<string | undefined>(undefined);
+  const [attempt, setAttempt] = useState(0);
+
   const router = useRouter()
   const {
     register,
@@ -18,6 +23,11 @@ export default function RegisterForm() {
   });
 
   const onSubmit = async (data: FormDataRegister) => {
+    if (attempt >= 3) {
+      setError("Too many attempts. Please try again later.");
+      return;
+    }
+
     const res = await fetch('/api/auth/register', {
       method: 'POST',
       headers: {
@@ -27,8 +37,16 @@ export default function RegisterForm() {
     });
 
     if (!res.ok) {
+      const error = await res.json()
+      setError(error.error)
+      setAttempt(attempt + 1)
       throw new Error('Error registering the user');
     }
+
+    sileo.success({
+      title: "User registered successfully",
+      description: "You can now login with your credentials",
+    });
     router.push("/account?auth=login")
   };
 
@@ -39,6 +57,13 @@ export default function RegisterForm() {
           <h2 className="text-3xl font-bold text-gray-800">Create Account</h2>
           <p className="mt-2 text-gray-500">Enter your details to register</p>
         </div>
+        {
+          error && (
+            <p className="mb-4 rounded-lg bg-red-50 p-3 text-sm text-red-700">
+              {error}
+            </p>
+          )
+        }
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
           {/* Email */}
           <div className="flex flex-col gap-1">

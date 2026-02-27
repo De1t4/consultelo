@@ -29,34 +29,44 @@ export default function ConsultationContent({ consultations }: { consultations: 
         <div className="flex items-center gap-2 max-md:flex-col max-md:w-full max-md:items-start">
           {/* Filter Status */}
           <div className="flex justify-center gap-2 items-center max-md:justify-between max-md:w-full">
-            <select disabled={consultations.length === 0} onChange={(e) => setFilterStatus(e.target.value as ConsultationStatus)} defaultValue={""} name="" className='flex w-32 items-center disabled:text-gray-500 disabled:cursor-not-allowed gap-2 px-3 py-2 bg-card border border-border rounded-lg text-sm text-foreground hover:bg-card/10 transition-colors' id="">
-              <option value="" >
+            <select
+              disabled={consultations.length === 0}
+              onChange={(e) => setFilterStatus(e.target.value as ConsultationStatus)}
+              defaultValue={""}
+              name="status"
+              className='flex w-32 items-center disabled:text-gray-500 disabled:cursor-not-allowed gap-2 px-3 py-2 bg-card border border-border rounded-lg text-sm text-foreground hover:bg-card/10 transition-colors' id="">
+              <option value="" className='bg-card text-foreground'>
                 All Status
               </option>
-              <option value={status.draft}>
+              <option value={status.draft} className='bg-card text-foreground'>
                 Draft
               </option>
-              <option value={status.archived}>
+              <option value={status.archived} className='bg-card text-foreground'>
                 Archived
               </option>
-              <option value={status.active}>
+              <option value={status.active} className='bg-card text-foreground'>
                 Active
               </option>
-              <option value={status.closed}>
+              <option value={status.closed} className='bg-card text-foreground'>
                 Closed
               </option>
             </select>
             {/* Category */}
-            <select disabled={consultations.length === 0} onChange={(e) => setFilterCategory(e.target.value as ConsultationCategory)} name="" defaultValue={""} className='flex w-32 items-center disabled:text-gray-500 disabled:cursor-not-allowed gap-2 px-3 py-2 bg-card border border-border rounded-lg text-sm text-foreground hover:bg-card/10 transition-colors' id="">
-              <option value="" >
+            <select
+              disabled={consultations.length === 0}
+              onChange={(e) => setFilterCategory(e.target.value as ConsultationCategory)}
+              name="category"
+              defaultValue={""}
+              className='flex w-32 items-center disabled:text-gray-500 disabled:cursor-not-allowed gap-2 px-3 py-2 bg-card border border-border rounded-lg text-sm text-foreground hover:bg-card/10 transition-colors' id="">
+              <option value="" className='bg-card text-foreground'>
                 Category
               </option>
-              <option value={category.software}>Software</option>
-              <option value={category.IA}>IA</option>
-              <option value={category.business}>Business</option>
-              <option value={category.company}>Company</option>
-              <option value={category.strategy}>Strategy</option>
-              <option value={category.other}>Other</option>
+              <option value={category.software} className='bg-card text-foreground'>Software</option>
+              <option value={category.IA} className='bg-card text-foreground'>IA</option>
+              <option value={category.business} className='bg-card text-foreground'>Business</option>
+              <option value={category.company} className='bg-card text-foreground'>Company</option>
+              <option value={category.strategy} className='bg-card text-foreground'>Strategy</option>
+              <option value={category.other} className='bg-card text-foreground'>Other</option>
             </select>
           </div>
 

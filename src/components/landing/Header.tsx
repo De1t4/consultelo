@@ -7,8 +7,8 @@ export default function Header() {
   const { data: session } = useSession()
 
   return (
-    <header className="border-b shadow-xs w-full border-gray-100  bg-white fixed top-0 z-10">
-      <div className="max-w-6xl mx-auto px-12 py-4 max-md:px-4">
+    <header className="border-b shadow-xs w-full border-gray-100  bg-white sticky  top-0 z-10">
+      <div className="max-w-7xl mx-auto px-12 py-4 max-md:px-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">

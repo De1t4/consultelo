@@ -8,12 +8,12 @@ function NotFoundConsult() {
       {/* Main Content */}
 
       {/* Inquiry Card */}
-      <div className="bg-card rounded-xl shadow-sm border border-border p-8 mb-8 h-[70vh] flex flex-col justify-center items-center">
+      <div className="bg-background rounded-xl  p-8 mb-8 h-[70vh] flex flex-col justify-center items-center">
         <div className="mb-12 flex flex-col items-center">
-          <div className="relative h-40 w-40 rounded-full bg-primary/20 dark:bg-primary/5 flex items-center justify-center shadow-lg mb-2">
+          <div className="relative h-36 w-36 rounded-full bg-primary/20 dark:bg-primary/5 flex items-center justify-center shadow-lg mb-2">
             <AlertCircle className=" h-24 w-24 rounded-full text-primary dark:text-primary flex items-center justify-center " />
           </div >
-          <h1 className="text-4xl font-bold text-foreground dark:text-primary mb-4 mt-2">
+          <h1 className="text-3xl font-bold text-foreground dark:text-primary mb-4 mt-2">
             Consultation Not Found
           </h1>
           <p className="text-lg text-muted-foreground">

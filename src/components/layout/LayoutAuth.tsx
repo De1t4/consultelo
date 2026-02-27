@@ -20,7 +20,7 @@ export default function LayoutAuth({ children }: { children: React.ReactNode }) 
       {session && <Sidebar />}
       <div className={`${session ? 'ml-18' : ''} max-md:ml-0 max-w-screen`}>
         {renderHeader()}
-        <div className="mx-auto px-12 py-22 max-w-7xl max-md:px-4">
+        <div className="mx-auto px-12 pb-20 pt-4 max-w-7xl max-md:px-4">
           {children}
         </div>
       </div>

@@ -31,6 +31,14 @@ export const createConsultation = async (
   });
 };
 
+export const deleteConsultation = async (idConsultation: string) => {
+  return await prisma.consultation.delete({
+    where: {
+      id: idConsultation,
+    },
+  });
+};
+
 export const getMyConsultations = async (userId: string) => {
   const res: ResponseConsultList[] = await prisma.consultation.findMany({
     where: {
@@ -96,17 +104,4 @@ export const getConsultationById = async (
     },
   });
   return res as ResponseConsultDetail;
-
-  // } catch (error) {
-  //   // If it's an error we already handled, rethrow it
-  //   if (
-  //     error instanceof Error &&
-  //     (error.message.includes("does not exist") ||
-  //       error.message.includes("is invalid"))
-  //   ) {
-  //     throw error;
-  //   }
-
-  //   throw new Error("An error occurred while processing your request.");
-  // }
 };

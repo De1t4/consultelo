@@ -1,6 +1,7 @@
+import ConsultationToogle from "@/app/(owner)/my-consultations/components/ConsultationToogle";
 import { ConsultationCategory, ConsultationStatus } from "@/generated/prisma/enums";
 import { ResponseConsultList } from "@/shared/types/response-consult";
-import { Calendar, MessageSquare, MoreVertical } from "lucide-react";
+import { Calendar, MessageSquare } from "lucide-react";
 
 const categoryStyles: Record<ConsultationCategory, string> = {
   'software': 'bg-orange-100 text-orange-600',
@@ -52,9 +53,7 @@ export default function RowConsult({ consultation }: { consultation: ResponseCon
           <span className={`h-1.5 w-1.5 rounded-full ${statusDot[consultation.status]}`} />
           {consultation.status.toUpperCase()}
         </span>
-        <button className="p-1 rounded hover:bg-gray-100 transition-colors text-gray-400 shrink-0">
-          <MoreVertical className="h-4 w-4" />
-        </button>
+        <ConsultationToogle consultation={consultation} />
       </div>
     </div>
   );

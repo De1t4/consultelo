@@ -1,7 +1,7 @@
 import { Copy } from 'lucide-react'
 import { useState } from 'react'
 
-export default function ShareConsult({ consultationId }: { consultationId: string }) {
+export default function ShareConsult({ consultationId, isOwner }: { consultationId: string, isOwner: boolean }) {
   const [copied, setCopied] = useState(false)
   const consultationUrl = `https://consultelo.vercel.app/consultation/${consultationId}`
 
@@ -10,6 +10,8 @@ export default function ShareConsult({ consultationId }: { consultationId: strin
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }
+
+  if (!isOwner) return null
 
   return (
     <aside className="bg-card border border-border p-6 rounded-2xl shadow-sm hover:shadow-md transition-all group relative overflow-hidden">

@@ -34,7 +34,7 @@ export default function FeedbackConsult({ consultation }: { consultation: Respon
       <article className="bg-card rounded-lg border border-border p-6">
         <form onSubmit={handleSubmit(onSubmit)}>
           <label htmlFor='feedback' className="font-semibold text-foreground mb-4">Professional Feedback</label>
-          <div className={`border border-gray-300 rounded-lg overflow-hidden ${errors.message ? "border-red-500" : ""}`}>
+          <div className={`border border-border rounded-lg overflow-hidden ${errors.message ? "border-red-500" : ""}`}>
             {/* Text Area */}
             <textarea
               className="w-full p-4 text-sm text-muted-foreground focus:outline-none resize-none"

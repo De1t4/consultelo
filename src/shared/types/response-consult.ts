@@ -40,8 +40,10 @@ export interface ResponseConsultDetail {
   createdAt: Date;
   expiresAt: Date | null;
   settings: Settings | null;
-  comments: Comment[];
   user: User | null;
+  _count: {
+    comments: number;
+  };
 }
 
 export interface Comment {

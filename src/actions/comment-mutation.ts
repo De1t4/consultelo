@@ -11,7 +11,7 @@ export async function createCommentAction(data: FormDataComment) {
   const cookieStore = await cookies();
   const cookieName = `has_commented_${data.consultationId}`;
 
-  return await executeAction({
+  const newComment = await executeAction({
     actionFn: async () => {
       if (!data.consultationId) {
         throw new Error("No consultation ID was provided.");
@@ -42,17 +42,17 @@ export async function createCommentAction(data: FormDataComment) {
         }
       }
 
-      const comment = await createComment(data, data.consultationId);
-
-      cookieStore.set(cookieName, "true", {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        maxAge: 60 * 60 * 24 * 30,
-        path: "/",
-        sameSite: "lax",
-      });
-
-      return comment;
+      return await createComment(data, data.consultationId);
     },
   });
+
+  cookieStore.set(cookieName, "true", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    maxAge: 60 * 60 * 24 * 30,
+    path: "/",
+    sameSite: "lax",
+  });
+
+  return newComment;
 }

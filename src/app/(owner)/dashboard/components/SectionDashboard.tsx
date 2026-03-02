@@ -44,15 +44,15 @@ export default function SectionDashboard() {
       {/* Header section */}
       <div className="flex justify-between items-center border-b border-border pb-6 max-md:flex-col gap-4">
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-foreground">Dashboard Overview</h1>
-          <p className="text-muted-foreground text-lg mt-1 font-medium">
+          <h1 className="text-3xl font-extrabold tracking-tight text-foreground max-md:text-center">Dashboard Overview</h1>
+          <p className="text-muted-foreground text-md mt-1 font-medium max-md:text-center">
             Welcome back, <span className="text-primary font-bold">{session.user.name?.split(' ')[0]}</span>
           </p>
         </div>
         <Link href="/consultation">
           <Button className="flex h-12 items-center gap-2 rounded-xl px-5 py-6 shadow-lg shadow-primary/20 hover:shadow-primary/30 active:scale-95 transition-all">
             <Plus className="size-5" />
-            <span className=" sm:inline">New Inquiry</span>
+            <span className=" sm:inline">New Consultation</span>
           </Button>
         </Link>
       </div>
@@ -84,7 +84,9 @@ export default function SectionDashboard() {
 
       {/* Recent Public Inquiries Header */}
       <div className="flex items-center justify-between pt-4">
-        <h2 className="text-2xl font-bold text-foreground">Recent Inquiries</h2>
+        <div className="flex flex-col gap-2">
+          <h2 className="text-2xl tracking-tight text-foreground font-bold mb-2">Public Consultations</h2>
+        </div>
         <div className="flex items-center gap-2">
           <button className="flex items-center gap-2 px-3 py-1.5 bg-card border border-border rounded-lg text-sm text-foreground hover:bg-accent transition-colors cursor-pointer">
             <ChevronDown className="size-4" />

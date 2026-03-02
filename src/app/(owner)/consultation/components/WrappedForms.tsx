@@ -36,11 +36,11 @@ export default function WrappedForms() {
             STEP {currentStep === "drafting" ? "1" : "2"} OF 2
           </span>
         </div>
-        <h1 className="text-4xl font-bold text-foreground mb-2">
+        <h2 className="text-2xl font-bold tracking-tight text-foreground mb-2">
           {currentStep === "drafting" ? "Create Consultation" : "Review Inquiry"}
-        </h1>
+        </h2>
         <div className="flex items-center justify-between max-md:flex-col max-md:items-start max-md:gap-2">
-          <p className="text-muted-foreground">
+          <p className="text-sm text-muted-foreground">
             {currentStep === "drafting"
               ? "Detailed inquiry for expert analysis and strategic feedback."
               : "Please review the details before publishing your consultation request."}

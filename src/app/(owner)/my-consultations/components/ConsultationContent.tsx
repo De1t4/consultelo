@@ -37,7 +37,7 @@ export default function ConsultationContent({ consultations }: { consultations: 
       {/* Header & Controls */}
       <section className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h2 className='text-2xl font-bold tracking-tight text-foreground'>My Consultations</h2>
+          <h2 className='text-2xl font-bold tracking-tight text-foreground mb-2'>My Consultations</h2>
           <p className='text-sm text-muted-foreground'>Manage and track your expert inquiries</p>
         </div>
 

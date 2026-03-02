@@ -42,8 +42,9 @@ export default function CardConsult({ consultation }: { consultation: ResponseCo
       {/* Top row */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className={`text-xs font-bold tracking-wide px-2 py-1 rounded-full ${categoryStyles[consultation.categories]}`}>
-            {consultation.categories.toUpperCase()}
+          <span className={`flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full ${statusStyles[consultation.status]}`}>
+            <span className={`h-1.5 w-1.5 rounded-full ${statusDot[consultation.status]}`} />
+            {consultation.status.toUpperCase()}
           </span>
           <span className="text-gray-300">•</span>
           <span className="text-xs text-foreground font-medium opacity-60">#{consultation.id.slice(0, 8)}</span>
@@ -51,13 +52,20 @@ export default function CardConsult({ consultation }: { consultation: ResponseCo
         <ConsultationToogle consultation={consultation} />
       </div>
       {/* Title */}
-      <h3 className="font-semibold text-primary leading-snug text-lg">
+      <h3 className="font-semibold text-primary leading-snug text-lg line-clamp-1">
         {consultation.title}
       </h3>
       {/* Description */}
       <RichTextDisplay content={JSON.stringify(consultation.body)} classname='line-clamp-2' />
+
+      <div className="">
+        <span className={`text-[10px] font-bold tracking-wide px-2 py-1 rounded-full ${categoryStyles[consultation.categories]}`}>
+          {consultation.categories.toUpperCase()}
+        </span>
+      </div>
+
       {/* Footer */}
-      <div className="flex items-center gap-3 pt-1 border-t border-gray-100 flex-wrap">
+      <div className="flex items-center justify-between gap-3 pt-3 border-t border-border flex-wrap">
         <div className="flex items-center gap-1.5 text-xs text-gray-400">
           <Calendar className="h-3.5 w-3.5" />
           {consultation.createdAt.toDateString()}
@@ -70,12 +78,7 @@ export default function CardConsult({ consultation }: { consultation: ResponseCo
           <MessageSquare className="h-3.5 w-3.5" />
           {consultation._count.comments} comments
         </div>
-        <div className="ml-auto">
-          <span className={`flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full ${statusStyles[consultation.status]}`}>
-            <span className={`h-1.5 w-1.5 rounded-full ${statusDot[consultation.status]}`} />
-            {consultation.status.toUpperCase()}
-          </span>
-        </div>
+
       </div>
     </Link>
 

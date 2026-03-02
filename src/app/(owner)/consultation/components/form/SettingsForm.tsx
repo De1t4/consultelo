@@ -14,7 +14,7 @@ export default function SettingsForm({ isPending }: { isPending: boolean }) {
 
   return (
     <div className="lg:col-span-1">
-      <div className="bg-card rounded-lg border border-border p-6 sticky top-24">
+      <div className="bg-card rounded-lg border border-border p-6 fixed top-24">
         {currentStep === "drafting" ? (
           <>
             {/* Quick Settings Header */}

@@ -89,6 +89,15 @@ export const getConsultationById = async (
         },
       },
       settings: true,
+      comments: {
+        select: {
+          id: true,
+          authorName: true,
+          message: true,
+          createdAt: true,
+          userId: true,
+        },
+      },
       _count: {
         select: {
           comments: true,

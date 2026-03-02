@@ -11,16 +11,14 @@ export async function createCommentAction(data: FormDataComment) {
   const cookieStore = await cookies();
   const cookieName = `has_commented_${data.consultationId}`;
 
+  if (cookieStore.get(cookieName)) {
+    throw new Error("You have already left a comment on this consultation.");
+  }
+
   const newComment = await executeAction({
     actionFn: async () => {
       if (!data.consultationId) {
         throw new Error("No consultation ID was provided.");
-      }
-
-      if (cookieStore.get(cookieName)) {
-        throw new Error(
-          "You have already left a comment on this consultation.",
-        );
       }
 
       if (!data.isAnonymous) {

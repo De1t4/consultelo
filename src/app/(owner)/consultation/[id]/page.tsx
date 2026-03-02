@@ -3,22 +3,22 @@ import CaseInfoConsult from "@/app/(owner)/consultation/[id]/components/CaseInfo
 import CommentsConsult from "@/app/(owner)/consultation/[id]/components/CommentsConsult"
 import FeedbackConsult from "@/app/(owner)/consultation/[id]/components/FeedbackConsult"
 import PrincipalConsult from "@/app/(owner)/consultation/[id]/components/PrincipalConsult"
+import SkeletonConsult from "@/components/skeletons/SkeletonConsult"
 import { useConsultationId } from "@/hooks/use/use-consultation-id"
 import { useSession } from "next-auth/react"
 import { notFound, useParams } from "next/navigation"
 import ShareConsult from "./components/ShareConsult"
-import SkeletonConsult from "@/components/skeletons/SkeletonConsult"
 
 export default function Page() {
   const params = useParams<{ id: string }>()
   const { data: session } = useSession()
 
-  const { consultation, isLoading, error, comments, isLoadingComment } =
+  const { consultation, isLoading, error } =
     useConsultationId({ idParams: params.id });
 
-  if (isLoading && isLoadingComment) return <SkeletonConsult />
+  if (isLoading) return <SkeletonConsult />
   if (error) return <div>Error: {error.message}</div>
-  if (!consultation) return notFound()
+  if (consultation == null) return notFound()
 
 
   return (
@@ -28,7 +28,7 @@ export default function Page() {
         {/* Left Column - Main Content */}
         <section className="lg:col-span-2 space-y-6">
           <PrincipalConsult consultation={consultation} />
-          <CommentsConsult comments={comments || []} consultation={consultation} />
+          <CommentsConsult comments={consultation.comments || []} consultation={consultation} />
           <FeedbackConsult consultation={consultation} />
         </section>
         {/* Right Sidebar */}

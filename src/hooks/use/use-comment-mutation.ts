@@ -17,7 +17,7 @@ const useCreateComment = () => {
         description: "Your comment has been added to the consultation.",
       });
       queryClient.invalidateQueries({
-        queryKey: ["comments", data.consultationId],
+        queryKey: ["consultation-detail", data.consultationId],
       });
       return true;
     },

@@ -41,6 +41,7 @@ export interface ResponseConsultDetail {
   expiresAt: Date | null;
   settings: Settings | null;
   user: User | null;
+  comments: Comment[] | null;
   _count: {
     comments: number;
   };

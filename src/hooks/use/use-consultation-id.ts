@@ -1,4 +1,3 @@
-import { getCommentsByConsultationIdAction } from "@/actions/comment-queries";
 import { getConsultationByIdAction } from "@/actions/consultation-queries";
 import { useQuery } from "@tanstack/react-query";
 
@@ -12,16 +11,15 @@ export const useConsultationId = ({ idParams }: { idParams: string }) => {
     queryFn: () => getConsultationByIdAction(idParams),
   });
 
-  const { data: comments, isLoading: isLoadingComment } = useQuery({
-    queryKey: ["comments", idParams],
-    queryFn: () => getCommentsByConsultationIdAction(idParams),
-  });
+  // const { data: comments, isLoading: isLoadingComment } = useQuery({
+  //   queryKey: ["comments", idParams],
+  //   queryFn: () => getCommentsByConsultationIdAction(idParams),
+  //   retry: 1,
+  // });
 
   return {
     consultation,
     isLoading,
     error,
-    comments,
-    isLoadingComment,
   };
 };

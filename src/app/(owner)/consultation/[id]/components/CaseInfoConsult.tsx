@@ -42,7 +42,7 @@ export default function CaseInfoConsult({ consultation }: { consultation: Respon
         <div className="mt-4 pt-4 border-t border-gray-200">
           <div className="flex items-center justify-between">
             <span className="text-xs font-medium text-teal-600">TOTAL COMMENTS</span>
-            <span className="text-sm font-semibold text-foreground">{consultation.comments.length}</span>
+            <span className="text-sm font-semibold text-foreground">{consultation._count.comments}</span>
           </div>
         </div>
       </div>

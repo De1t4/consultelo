@@ -1,17 +1,17 @@
 import {
   ConsultationCategory,
   ConsultationStatus,
-} from "@/generated/prisma/enums.js";
-import { ResponseConsultList } from "@/shared/types/response-consult.js";
+} from "@/generated/prisma/enums";
+import { ResponseConsultList } from "@/shared/types/response-consult";
 import { useMemo, useState } from "react";
 
 type ViewMode = "grid" | "list";
 
-export function useConsults({
-  consultations,
-}: {
+interface UseConsultsProps {
   consultations: ResponseConsultList[];
-}) {
+}
+
+export function useConsults({ consultations }: UseConsultsProps) {
   const [viewMode, setViewMode] = useState<ViewMode>("grid");
   const [filterStatus, setFilterStatus] = useState<ConsultationStatus | "">("");
   const [filterCategory, setFilterCategory] = useState<
@@ -20,21 +20,32 @@ export function useConsults({
 
   const filteredConsultations = useMemo(() => {
     const data = Array.isArray(consultations) ? consultations : [];
+
     return data.filter((item) => {
-      const matchesStatus = filterStatus ? item.status === filterStatus : true;
-      const matchesCategory = filterCategory
-        ? item.categories === filterCategory
-        : true;
+      const matchesStatus = !filterStatus || item.status === filterStatus;
+      const matchesCategory =
+        !filterCategory || item.categories === filterCategory;
+
       return matchesStatus && matchesCategory;
     });
   }, [consultations, filterStatus, filterCategory]);
 
+  const resetFilters = () => {
+    setFilterStatus("");
+    setFilterCategory("");
+  };
+
   return {
-    filteredConsultations,
-    setViewMode,
+    // Data
+    viewMode,
     filterStatus,
+    filterCategory,
+    filteredConsultations,
+
+    // Actions
+    setViewMode,
     setFilterStatus,
     setFilterCategory,
-    viewMode,
+    resetFilters,
   };
 }

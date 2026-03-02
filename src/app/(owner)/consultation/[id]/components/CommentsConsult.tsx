@@ -1,17 +1,16 @@
-import { ResponseConsultDetail } from '@/shared/types/response-consult'
+import { Comment, ResponseConsultDetail } from '@/shared/types/response-consult'
 import { User } from 'lucide-react'
 import { useSession } from 'next-auth/react'
 
-export default function CommentsConsult({ consultation }: { consultation: ResponseConsultDetail }) {
-
+export default function CommentsConsult({ comments, consultation }: { comments: Comment[], consultation: ResponseConsultDetail }) {
   const { data: session } = useSession()
 
-  const comments = consultation.comments
   const isOwner = consultation.userId === session?.user.id
 
   if (!isOwner && !consultation.settings?.viewComments) {
     return null
   }
+
   return (
     <>
       <article className="bg-card rounded-lg border border-border p-6">

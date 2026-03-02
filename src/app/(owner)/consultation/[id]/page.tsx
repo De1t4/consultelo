@@ -1,25 +1,22 @@
 'use client'
-import { getConsultationByIdAction } from "@/actions/consultation-queries"
 import CaseInfoConsult from "@/app/(owner)/consultation/[id]/components/CaseInfoConsult"
 import CommentsConsult from "@/app/(owner)/consultation/[id]/components/CommentsConsult"
 import FeedbackConsult from "@/app/(owner)/consultation/[id]/components/FeedbackConsult"
 import PrincipalConsult from "@/app/(owner)/consultation/[id]/components/PrincipalConsult"
-import { useQuery } from "@tanstack/react-query"
+import { useConsultationId } from "@/hooks/use/use-consultation-id"
 import { useSession } from "next-auth/react"
 import { notFound, useParams } from "next/navigation"
 import ShareConsult from "./components/ShareConsult"
-import SkeletonConsult from "./components/SkeletonConsult"
+import SkeletonConsult from "@/components/skeletons/SkeletonConsult"
 
 export default function Page() {
-  const { data: session } = useSession()
   const params = useParams<{ id: string }>()
+  const { data: session } = useSession()
 
-  const { data: consultation, isLoading, error } = useQuery({
-    queryKey: ["consultation-detail", params.id],
-    queryFn: () => getConsultationByIdAction(params.id),
-  });
+  const { consultation, isLoading, error, comments, isLoadingComment } =
+    useConsultationId({ idParams: params.id });
 
-  if (isLoading) return <SkeletonConsult />
+  if (isLoading && isLoadingComment) return <SkeletonConsult />
   if (error) return <div>Error: {error.message}</div>
   if (!consultation) return notFound()
 
@@ -31,12 +28,12 @@ export default function Page() {
         {/* Left Column - Main Content */}
         <section className="lg:col-span-2 space-y-6">
           <PrincipalConsult consultation={consultation} />
-          <CommentsConsult consultation={consultation} />
+          <CommentsConsult comments={comments || []} consultation={consultation} />
           <FeedbackConsult consultation={consultation} />
         </section>
         {/* Right Sidebar */}
         <div className="space-y-6">
-          {session?.user.id === consultation.userId && <ShareConsult consultationId={consultation.id} />}
+          <ShareConsult consultationId={consultation.id} isOwner={session?.user.id === consultation.userId} />
           <CaseInfoConsult consultation={consultation} />
         </div>
       </div>

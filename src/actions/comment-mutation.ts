@@ -8,14 +8,14 @@ import { getServerSession } from "next-auth";
 import { cookies } from "next/headers";
 
 export async function createCommentAction(data: FormDataComment) {
+  const cookieStore = await cookies();
+  const cookieName = `has_commented_${data.consultationId}`;
+
   return await executeAction({
     actionFn: async () => {
       if (!data.consultationId) {
         throw new Error("No consultation ID was provided.");
       }
-
-      const cookieStore = await cookies();
-      const cookieName = `has_commented_${data.consultationId}`;
 
       if (cookieStore.get(cookieName)) {
         throw new Error(
@@ -23,34 +23,36 @@ export async function createCommentAction(data: FormDataComment) {
         );
       }
 
-      try {
-        if (!data.isAnonymous) {
-          const session = await getServerSession(authOptions);
-          if (!session?.user?.id) {
-            throw new Error("You must be logged in to comment.");
-          }
-          data.userId = session.user.id;
-          const commented = await isCommentedByUser(
-            session.user.id,
-            data.consultationId,
-          );
-          if (commented) {
-            throw new Error(
-              "You have already left a comment on this consultation.",
-            );
-          }
+      if (!data.isAnonymous) {
+        const session = await getServerSession(authOptions);
+        if (!session?.user?.id) {
+          throw new Error("You must be logged in to comment.");
         }
 
-        await createComment(data, data.consultationId);
-        cookieStore.set(cookieName, "true", {
-          httpOnly: true,
-          secure: true,
-          maxAge: 60 * 60 * 24 * 30,
-          path: "/", // Available on the entire web
-        });
-      } catch (error) {
-        throw error;
+        data.userId = session.user.id;
+        const commented = await isCommentedByUser(
+          session.user.id,
+          data.consultationId,
+        );
+
+        if (commented) {
+          throw new Error(
+            "You have already left a comment on this consultation.",
+          );
+        }
       }
+
+      const comment = await createComment(data, data.consultationId);
+
+      cookieStore.set(cookieName, "true", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        maxAge: 60 * 60 * 24 * 30,
+        path: "/",
+        sameSite: "lax",
+      });
+
+      return comment;
     },
   });
 }

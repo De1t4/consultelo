@@ -1,22 +1,19 @@
 export const dynamic = 'force-dynamic';
 
-import { useCreateComment } from '@/hooks/use/use-comment-mutation'
-import { FormDataComment, SchemaComment } from '@/schemas/schema-comment'
-import { ResponseConsultDetail } from '@/shared/types/response-consult'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { Info } from 'lucide-react'
-import { useForm } from 'react-hook-form'
-import { Button } from '@/components/ui/Button'
-import { useQueryClient } from '@tanstack/react-query';
+import { Button } from '@/components/ui/Button';
+import { useCreateComment } from '@/hooks/use/use-comment-mutation';
+import { FormDataComment, SchemaComment } from '@/schemas/schema-comment';
+import { ResponseConsultDetail } from '@/shared/types/response-consult';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Info } from 'lucide-react';
+import { useForm } from 'react-hook-form';
 
 export default function FeedbackConsult({ consultation }: { consultation: ResponseConsultDetail }) {
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<FormDataComment>({
+  const { register, handleSubmit, formState: { errors } } = useForm<FormDataComment>({
     resolver: zodResolver(SchemaComment),
   })
 
   const { createComment, isPending } = useCreateComment();
-
-  const queryClient = useQueryClient();
 
   const onSubmit = async (data: FormDataComment) => {
     await createComment({
@@ -24,8 +21,6 @@ export default function FeedbackConsult({ consultation }: { consultation: Respon
       consultationId: consultation.id,
       isAnonymous: consultation.settings?.allowAnonymous,
     })
-    queryClient.invalidateQueries({ queryKey: ["consultation-detail", consultation.id] })
-    reset({ message: "" })
   }
 
   return (
@@ -39,6 +34,7 @@ export default function FeedbackConsult({ consultation }: { consultation: Respon
             <textarea
               className="w-full p-4 text-sm text-muted-foreground focus:outline-none resize-none"
               rows={8}
+              minLength={20}
               placeholder="Type your professional advice here... Reference specific codes or standards where applicable..."
               {...register("message")}
             />

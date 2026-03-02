@@ -2,13 +2,14 @@ import { deleteConsultationAction } from '@/actions/consultation-mutation';
 import { ResponseConsultList } from '@/shared/types/response-consult';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Edit, MoreVertical, Trash2 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
 import { sileo } from 'sileo';
 
 export default function ConsultationToogle({ consultation }: { consultation: ResponseConsultList }) {
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
-
+  const router = useRouter();
   const queryClient = useQueryClient();
 
   const { mutateAsync: deleteConsultation } = useMutation({
@@ -21,6 +22,7 @@ export default function ConsultationToogle({ consultation }: { consultation: Res
           description: "The consultation has been deleted successfully",
         }
       )
+      router.refresh();
     },
   })
 

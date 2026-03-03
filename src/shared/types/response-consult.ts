@@ -53,6 +53,10 @@ export interface Comment {
   createdAt: Date;
   userId: string | null;
   authorName: string | null;
+  user: {
+    username: string;
+    email: string;
+  } | null;
 }
 
 interface Settings {

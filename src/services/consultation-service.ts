@@ -96,6 +96,12 @@ export const getConsultationById = async (
           message: true,
           createdAt: true,
           userId: true,
+          user: {
+            select: {
+              username: true,
+              email: true,
+            },
+          },
         },
       },
       _count: {

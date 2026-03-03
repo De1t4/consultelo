@@ -26,13 +26,11 @@ export async function createCommentAction(data: FormDataComment) {
         if (!session?.user?.id) {
           throw new Error("You must be logged in to comment.");
         }
-
         data.userId = session.user.id;
         const commented = await isCommentedByUser(
           session.user.id,
           data.consultationId,
         );
-
         if (commented) {
           throw new Error(
             "You have already left a comment on this consultation.",

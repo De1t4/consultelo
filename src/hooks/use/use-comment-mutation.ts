@@ -19,14 +19,12 @@ const useCreateComment = () => {
       queryClient.invalidateQueries({
         queryKey: ["consultation-detail", data.consultationId],
       });
-      return true;
     },
     onError: (error) => {
       sileo.error({
         title: "Failed to create comment",
         description: error.message,
       });
-      return false;
     },
   });
   return { createComment, isPending, isSuccess };

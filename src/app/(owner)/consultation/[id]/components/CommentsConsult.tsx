@@ -34,7 +34,7 @@ export default function CommentsConsult({ comments, consultation }: { comments: 
                   <div className="flex items-center gap-2 mb-1">
                     <h4 className="font-semibold text-foreground">
                       {
-                        consultation.settings?.allowAnonymous ? comment.authorName ?? "Anonymous" : comment.user?.username
+                        consultation.settings?.allowAnonymous ? "Anonymous" : comment.user?.username
                       }
                     </h4>
                     {

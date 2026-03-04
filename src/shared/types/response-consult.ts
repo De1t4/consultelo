@@ -52,7 +52,6 @@ export interface Comment {
   message: string;
   createdAt: Date;
   userId: string | null;
-  authorName: string | null;
   user: {
     username: string;
     email: string;

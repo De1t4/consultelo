@@ -10,7 +10,6 @@ export const createComment = async (
       message: data.message,
       userId: data.userId ?? null,
       consultationId: consultationId,
-      authorName: data.authorName ?? "Anonymous",
     },
   });
 };

@@ -47,7 +47,7 @@ export function Sidebar() {
       <aside
         onMouseEnter={() => setExpanded(true)}
         onMouseLeave={() => setExpanded(false)}
-        className={`fixed left-0 top-0 z-40 bg-card hidden h-screen flex-col border-r border-border bg-sidebar transition-all duration-300 ease-in-out md:flex ${expanded ? "w-60" : "w-[72px]"}`}
+        className={`fixed left-0 top-0 z-20 bg-card hidden h-screen flex-col border-r border-border bg-sidebar transition-all duration-300 ease-in-out md:flex ${expanded ? "w-60" : "w-[72px]"}`}
       >
         {/* Logo */}
         <div className="flex h-16 items-center px-6">

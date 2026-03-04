@@ -10,6 +10,7 @@ import { cookies } from "next/headers";
 export async function createCommentAction(data: FormDataComment) {
   const cookieStore = await cookies();
   const cookieName = `has_commented_${data.consultationId}`;
+  const session = await getServerSession(authOptions);
 
   if (cookieStore.get(cookieName)) {
     throw new Error("You have already left a comment on this consultation.");
@@ -22,7 +23,6 @@ export async function createCommentAction(data: FormDataComment) {
       }
 
       if (!data.isAnonymous) {
-        const session = await getServerSession(authOptions);
         if (!session?.user?.id) {
           throw new Error("You must be logged in to comment.");
         }
@@ -41,6 +41,10 @@ export async function createCommentAction(data: FormDataComment) {
       return await createComment(data, data.consultationId);
     },
   });
+
+  if (session) {
+    return newComment;
+  }
 
   cookieStore.set(cookieName, "true", {
     httpOnly: true,

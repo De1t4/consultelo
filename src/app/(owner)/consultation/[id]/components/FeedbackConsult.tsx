@@ -1,5 +1,6 @@
 "use client"
 
+import LoginForm from '@/app/(auth)/components/LoginForm';
 import { Button } from '@/components/ui/Button';
 import { Modal } from '@/components/ui/Modal';
 import { useCreateComment } from '@/hooks/use/use-comment-mutation';
@@ -7,14 +8,15 @@ import { FormDataComment, SchemaComment } from '@/schemas/schema-comment';
 import { ResponseConsultDetail } from '@/shared/types/response-consult';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Info } from 'lucide-react';
+import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 export default function FeedbackConsult({ consultation }: { consultation: ResponseConsultDetail }) {
   const [open, setOpen] = useState(false);
+  const { data: session } = useSession()
 
-
-  const { register, handleSubmit, formState: { errors }, trigger, setValue } = useForm<FormDataComment>({
+  const { register, handleSubmit, formState: { errors } } = useForm<FormDataComment>({
     resolver: zodResolver(SchemaComment),
   })
 
@@ -31,27 +33,8 @@ export default function FeedbackConsult({ consultation }: { consultation: Respon
 
   return (
     <>
-      <Modal isOpen={open} onClose={() => setOpen(false)} showCloseButton={false} title='Enter an author name'>
-        <div className="flex flex-col gap-2 h-48 justify-around">
-          <div className="flex flex-col gap-2">
-            <label htmlFor='feedback' className="font-semibold text-foreground ">Author Name</label>
-            <input
-              type="text"
-              placeholder='Ej: John Doe'
-              {...register("authorName")}
-              className={`w-full px-3 py-2 bg-background border border-border rounded-lg text-sm text-foreground focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all ${errors.authorName ? "border-red-500" : ""}`}
-            />
-            {errors.authorName && (
-              <p className="text-red-500 text-xs ">
-                {errors.authorName.message}
-              </p>
-            )}
-          </div>
-          <div className="flex items-center justify-end gap-2 mt-4">
-            <Button variant="outline" type='button' onClick={() => setOpen(false)}>Cancel</Button>
-            <Button disabled={isPending} variant="primary" type='submit' form='form-feedback'>Submit</Button>
-          </div>
-        </div>
+      <Modal isOpen={open} onClose={() => setOpen(false)} size='md' >
+        <LoginForm onSuccess={() => setOpen(false)} callbackUrl={`/consultation/${consultation.id}`} />
       </Modal>
       {/* Contribute Feedback */}
       <article className="bg-card rounded-lg border border-border p-6">
@@ -77,16 +60,13 @@ export default function FeedbackConsult({ consultation }: { consultation: Respon
               <span>All contributions are subject to professional review guidelines.</span>
             </div>
             <Button disabled={isPending} onClick={async () => {
-              const isValid = await trigger(["message"])
-              if (isValid) {
-                if (consultation.settings?.allowAnonymous) {
-                  setOpen(true)
-                } else {
-                  setValue("authorName", "Registered User")
-                  handleSubmit(onSubmit)
-                }
+              console.log(consultation.settings?.allowAnonymous, session)
+              if (!consultation.settings?.allowAnonymous && !session?.user) {
+                setOpen(true)
+              } else {
+                handleSubmit(onSubmit)
               }
-            }} type={consultation.settings?.allowAnonymous ? "button" : "submit"} variant="primary" className='max-md:w-full max-md:items-end max-md:h-10' >
+            }} type={!consultation.settings?.allowAnonymous && !session?.user ? "button" : "submit"} variant="primary" className='max-md:w-full max-md:items-end max-md:h-10' >
               {isPending ? "Submitting..." : "Submit Answer"}
             </Button>
           </div>

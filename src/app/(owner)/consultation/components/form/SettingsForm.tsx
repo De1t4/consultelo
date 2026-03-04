@@ -107,7 +107,7 @@ export default function SettingsForm({ isPending }: { isPending: boolean }) {
               className="w-full justify-center cursor-pointer"
               type='button'
               onClick={async () => {
-                const isValid = await trigger(["title", "body"])
+                const isValid = await trigger(["title", "body", "categories"])
                 if (isValid) {
                   setCurrentStep("review")
                 }

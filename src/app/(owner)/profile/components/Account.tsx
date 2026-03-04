@@ -39,6 +39,7 @@ export default function Account() {
             <label className="block text-sm font-medium text-muted-foreground mb-2">Professional Title</label>
             <input
               type="text"
+              placeholder='Ej: Chief Executive Officer'
               className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm text-foreground focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
             />
           </div>

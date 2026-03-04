@@ -20,14 +20,7 @@ export const SchemaConsultation = z.object({
         return false;
       }
     }, "The body must be a valid JSON"),
-  categories: z.enum([
-    "software",
-    "IA",
-    "business",
-    "company",
-    "strategy",
-    "other",
-  ]),
+  categories: z.string().min(1, "Category is required"),
   privacy: z.enum(["public", "private"]),
   allowAnonymous: z.boolean(),
   viewComments: z.boolean(),
@@ -38,7 +31,7 @@ export type FormDataConsultation = z.infer<typeof SchemaConsultation>;
 export const initialValuesConsultation: FormDataConsultation = {
   title: "",
   body: "",
-  categories: "other",
+  categories: "",
   privacy: "public",
   allowAnonymous: false,
   viewComments: false,

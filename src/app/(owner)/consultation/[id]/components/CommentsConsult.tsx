@@ -27,7 +27,7 @@ export default function CommentsConsult({ consultation }: { consultation: Respon
             <p className="text-sm text-muted-foreground text-center py-4">No comments yet. Be the first to participate!</p>
           ) : (
             comments.map((comment, index) => (
-              <div key={comment.id} className={`${index > 0 ? 'pt-6 border-t border-gray-200' : ''} flex items-start gap-4`}>
+              <div key={comment.id} className={`${index > 0 ? 'pt-6 border-t border-border' : ''} flex items-start gap-4`}>
                 <div className="h-10 w-10 bg-teal-500 rounded-full flex items-center justify-center text-white font-semibold">
                   {comment.user?.username?.slice(0, 2).toUpperCase() || <User size={20} />}
                 </div>
@@ -46,7 +46,7 @@ export default function CommentsConsult({ consultation }: { consultation: Respon
                     Posted on {new Date(comment.createdAt).toLocaleDateString()}
                   </p>
 
-                  <div className="prose prose-sm max-w-none text-foreground mb-4">
+                  <div className="prose prose-sm max-w-none text-foreground text-wrap mb-4">
                     <p>{comment.message}</p>
                   </div>
                 </div>

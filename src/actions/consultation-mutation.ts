@@ -7,7 +7,7 @@ import {
   getConsultationById,
 } from "@/services/consultation-service";
 import { authOptions } from "@/shared/lib/auth";
-import { executeAction } from "@/shared/types/executionAction";
+import { executeAction } from "@/shared/utils/execution-action-db";
 import { isValidId } from "@/shared/utils/validates";
 import { InputJsonValue } from "@prisma/client/runtime/client";
 import { getServerSession } from "next-auth";

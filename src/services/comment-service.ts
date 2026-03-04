@@ -1,6 +1,5 @@
 import { FormDataComment } from "@/schemas/schema-comment";
 import prisma from "@/shared/lib/prisma";
-import { Comment } from "@/shared/types/response-consult";
 
 export const createComment = async (
   data: FormDataComment,
@@ -11,7 +10,6 @@ export const createComment = async (
       message: data.message,
       userId: data.userId ?? null,
       consultationId: consultationId,
-      authorName: data.authorName ?? null,
     },
   });
 };
@@ -28,22 +26,22 @@ export const isCommentedByUser = async (
   });
 };
 
-export const getCommentsByConsultationId = async (consultationId: string) => {
-  const comments: Comment[] | [] = await prisma.comment.findMany({
-    where: {
-      consultationId: consultationId,
-    },
-    select: {
-      id: true,
-      message: true,
-      createdAt: true,
-      userId: true,
-      authorName: true,
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
+// export const getCommentsByConsultationId = async (consultationId: string) => {
+//   const comments: Comment[] | [] = await prisma.comment.findMany({
+//     where: {
+//       consultationId: consultationId,
+//     },
+//     select: {
+//       id: true,
+//       message: true,
+//       createdAt: true,
+//       userId: true,
+//       authorName: true,
+//     },
+//     orderBy: {
+//       createdAt: "desc",
+//     },
+//   });
 
-  return comments;
-};
+//   return comments;
+// };

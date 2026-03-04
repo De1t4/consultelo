@@ -1,14 +1,21 @@
-export const dynamic = 'force-dynamic';
+"use client"
 
+import LoginForm from '@/app/(auth)/components/LoginForm';
 import { Button } from '@/components/ui/Button';
+import { Modal } from '@/components/ui/Modal';
 import { useCreateComment } from '@/hooks/use/use-comment-mutation';
 import { FormDataComment, SchemaComment } from '@/schemas/schema-comment';
 import { ResponseConsultDetail } from '@/shared/types/response-consult';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Info } from 'lucide-react';
+import { useSession } from 'next-auth/react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 export default function FeedbackConsult({ consultation }: { consultation: ResponseConsultDetail }) {
+  const [open, setOpen] = useState(false);
+  const { data: session } = useSession()
+
   const { register, handleSubmit, formState: { errors } } = useForm<FormDataComment>({
     resolver: zodResolver(SchemaComment),
   })
@@ -21,20 +28,23 @@ export default function FeedbackConsult({ consultation }: { consultation: Respon
       consultationId: consultation.id,
       isAnonymous: consultation.settings?.allowAnonymous,
     })
+    setOpen(false)
   }
 
   return (
     <>
+      <Modal isOpen={open} onClose={() => setOpen(false)} size='md' >
+        <LoginForm onSuccess={() => setOpen(false)} callbackUrl={`/consultation/${consultation.id}`} />
+      </Modal>
       {/* Contribute Feedback */}
       <article className="bg-card rounded-lg border border-border p-6">
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form id='form-feedback' onSubmit={handleSubmit(onSubmit)}>
           <label htmlFor='feedback' className="font-semibold text-foreground mb-4">Professional Feedback</label>
           <div className={`border border-border rounded-lg overflow-hidden ${errors.message ? "border-red-500" : ""}`}>
             {/* Text Area */}
             <textarea
               className="w-full p-4 text-sm text-muted-foreground focus:outline-none resize-none"
               rows={8}
-              minLength={20}
               placeholder="Type your professional advice here... Reference specific codes or standards where applicable..."
               {...register("message")}
             />
@@ -49,8 +59,15 @@ export default function FeedbackConsult({ consultation }: { consultation: Respon
               <Info className="h-4 w-4" />
               <span>All contributions are subject to professional review guidelines.</span>
             </div>
-            <Button disabled={isPending} type='submit' variant="primary" className='max-md:w-full max-md:items-end max-md:h-10' >
-              {isPending ? 'Submitting...' : 'Submit Answer'}
+            <Button disabled={isPending} onClick={async () => {
+              console.log(consultation.settings?.allowAnonymous, session)
+              if (!consultation.settings?.allowAnonymous && !session?.user) {
+                setOpen(true)
+              } else {
+                handleSubmit(onSubmit)
+              }
+            }} type={!consultation.settings?.allowAnonymous && !session?.user ? "button" : "submit"} variant="primary" className='max-md:w-full max-md:items-end max-md:h-10' >
+              {isPending ? "Submitting..." : "Submit Answer"}
             </Button>
           </div>
         </form>

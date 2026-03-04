@@ -31,10 +31,10 @@ export const createConsultation = async (
   });
 };
 
-export const deleteConsultation = async (idConsultation: string) => {
+export const deleteConsultation = async (consultationId: string) => {
   return await prisma.consultation.delete({
     where: {
-      id: idConsultation,
+      id: consultationId,
     },
   });
 };
@@ -89,6 +89,20 @@ export const getConsultationById = async (
         },
       },
       settings: true,
+      comments: {
+        select: {
+          id: true,
+          message: true,
+          createdAt: true,
+          userId: true,
+          user: {
+            select: {
+              username: true,
+              email: true,
+            },
+          },
+        },
+      },
       _count: {
         select: {
           comments: true,

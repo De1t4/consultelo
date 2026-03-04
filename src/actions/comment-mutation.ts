@@ -3,10 +3,13 @@
 import { FormDataComment } from "@/schemas/schema-comment";
 import { createComment, isCommentedByUser } from "@/services/comment-service";
 import { authOptions } from "@/shared/lib/auth";
+import { executeAction } from "@/shared/utils/execution-action-db";
+import {
+  ServerActionError,
+  createServerAction,
+} from "@/shared/utils/execution-action-server";
 import { getServerSession } from "next-auth";
 import { cookies } from "next/headers";
-import { ServerActionError, createServerAction } from "./test";
-import { executeAction } from "@/shared/types/executionAction";
 
 export const createCommentAction = createServerAction(
   async (data: FormDataComment) => {

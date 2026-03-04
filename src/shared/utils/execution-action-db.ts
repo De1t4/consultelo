@@ -1,5 +1,5 @@
 import { isRedirectError } from "next/dist/client/components/redirect-error";
-import { getErrorMessage } from "./getErrorMessage";
+import { getErrorMessage } from "./error-message-prisma";
 
 type Options<T> = {
   actionFn: () => Promise<T>;

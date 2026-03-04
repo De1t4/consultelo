@@ -7,7 +7,7 @@ import {
   getUserStats,
 } from "@/services/consultation-service";
 import { authOptions } from "@/shared/lib/auth";
-import { executeAction } from "@/shared/types/executionAction";
+import { executeAction } from "@/shared/utils/execution-action-db";
 import { ResponseConsultDetail } from "@/shared/types/response-consult";
 import { isValidId } from "@/shared/utils/validates";
 import { getServerSession } from "next-auth";

@@ -6,19 +6,19 @@ import { authOptions } from "@/shared/lib/auth";
 import { getServerSession } from "next-auth";
 import { cookies } from "next/headers";
 import { createServerAction } from "./test";
+import { executeAction } from "@/shared/types/executionAction";
 
 export const createCommentAction = createServerAction(
   async (data: FormDataComment) => {
+    if (data.consultationId === undefined) {
+      throw new Error("No consultation ID was provided.");
+    }
     const cookieStore = await cookies();
     const cookieName = `has_commented_${data.consultationId}`;
     const session = await getServerSession(authOptions);
 
     if (cookieStore.get(cookieName)) {
       throw new Error("You have already left a comment on this consultation.");
-    }
-
-    if (!data.consultationId) {
-      throw new Error("No consultation ID was provided.");
     }
 
     if (!data.isAnonymous) {
@@ -37,7 +37,11 @@ export const createCommentAction = createServerAction(
       }
     }
 
-    const newComment = await createComment(data, data.consultationId);
+    const newComment = await executeAction({
+      actionFn: async () => {
+        return await createComment(data, data.consultationId!);
+      },
+    });
 
     if (session) {
       return newComment;

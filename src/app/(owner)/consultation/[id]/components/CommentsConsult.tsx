@@ -1,10 +1,11 @@
-import { Comment, ResponseConsultDetail } from '@/shared/types/response-consult'
+import { ResponseConsultDetail } from '@/shared/types/response-consult'
 import { User } from 'lucide-react'
 import { useSession } from 'next-auth/react'
 
-export default function CommentsConsult({ comments, consultation }: { comments: Comment[], consultation: ResponseConsultDetail }) {
+export default function CommentsConsult({ consultation }: { consultation: ResponseConsultDetail }) {
   const { data: session } = useSession()
 
+  const comments = consultation.comments || []
   const isOwner = consultation.userId === session?.user.id
 
   if (!isOwner && !consultation.settings?.viewComments) {
@@ -17,12 +18,12 @@ export default function CommentsConsult({ comments, consultation }: { comments: 
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-2">
             <h2 className="text-lg font-semibold text-foreground">Comments</h2>
-            <span className="text-sm text-muted-foreground">({comments.length})</span>
+            <span className="text-sm text-muted-foreground">({consultation._count.comments})</span>
           </div>
         </div>
 
         <div className="space-y-6">
-          {comments.length === 0 ? (
+          {consultation._count.comments === 0 ? (
             <p className="text-sm text-muted-foreground text-center py-4">No comments yet. Be the first to participate!</p>
           ) : (
             comments.map((comment, index) => (

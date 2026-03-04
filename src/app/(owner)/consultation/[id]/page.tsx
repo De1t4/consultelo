@@ -20,7 +20,6 @@ export default function Page() {
   if (error) return <div>Error: {error.message}</div>
   if (consultation == null) return notFound()
 
-
   return (
     <>
       <title>{consultation.title}</title>
@@ -28,7 +27,7 @@ export default function Page() {
         {/* Left Column - Main Content */}
         <section className="lg:col-span-2 space-y-6">
           <PrincipalConsult consultation={consultation} />
-          <CommentsConsult comments={consultation.comments || []} consultation={consultation} />
+          <CommentsConsult consultation={consultation} />
           <FeedbackConsult consultation={consultation} />
         </section>
         {/* Right Sidebar */}

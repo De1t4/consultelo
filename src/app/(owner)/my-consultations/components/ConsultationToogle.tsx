@@ -24,6 +24,14 @@ export default function ConsultationToogle({ consultation }: { consultation: Res
       )
       router.refresh();
     },
+    onError: () => {
+      sileo.error(
+        {
+          title: "Error deleting consultation",
+          description: "The consultation could not be deleted. Please try again.",
+        }
+      )
+    }
   })
 
   useEffect(() => {

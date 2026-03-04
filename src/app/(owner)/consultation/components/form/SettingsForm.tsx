@@ -102,20 +102,6 @@ export default function SettingsForm({ isPending }: { isPending: boolean }) {
               </div>
             </div>
 
-            {/* Service Tier */}
-            <div className="mb-6">
-              <label className="block font-semibold text-foreground text-sm mb-3">
-                Type of consultation
-              </label>
-              <select
-                disabled
-                className="w-full px-3 py-2 border bg-accent/10 disabled:text-muted-foreground/60 disabled:cursor-not-allowed border-border rounded-lg text-sm outline-none focus:border-primary transition-colors"
-              >
-                <option value="expert-review">Open Question</option>
-                <option value="expert-premium">Multiple Choice</option>
-              </select>
-            </div>
-
             {/* Continue Button */}
             <Button
               className="w-full justify-center cursor-pointer"

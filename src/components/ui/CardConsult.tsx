@@ -78,7 +78,6 @@ export default function CardConsult({ consultation }: { consultation: ResponseCo
           <MessageSquare className="h-3.5 w-3.5" />
           {consultation._count.comments} comments
         </div>
-
       </div>
     </Link>
 

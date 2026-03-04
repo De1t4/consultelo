@@ -9,7 +9,6 @@ import {
   MenuIcon,
   Plus,
   Settings,
-  User,
   X
 } from "lucide-react"
 import { signOut } from "next-auth/react"
@@ -217,15 +216,31 @@ export function Sidebar() {
               </nav>
 
               {/* Mobile bottom */}
-              <div className="border-t border-border px-3 py-3">
+
+              <div className="border-t border-border px-3 py-3 w-full  mb-4">
+                <button
+                  onClick={() => signOut()}
+                  className="flex items-center gap-3 w-full rounded-lg px-3 py-2.5 text-sidebar-foreground hover:bg-primary/15 transition-colors"
+                >
+
+                  <LogOut />
+                  <span
+                    className="text-sm font-medium"
+                  >
+                    Log Out
+                  </span>
+                </button>
+              </div>
+              <div className=" px-3 py-3">
                 <Link
                   href="/profile"
                   className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sidebar-foreground hover:bg-primary/15 transition-colors"
                 >
-                  <User />
-                  <span className="text-sm font-medium">Your Profile</span>
+                  <Settings />
+                  <span className="text-sm font-medium">Settings</span>
                 </Link>
               </div>
+
             </div>
           </div>
         )

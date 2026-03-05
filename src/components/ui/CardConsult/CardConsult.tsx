@@ -75,7 +75,7 @@ const Description = ({ body, category }: { body: JsonValue, category: Consultati
 const Title = ({ title }: { title: string }) => {
   return (
     <>
-      <h3 className="font-semibold text-primary leading-snug text-lg line-clamp-1">
+      <h3 className="font-semibold text-primary leading-snug text-lg line-clamp-1 group-hover:text-primary/80 transition-colors">
         {title}
       </h3>
     </>
@@ -85,7 +85,7 @@ const Title = ({ title }: { title: string }) => {
 const Container = ({ consultationId, children }: { consultationId: string, children: React.ReactNode }) => {
   return (
     <>
-      <Link href={`/consultation/${consultationId.toString()}`} className='bg-card border border-border rounded-xl p-5 hover:shadow-md transition-shadow flex flex-col gap-3 h-full relative group'>
+      <Link href={`/consultation/${consultationId.toString()}`} className='bg-card border border-border rounded-xl p-5 hover:dark:shadow-gray-800 hover:shadow-md transition-shadow flex flex-col gap-3 h-full relative group'>
         {children}
       </Link>
     </>

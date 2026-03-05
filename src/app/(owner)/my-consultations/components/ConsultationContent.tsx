@@ -11,7 +11,6 @@ import { categoryOptions, statusOptions } from '@/shared/utils/list-options'
 import { useQuery } from '@tanstack/react-query'
 import EmptyState from './EmptyState'
 import { ViewSwitcher } from './ViewWatcher'
-// --- Main Component ---
 
 export default function ConsultationContent({ consultations }: { consultations: ResponseConsultList[] }) {
   const { data: consultationsData = [] } = useQuery({

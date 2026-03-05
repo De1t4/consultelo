@@ -1,13 +1,13 @@
 'use client'
 
 import { getMyConsultationsAction } from '@/actions/consultation-queries'
+import { CardDefault } from '@/components/ui/CardConsult/Card'
 import { FilterSelect } from '@/components/ui/FilterSelect'
 import RowConsult from '@/components/ui/RowConsult'
 import { ConsultationCategory, ConsultationStatus } from '@/generated/prisma/enums'
 import { useConsults } from '@/hooks/use/use-consult'
 import { ResponseConsultList } from '@/shared/types/response-consult'
 import { categoryOptions, statusOptions } from '@/shared/utils/list-options'
-import CardConsult from '@components/ui/CardConsult'
 import { useQuery } from '@tanstack/react-query'
 import EmptyState from './EmptyState'
 import { ViewSwitcher } from './ViewWatcher'
@@ -70,7 +70,7 @@ export default function ConsultationContent({ consultations }: { consultations: 
           {viewMode === 'grid' ? (
             <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'>
               {filteredConsultations.map((consultation) => (
-                <CardConsult key={consultation.id} consultation={consultation} />
+                <CardDefault key={consultation.id} consultation={consultation} />
               ))}
             </div>
           ) : (

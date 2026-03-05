@@ -2,7 +2,7 @@
 
 import { getPublicConsultationsAction, getUserStatsAction } from "@/actions/consultation-queries";
 import { Button } from "@/components/ui/Button";
-import CardConsult from "@/components/ui/CardConsult";
+import { CardDashboard } from "@/components/ui/CardConsult/Card";
 import StatCard from "@/components/ui/StatCard";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -103,7 +103,7 @@ export default function SectionDashboard() {
           ))
         ) : (
           publicConsultations?.map((consultation) => (
-            <CardConsult key={consultation.id} consultation={consultation} />
+            <CardDashboard key={consultation.id} consultation={consultation} />
           ))
         )}
       </div>

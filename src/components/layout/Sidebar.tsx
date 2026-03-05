@@ -216,11 +216,19 @@ export function Sidebar() {
               </nav>
 
               {/* Mobile bottom */}
-
-              <div className="border-t border-border px-3 py-3 w-full  mb-4">
+              <div className=" px-3 py-3">
+                <Link
+                  href="/profile"
+                  className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sidebar-foreground hover:bg-sidebar-accent transition-colors  ${activeItem === "/profile" ? "bg-sidebar-accent" : ""}`}
+                >
+                  <Settings />
+                  <span className="text-sm font-medium">Settings</span>
+                </Link>
+              </div>
+              <div className="border-t border-border px-3 py-2 w-full ">
                 <button
                   onClick={() => signOut()}
-                  className="flex items-center gap-3 w-full rounded-lg px-3 py-2.5 text-sidebar-foreground hover:bg-primary/15 transition-colors"
+                  className="flex items-center gap-3 w-full rounded-lg cursor-pointer px-3 py-2.5 text-sidebar-foreground hover:bg-sidebar-accent transition-colors"
                 >
 
                   <LogOut />
@@ -231,15 +239,7 @@ export function Sidebar() {
                   </span>
                 </button>
               </div>
-              <div className=" px-3 py-3">
-                <Link
-                  href="/profile"
-                  className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sidebar-foreground hover:bg-primary/15 transition-colors"
-                >
-                  <Settings />
-                  <span className="text-sm font-medium">Settings</span>
-                </Link>
-              </div>
+
 
             </div>
           </div>

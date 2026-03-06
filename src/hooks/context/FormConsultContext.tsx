@@ -3,7 +3,7 @@
 import { FormDataConsultation, SchemaConsultation, initialValuesConsultation } from '@/schemas/schema-consultation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createContext, useContext, useState } from 'react';
-import { FieldErrors, UseFormGetValues, UseFormHandleSubmit, UseFormRegister, UseFormSetValue, UseFormTrigger, UseFormWatch, useForm } from 'react-hook-form';
+import { Control, FieldErrors, UseFormGetValues, UseFormHandleSubmit, UseFormRegister, UseFormSetValue, UseFormTrigger, UseFormWatch, useForm } from 'react-hook-form';
 
 type Step = "drafting" | "review"
 
@@ -17,6 +17,7 @@ interface ConsultContextType {
   setValue: UseFormSetValue<FormDataConsultation>
   watch: UseFormWatch<FormDataConsultation>
   trigger: UseFormTrigger<FormDataConsultation>
+  control: Control<FormDataConsultation>
 }
 
 const FormConsultContext = createContext<ConsultContextType | undefined>(undefined);
@@ -31,6 +32,7 @@ export function FormConsultProvider({ children }: { children: React.ReactNode })
     setValue,
     watch,
     trigger,
+    control,
     formState: { errors },
   } = useForm<FormDataConsultation>({
     resolver: zodResolver(SchemaConsultation),
@@ -47,6 +49,7 @@ export function FormConsultProvider({ children }: { children: React.ReactNode })
       getValues,
       setValue,
       watch,
+      control,
       trigger,
     }}>
       {children}

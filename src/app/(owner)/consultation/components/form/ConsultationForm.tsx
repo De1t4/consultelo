@@ -4,7 +4,7 @@ import RichTextDisplay from "@/components/ui/RichTextDisplay"
 import EditorText from "../EditorText"
 
 export default function ConsultationForm() {
-  const { currentStep, register, getValues, errors, setValue } = useFormConsult()
+  const { currentStep, register, getValues, errors, setValue, trigger } = useFormConsult()
 
   const title = getValues("title")
   const body = getValues("body")
@@ -39,7 +39,13 @@ export default function ConsultationForm() {
               <label htmlFor="body" className="block text-sm font-semibold text-foreground mb-3">
                 Description & Context
               </label>
-              <EditorText body={body} setValue={(value) => setValue("body", value)} />
+              <EditorText
+                body={body}
+                setValue={(value) => {
+                  setValue("body", value)
+                  if (errors.body) trigger("body")
+                }}
+              />
               {errors.body && (
                 <p className="text-red-500 text-sm mt-1">
                   {errors.body.message}

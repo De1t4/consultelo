@@ -5,6 +5,7 @@ import {
   createConsultation,
   deleteConsultation,
   getConsultationById,
+  updateConsultation,
 } from "@/services/consultation-service";
 import { authOptions } from "@/shared/lib/auth";
 import { executeAction } from "@/shared/utils/execution-action-db";
@@ -56,6 +57,37 @@ export async function deleteConsultationAction(idConsultation: string) {
       await checkConsultationOwner(idConsultation, userId);
 
       await deleteConsultation(idConsultation);
+
+      revalidatePath("/my-consultations");
+    },
+  });
+}
+
+export async function updateConsultationAction(
+  idConsultation: string,
+  data: FormDataConsultation,
+) {
+  return await executeAction({
+    actionFn: async () => {
+      const session = await getServerSession(authOptions);
+      const userId = session?.user?.id;
+      const bodyParsed: InputJsonValue = JSON.parse(data.body);
+
+      if (!userId) {
+        throw new Error("User not authenticated or session expired");
+      }
+
+      if (!idConsultation) {
+        throw new Error("No consultation ID was provided.");
+      }
+
+      if (!isValidId(idConsultation)) {
+        throw new Error("The consultation ID format is invalid.");
+      }
+
+      await checkConsultationOwner(idConsultation, userId);
+
+      await updateConsultation(idConsultation, data, bodyParsed);
 
       revalidatePath("/my-consultations");
     },

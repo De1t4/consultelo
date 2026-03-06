@@ -162,3 +162,27 @@ export const getUserStats = async (userId: string) => {
     communityImpact: "Top 10%",
   };
 };
+
+export const updateConsultation = async (
+  consultationId: string,
+  data: FormDataConsultation,
+  body: InputJsonValue,
+) => {
+  return await prisma.consultation.update({
+    where: {
+      id: consultationId,
+    },
+    data: {
+      title: data.title,
+      body: body,
+      categories: data.categories as ConsultationCategory,
+      settings: {
+        update: {
+          privacy: data.privacy,
+          allowAnonymous: data.allowAnonymous,
+          viewComments: data.viewComments,
+        },
+      },
+    },
+  });
+};

@@ -183,10 +183,10 @@ export function Sidebar() {
 
               {/* Mobile create */}
               <div className="px-3 py-3">
-                <button className="flex cursor-pointer w-full items-center gap-3 rounded-full bg-primary px-5 py-2.5 text-primary-foreground font-medium hover:opacity-90 transition-opacity">
+                <Link href={"/consultation"} className="flex cursor-pointer w-full items-center gap-3 rounded-full bg-primary px-5 py-2.5 text-primary-foreground font-medium hover:opacity-90 transition-opacity">
                   <Plus className="size-5 text-white" />
                   <span className="text-sm text-white">Create</span>
-                </button>
+                </Link>
               </div>
 
               {/* Mobile nav */}

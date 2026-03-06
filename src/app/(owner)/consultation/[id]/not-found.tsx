@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/Button";
-import { AlertCircle, Home, Link } from "lucide-react";
+import { AlertCircle, Home } from "lucide-react";
+import Link from "next/link";
 
 export default function NotFound() {
   return <>

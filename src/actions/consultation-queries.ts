@@ -7,15 +7,15 @@ import {
   getUserStats,
 } from "@/services/consultation-service";
 import { authOptions } from "@/shared/lib/auth";
-import { executeAction } from "@/shared/utils/execution-action-db";
 import { ResponseConsultDetail } from "@/shared/types/response-consult";
+import { executeAction } from "@/shared/utils/execution-action-db";
 import { isValidId } from "@/shared/utils/validates";
 import { getServerSession } from "next-auth";
 
 export async function getMyConsultationsAction() {
   const session = await getServerSession(authOptions);
   if (!session?.user?.id) {
-    throw new Error("User not authenticated or invalid ID");
+    throw new Error("User not authenticated");
   }
   try {
     return await getMyConsultations(session.user.id);
@@ -26,12 +26,14 @@ export async function getMyConsultationsAction() {
 }
 
 export async function getConsultationByIdAction(
-  id: string,
+  idConsultation: string,
 ): Promise<ResponseConsultDetail | null> {
   return await executeAction({
     actionFn: async () => {
-      isValidId(id);
-      const consultation = await getConsultationById(id);
+      if (!isValidId(idConsultation)) {
+        throw new Error("The consultation ID format is invalid.");
+      }
+      const consultation = await getConsultationById(idConsultation);
       return consultation;
     },
   });

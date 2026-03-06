@@ -13,14 +13,14 @@ export const ViewSwitcher = ({
     <button
       onClick={() => onToggle('grid')}
       disabled={disabled}
-      className={`p-2 rounded-lg transition-all ${mode === 'grid' ? 'bg-background text-primary shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}
+      className={`p-2 rounded-lg cursor-pointer transition-all ${mode === 'grid' ? 'bg-background text-primary shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}
     >
       <LayoutGrid className="h-4 w-4" />
     </button>
     <button
       onClick={() => onToggle('list')}
       disabled={disabled}
-      className={`p-2 rounded-lg transition-all ${mode === 'list' ? 'bg-background text-primary shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}
+      className={`p-2 rounded-lg cursor-pointer transition-all ${mode === 'list' ? 'bg-background text-primary shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}
     >
       <List className="h-4 w-4" />
     </button>

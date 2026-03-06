@@ -57,7 +57,7 @@ export default function ConsultationForm() {
                 {...register("categories")}
                 className="w-full px-3 py-2 border text-foreground bg-card border-border rounded-lg text-sm outline-none focus:border-primary transition-colors"
               >
-                <option value="">Select...</option>
+                <option value="">Select Category</option>
                 <option value="software">Software</option>
                 <option value="IA">IA</option>
                 <option value="business">Business</option>
@@ -65,7 +65,11 @@ export default function ConsultationForm() {
                 <option value="strategy">Strategy</option>
                 <option value="other">Other</option>
               </select>
-
+              {errors.categories && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.categories.message}
+                </p>
+              )}
               <div className="flex items-start gap-2 text-xs text-muted-foreground mt-2">
                 <div className="h-4 w-4 rounded-full bg-accent flex items-center justify-center shrink-0 mt-0.5">
                   <span className="text-accent-foreground text-xs font-bold">i</span>

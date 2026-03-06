@@ -28,7 +28,6 @@ export default function FeedbackConsult({ consultation }: { consultation: Respon
       consultationId: consultation.id,
       isAnonymous: consultation.settings?.allowAnonymous,
     })
-    setOpen(false)
   }
 
   return (
@@ -60,7 +59,6 @@ export default function FeedbackConsult({ consultation }: { consultation: Respon
               <span>All contributions are subject to professional review guidelines.</span>
             </div>
             <Button disabled={isPending} onClick={async () => {
-              console.log(consultation.settings?.allowAnonymous, session)
               if (!consultation.settings?.allowAnonymous && !session?.user) {
                 setOpen(true)
               } else {

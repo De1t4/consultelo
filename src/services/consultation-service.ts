@@ -1,3 +1,4 @@
+import { ConsultationCategory } from "@/generated/prisma/enums";
 import { FormDataConsultation } from "@/schemas/schema-consultation";
 import prisma from "@/shared/lib/prisma";
 import {
@@ -15,7 +16,7 @@ export const createConsultation = async (
     data: {
       title: data.title,
       body: body,
-      categories: data.categories,
+      categories: data.categories as ConsultationCategory,
       userId: userId,
       settings: {
         create: {

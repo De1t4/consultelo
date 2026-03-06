@@ -2,6 +2,7 @@
 
 import { X } from "lucide-react";
 import React, { useEffect } from "react";
+import { createPortal } from "react-dom";
 
 interface ModalProps {
   isOpen: boolean
@@ -20,6 +21,11 @@ export function Modal({
   size = "md",
   showCloseButton = true
 }: ModalProps) {
+  const isClient = React.useSyncExternalStore(
+    () => () => { },
+    () => true,
+    () => false
+  );
 
   // Close on ESC key
   useEffect(() => {
@@ -45,7 +51,7 @@ export function Modal({
     }
   }, [isOpen])
 
-  if (!isOpen) return null
+  if (!isOpen || !isClient) return null
 
   const sizeClasses = {
     sm: "max-w-md",
@@ -54,23 +60,34 @@ export function Modal({
     xl: "max-w-4xl"
   }
 
-  return (
-    <div className="fixed inset-0 z-20 flex items-center justify-center">
+  const modalContent = (
+    <div
+      className="fixed inset-0 z-9999 flex items-center justify-center p-4"
+      onClick={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+      }}
+    >
       {/* Backdrop */}
       <div
         className="fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity"
-        onClick={onClose}
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          onClose();
+        }}
         aria-hidden="true"
       />
 
-      {/* Modal */}
+      {/* Modal Container */}
       <div
+        onClick={(e) => e.stopPropagation()} // Prevent clicking modal content from closing it via backdrop
         className={`
-          relative bg-white rounded-lg shadow-xl w-full mx-4
+          relative bg-background border border-border rounded-xl shadow-2xl w-full
           ${sizeClasses[size]}
           max-h-[90vh] flex flex-col
-          transition-all duration-200 ease-out
-          ${isOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}
+          transition-all ease-out
+          animate-in fade-in zoom-in duration-300
         `}
         role="dialog"
         aria-modal="true"
@@ -78,16 +95,20 @@ export function Modal({
       >
         {/* Header */}
         {(title || showCloseButton) && (
-          <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
+          <div className="flex items-center justify-between px-6 py-4 border-b border-border">
             {title && (
-              <h2 id="modal-title" className="text-lg font-semibold text-gray-900">
+              <h2 id="modal-title" className="text-lg font-semibold text-foreground">
                 {title}
               </h2>
             )}
             {showCloseButton && (
               <button
-                onClick={onClose}
-                className="p-1 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  onClose();
+                }}
+                className="p-1.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-accent transition-colors cursor-pointer"
                 aria-label="Close modal"
               >
                 <X className="h-5 w-5" />
@@ -102,7 +123,9 @@ export function Modal({
         </div>
       </div>
     </div>
-  )
+  );
+
+  return createPortal(modalContent, document.body);
 }
 
 interface ModalFooterProps {

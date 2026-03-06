@@ -14,6 +14,8 @@ export default function Security() {
               <label className="block text-sm font-medium text-muted-foreground mb-2">New Password</label>
               <input
                 type="password"
+                name='password'
+                placeholder='**********'
                 className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm text-foreground focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
               />
             </div>
@@ -21,6 +23,8 @@ export default function Security() {
               <label className="block text-sm font-medium text-muted-foreground mb-2">Confirm New Password</label>
               <input
                 type="password"
+                placeholder='**********'
+                name='confirmPassword'
                 className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm text-foreground focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
               />
             </div>

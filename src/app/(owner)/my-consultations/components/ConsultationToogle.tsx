@@ -1,8 +1,8 @@
 "use client"
 
-import { deleteConsultationAction } from '@/actions/consultation-mutation';
 import { ActionMenu, ActionMenuItem } from '@/components/ui/ActionMenu';
 import { Modal } from '@/components/ui/Modal';
+import { deleteConsultationAction } from '@/features/consultations';
 import { ResponseConsultList } from '@/shared/types/response-consult';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Edit, MoreVertical, Trash2 } from 'lucide-react';
@@ -18,18 +18,25 @@ export default function ConsultationToogle({ consultation }: { consultation: Res
 
   const { mutateAsync: deleteConsultation } = useMutation({
     mutationFn: (idConsultation: string) => deleteConsultationAction(idConsultation),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['consultations'] });
-      sileo.success({
-        title: "Consultation deleted successfully",
-        description: "The consultation has been deleted successfully",
-      });
-      router.refresh();
+    onSuccess: (res) => {
+      if (res.success) {
+        queryClient.invalidateQueries({ queryKey: ['consultations'] });
+        sileo.success({
+          title: "Consultation deleted successfully",
+          description: "The consultation has been deleted successfully",
+        });
+        router.refresh();
+      } else {
+        sileo.error({
+          title: "Error deleting consultation",
+          description: res.error,
+        });
+      }
     },
     onError: () => {
       sileo.error({
-        title: "Error deleting consultation",
-        description: "The consultation could not be deleted. Please try again.",
+        title: "System Error",
+        description: "An unexpected error occurred while deleting.",
       });
     }
   });

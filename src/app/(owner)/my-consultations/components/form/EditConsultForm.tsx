@@ -1,8 +1,8 @@
-import { updateConsultationAction } from '@/actions/consultation-mutation'
+import { updateConsultationAction, FormDataConsultation, SchemaConsultation } from '@/features/consultations'
 import EditorText from '@/app/(owner)/consultation/components/EditorText'
 import { Button } from '@/components/ui/Button'
 import { Toggle } from '@/components/ui/Toggle'
-import { FormDataConsultation, SchemaConsultation } from '@/schemas/schema-consultation'
+import { sileo } from 'sileo'
 import { ResponseConsultList } from '@/shared/types/response-consult'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
@@ -14,12 +14,26 @@ export default function EditConsultForm({ consultation, setIsOpen }: { consultat
 
   const { mutate: updateConsultation, isPending } = useMutation({
     mutationFn: async (data: FormDataConsultation) => await updateConsultationAction(consultation.id, data),
-    onSuccess: () => {
-      setIsOpen(false)
-      queryClient.invalidateQueries({ queryKey: ['consultations'] });
+    onSuccess: (res) => {
+      if (res.success) {
+        setIsOpen(false)
+        sileo.success({
+          title: "Consultation updated",
+          description: "Your changes have been saved successfully.",
+        });
+        queryClient.invalidateQueries({ queryKey: ['consultations'] });
+      } else {
+        sileo.error({
+          title: "Update failed",
+          description: res.error,
+        });
+      }
     },
-    onError: (error) => {
-      console.log(error)
+    onError: () => {
+      sileo.error({
+        title: "System error",
+        description: "An unexpected error occurred. Please try again.",
+      });
     }
   })
 

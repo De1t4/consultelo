@@ -4,7 +4,7 @@ import CommentsConsult from "@/app/(owner)/consultation/[id]/components/Comments
 import FeedbackConsult from "@/app/(owner)/consultation/[id]/components/FeedbackConsult"
 import PrincipalConsult from "@/app/(owner)/consultation/[id]/components/PrincipalConsult"
 import SkeletonConsult from "@/components/skeletons/SkeletonConsult"
-import { useConsultationId } from "@/hooks/use/use-consultation-id"
+import { useConsultationId } from "@/features/consultations"
 import { useSession } from "next-auth/react"
 import { notFound, useParams } from "next/navigation"
 import ShareConsult from "./components/ShareConsult"
@@ -18,22 +18,22 @@ export default function Page() {
 
   if (isLoading) return <SkeletonConsult />
   if (error) return <div>Error: {error.message}</div>
-  if (consultation == null) return notFound()
+  if (consultation?.data == null) return notFound()
 
   return (
     <>
-      <title>{consultation.title}</title>
+      <title>{consultation.data?.title}</title>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left Column - Main Content */}
         <section className="lg:col-span-2 space-y-6">
-          <PrincipalConsult consultation={consultation} />
-          <CommentsConsult consultation={consultation} />
-          <FeedbackConsult consultation={consultation} />
+          <PrincipalConsult consultation={consultation.data} />
+          <CommentsConsult consultation={consultation.data} />
+          <FeedbackConsult consultation={consultation.data} />
         </section>
         {/* Right Sidebar */}
         <div className="space-y-6">
-          <ShareConsult consultationId={consultation.id} isOwner={session?.user.id === consultation.userId} />
-          <CaseInfoConsult consultation={consultation} />
+          <ShareConsult consultationId={consultation.data?.id} isOwner={session?.user.id === consultation.data?.userId} />
+          <CaseInfoConsult consultation={consultation.data} />
         </div>
       </div>
     </>

@@ -1,6 +1,6 @@
 'use client';
 
-import { FormDataConsultation, SchemaConsultation, initialValuesConsultation } from '@/schemas/schema-consultation';
+import { FormDataConsultation, SchemaConsultation, initialValuesConsultation } from '@/features/consultations/schemas/schema-consultation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createContext, useContext, useState } from 'react';
 import { Control, FieldErrors, UseFormGetValues, UseFormHandleSubmit, UseFormRegister, UseFormSetValue, UseFormTrigger, UseFormWatch, useForm } from 'react-hook-form';

@@ -1,12 +1,12 @@
 "use server";
 
-import { FormDataConsultation } from "@/schemas/schema-consultation";
+import { FormDataConsultation } from "../schemas/schema-consultation";
 import {
   createConsultation,
   deleteConsultation,
   getConsultationById,
   updateConsultation,
-} from "@/services/consultation-service";
+} from "../services/consultation-service";
 import { authOptions } from "@/shared/lib/auth";
 import { executeAction } from "@/shared/utils/execution-action-db";
 import { isValidId } from "@/shared/utils/validates";
@@ -18,27 +18,33 @@ export async function createConsultationAction(data: FormDataConsultation) {
   const session = await getServerSession(authOptions);
   const userId = session?.user?.id;
   if (!userId) {
-    throw new Error("User not authenticated or session expired");
+    return {
+      data: null,
+      error: "User not authenticated or session expired",
+      success: false as const,
+    };
   }
 
   const bodyParsed: InputJsonValue = JSON.parse(data.body);
 
-  const consultation = await executeAction({
+  const res = await executeAction({
     actionFn: async () => {
-      return await createConsultation(data, userId, bodyParsed);
+      const consultation = await createConsultation(data, userId, bodyParsed);
+      return {
+        consultationId: consultation.id,
+        title: consultation.title,
+      };
     },
   });
 
-  revalidatePath("/dashboard");
-  return {
-    success: true,
-    consultationId: consultation.id,
-    title: consultation.title,
-  };
+  if (res.success) {
+    revalidatePath("/dashboard");
+  }
+  return res;
 }
 
 export async function deleteConsultationAction(idConsultation: string) {
-  return await executeAction({
+  const res = await executeAction({
     actionFn: async () => {
       const session = await getServerSession(authOptions);
       const userId = session?.user?.id;
@@ -57,17 +63,20 @@ export async function deleteConsultationAction(idConsultation: string) {
       await checkConsultationOwner(idConsultation, userId);
 
       await deleteConsultation(idConsultation);
-
-      revalidatePath("/my-consultations");
     },
   });
+
+  if (res.success) {
+    revalidatePath("/my-consultations");
+  }
+  return res;
 }
 
 export async function updateConsultationAction(
   idConsultation: string,
   data: FormDataConsultation,
 ) {
-  return await executeAction({
+  const res = await executeAction({
     actionFn: async () => {
       const session = await getServerSession(authOptions);
       const userId = session?.user?.id;
@@ -88,10 +97,13 @@ export async function updateConsultationAction(
       await checkConsultationOwner(idConsultation, userId);
 
       await updateConsultation(idConsultation, data, bodyParsed);
-
-      revalidatePath("/my-consultations");
     },
   });
+
+  if (res.success) {
+    revalidatePath("/my-consultations");
+  }
+  return res;
 }
 
 const checkConsultationOwner = async (

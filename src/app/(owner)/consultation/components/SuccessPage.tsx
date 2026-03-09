@@ -1,11 +1,11 @@
 "use client"
 
-import { ResponseConsult } from "@/shared/types/response-consult"
+import { CreateConsultationResponseDTO } from "@/features/consultations"
 import { ArrowRight, Check, Copy, Share2 } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
 
-export default function SuccessConsultPage({ consult }: { consult: ResponseConsult }) {
+export default function SuccessConsultPage({ consult }: { consult: CreateConsultationResponseDTO }) {
   const [copied, setCopied] = useState(false)
   const consultationUrl = `https://consultelo.vercel.app/consultation/${consult.consultationId}`
 

@@ -40,6 +40,7 @@ export default function EditorText({ body, setValue }: { body: string, setValue:
       <EditorContent
         editor={editor}
         id="body"
+        minLength={20}
         className="min-h-[200px] cursor-text dark:text-gray-300"
       />
     </div>

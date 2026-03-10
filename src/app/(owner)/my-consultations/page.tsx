@@ -1,4 +1,4 @@
-import { getMyConsultations } from '@/services/consultation-service'
+import { getMyConsultations } from '@/features/consultations/services/consultation-service'
 import { authOptions } from '@/shared/lib/auth'
 import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'

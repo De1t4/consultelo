@@ -11,6 +11,7 @@ interface ModalProps {
   children: React.ReactNode
   size?: "sm" | "md" | "lg" | "xl"
   showCloseButton?: boolean
+  footer?: React.ReactNode
 }
 
 export function Modal({
@@ -19,7 +20,8 @@ export function Modal({
   title,
   children,
   size = "md",
-  showCloseButton = true
+  showCloseButton = true,
+  footer
 }: ModalProps) {
   const isClient = React.useSyncExternalStore(
     () => () => { },
@@ -85,7 +87,7 @@ export function Modal({
         className={`
           relative bg-background border border-border rounded-xl shadow-2xl w-full
           ${sizeClasses[size]}
-          max-h-[90vh] flex flex-col
+          max-h-[85vh] flex flex-col
           transition-all ease-out
           animate-in fade-in zoom-in duration-300
         `}
@@ -121,6 +123,13 @@ export function Modal({
         <div className="px-6 py-4 overflow-y-auto flex-1">
           {children}
         </div>
+
+        {/* Footer */}
+        {footer && (
+          <ModalFooter>
+            {footer}
+          </ModalFooter>
+        )}
       </div>
     </div>
   );
@@ -135,7 +144,7 @@ interface ModalFooterProps {
 
 export function ModalFooter({ children, className = "" }: ModalFooterProps) {
   return (
-    <div className={`px-6 py-4 border-t border-gray-200 flex items-center justify-end gap-3 ${className}`}>
+    <div className={`px-6 py-4 border-t border-border flex items-center justify-between gap-3 ${className}`}>
       {children}
     </div>
   )

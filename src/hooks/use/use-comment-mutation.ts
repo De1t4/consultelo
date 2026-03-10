@@ -11,11 +11,11 @@ const useCreateComment = () => {
     isSuccess,
   } = useMutation({
     mutationFn: createCommentAction,
-    onSuccess: (data) => {
-      if (!data.success) {
+    onSuccess: (res) => {
+      if (!res.success) {
         sileo.error({
           title: "Failed to create comment",
-          description: data.error,
+          description: res.error,
         });
         return;
       }
@@ -25,7 +25,7 @@ const useCreateComment = () => {
         description: "Your comment has been added to the consultation.",
       });
       queryClient.invalidateQueries({
-        queryKey: ["consultation-detail", data.value.consultationId],
+        queryKey: ["consultation-detail", res.data.consultationId],
       });
     },
     onError: (error) => {

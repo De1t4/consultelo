@@ -1,6 +1,6 @@
 "use client";
 
-import { getPublicConsultationsAction, getUserStatsAction } from "@/actions/consultation-queries";
+import { getPublicConsultationsAction, getUserStatsAction } from "@/features/consultations";
 import { Button } from "@/components/ui/Button";
 import { CardDashboard } from "@/components/ui/CardConsult/Card";
 import StatCard from "@/components/ui/StatCard";
@@ -19,13 +19,21 @@ export default function SectionDashboard() {
 
   const { data: stats, isLoading: statsLoading } = useQuery({
     queryKey: ["user-stats"],
-    queryFn: () => getUserStatsAction(),
+    queryFn: async () => {
+      const res = await getUserStatsAction();
+      if (!res.success) throw new Error(res.error);
+      return res.data;
+    },
     enabled: !!session,
   });
 
   const { data: publicConsultations, isLoading: consultationsLoading } = useQuery({
     queryKey: ["public-consultations"],
-    queryFn: () => getPublicConsultationsAction(),
+    queryFn: async () => {
+      const res = await getPublicConsultationsAction();
+      if (!res.success) throw new Error(res.error);
+      return res.data;
+    },
   });
 
   if (!session) {

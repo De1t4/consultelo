@@ -39,6 +39,7 @@ export interface ResponseConsultDetail {
   status: ConsultationStatus;
   createdAt: Date;
   expiresAt: Date | null;
+  updatedAt: Date;
   settings: Settings | null;
   user: User | null;
   comments: Comment[] | null;

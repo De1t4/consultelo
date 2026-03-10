@@ -4,13 +4,14 @@ import { useFormConsult } from '@/hooks/context/FormConsultContext'
 import { Check, Edit, Eye, HatGlasses, Loader2, Menu, MessageSquareLock, Users } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Toggle } from '@/components/ui/Toggle'
+import { useWatch } from 'react-hook-form'
 
 export default function SettingsForm({ isPending }: { isPending: boolean }) {
-  const { currentStep, setValue, watch, setCurrentStep, trigger } = useFormConsult()
+  const { currentStep, setValue, setCurrentStep, trigger, control } = useFormConsult()
 
-  const isAnonymous = watch("allowAnonymous")
-  const isPrivate = watch("privacy")
-  const isViewComments = watch("viewComments")
+  const isAnonymous = useWatch({ control, name: "allowAnonymous" })
+  const isViewComments = useWatch({ control, name: "viewComments" })
+  const isPrivate = useWatch({ control, name: "privacy" })
 
   return (
     <div className="lg:col-span-1">

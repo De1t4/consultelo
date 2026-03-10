@@ -1,15 +1,13 @@
 'use client'
+import { CreateConsultationResponseDTO, FormDataConsultation, useCreateConsultation } from '@/features/consultations'
 import { useFormConsult } from '@/hooks/context/FormConsultContext'
-import { useCreateConsultation } from '@/hooks/use/use-consult-mutation'
-import { FormDataConsultation } from '@/schemas/schema-consultation'
-import { ResponseConsult } from '@/shared/types/response-consult'
 import { useState } from 'react'
+import SuccessConsultPage from './SuccessPage'
 import ConsultationForm from './form/ConsultationForm'
 import SettingsForm from './form/SettingsForm'
-import SuccessConsultPage from './SuccessPage'
 
 export default function WrappedForms() {
-  const [consult, setConsult] = useState<ResponseConsult | null>(null)
+  const [consult, setConsult] = useState<CreateConsultationResponseDTO | null>(null)
   const { currentStep, handleSubmit, setCurrentStep } = useFormConsult()
 
   const { createConsultation, isPending, isSuccess } = useCreateConsultation()
@@ -17,7 +15,9 @@ export default function WrappedForms() {
   const onSubmit = async (data: FormDataConsultation) => {
     setCurrentStep("review")
     const res = await createConsultation(data)
-    setConsult(res)
+    if (res.success) {
+      setConsult(res.data)
+    }
   }
 
   if (isSuccess && consult) {

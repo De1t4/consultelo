@@ -4,50 +4,46 @@ import { FormDataComment } from "@/schemas/schema-comment";
 import { createComment, isCommentedByUser } from "@/services/comment-service";
 import { authOptions } from "@/shared/lib/auth";
 import { executeAction } from "@/shared/utils/execution-action-db";
-import {
-  ServerActionError,
-  createServerAction,
-} from "@/shared/utils/execution-action-server";
 import { getServerSession } from "next-auth";
 import { cookies } from "next/headers";
 
 const COMMENT_COOKIE_PREFIX = "has_commented_";
 
-export const createCommentAction = createServerAction(
-  async (data: FormDataComment) => {
-    if (!data.consultationId) {
-      throw new ServerActionError("No consultation ID was provided.");
-    }
+export async function createCommentAction(data: FormDataComment) {
+  const result = await executeAction({
+    actionFn: async () => {
+      if (!data.consultationId) {
+        throw new Error("No consultation ID was provided.");
+      }
 
-    const session = await getServerSession(authOptions);
-    const userId = session?.user?.id;
+      const session = await getServerSession(authOptions);
+      const userId = session?.user?.id;
 
-    // 1. Validation for non-anonymous comments
-    if (!data.isAnonymous && !userId) {
-      throw new ServerActionError("You must be logged in to comment.");
-    }
+      // 1. Validation for non-anonymous comments
+      if (!data.isAnonymous && !userId) {
+        throw new Error("You must be logged in to comment.");
+      }
 
-    // 2. Check for existing comments (Cookie or DB)
-    await checkExistentComment(data.consultationId, userId);
+      // 2. Check for existing comments (Cookie or DB)
+      await checkExistentComment(data.consultationId, userId);
 
-    // 3. Prepare data
-    if (!data.isAnonymous && userId) {
-      data.userId = userId;
-    }
+      // 3. Prepare data
+      if (!data.isAnonymous && userId) {
+        data.userId = userId;
+      }
 
-    // 4. Persistence
-    const newComment = await executeAction({
-      actionFn: async () => {
-        return await createComment(data, data.consultationId!);
-      },
-    });
+      // 4. Persistence
+      const newComment = await createComment(data, data.consultationId!);
 
-    // 5. Success side effects (set cookie for anonymous or track for all)
-    await setCommentCookie(data.consultationId);
+      // 5. Success side effects (set cookie for anonymous or track for all)
+      await setCommentCookie(data.consultationId);
 
-    return newComment;
-  },
-);
+      return newComment;
+    },
+  });
+
+  return result;
+}
 
 async function checkExistentComment(consultationId: string, userId?: string) {
   const cookieStore = await cookies();
@@ -55,18 +51,14 @@ async function checkExistentComment(consultationId: string, userId?: string) {
 
   // Check cookie (for guest users or as a first line of defense)
   if (cookieStore.get(cookieName)) {
-    throw new ServerActionError(
-      "You have already left a comment on this consultation.",
-    );
+    throw new Error("You have already left a comment on this consultation.");
   }
 
   // Check database if user is logged in
   if (userId) {
     const isCommented = await isCommentedByUser(userId, consultationId);
     if (isCommented) {
-      throw new ServerActionError(
-        "You have already left a comment on this consultation.",
-      );
+      throw new Error("You have already left a comment on this consultation.");
     }
   }
 }

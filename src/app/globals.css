@@ -92,4 +92,11 @@ body {
 .tiptap p,
 .tiptap-content p {
   margin-bottom: 0.75em;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.tiptap-content {
+  overflow-wrap: break-word;
+  word-break: break-word;
 }

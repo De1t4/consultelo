@@ -4,7 +4,7 @@ import RichTextDisplay from "@/components/ui/RichTextDisplay"
 import EditorText from "../EditorText"
 
 export default function ConsultationForm() {
-  const { currentStep, register, getValues, errors, setValue } = useFormConsult()
+  const { currentStep, register, getValues, errors, setValue, trigger } = useFormConsult()
 
   const title = getValues("title")
   const body = getValues("body")
@@ -39,7 +39,13 @@ export default function ConsultationForm() {
               <label htmlFor="body" className="block text-sm font-semibold text-foreground mb-3">
                 Description & Context
               </label>
-              <EditorText body={body} setValue={(value) => setValue("body", value)} />
+              <EditorText
+                body={body}
+                setValue={(value) => {
+                  setValue("body", value)
+                  if (errors.body) trigger("body")
+                }}
+              />
               {errors.body && (
                 <p className="text-red-500 text-sm mt-1">
                   {errors.body.message}
@@ -85,7 +91,7 @@ export default function ConsultationForm() {
               <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
                 CONSULTATION TITLE
               </p>
-              <h2 className="text-2xl font-bold text-foreground">
+              <h2 className="text-2xl font-bold text-foreground wrap-break-word">
                 {title}
               </h2>
             </div>
@@ -95,7 +101,9 @@ export default function ConsultationForm() {
               <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">
                 DESCRIPTION & CONTEXT
               </p>
-              <RichTextDisplay content={body} />
+              <div className="w-full bg-accent/20 border border-border rounded-lg px-4 py-3 wrap-break-word overflow-hidden font-mono text-sm shadow-inner">
+                <RichTextDisplay content={body} />
+              </div>
             </div>
 
             {/* Industry Categories */}

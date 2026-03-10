@@ -1,11 +1,10 @@
 'use client'
 
-import { getMyConsultationsAction } from '@/actions/consultation-queries'
+import { getMyConsultationsAction, useConsults } from '@/features/consultations'
 import { CardDefault } from '@/components/ui/CardConsult/Card'
 import { FilterSelect } from '@/components/ui/FilterSelect'
 import RowConsult from '@/components/ui/RowConsult'
 import { ConsultationCategory, ConsultationStatus } from '@/generated/prisma/enums'
-import { useConsults } from '@/hooks/use/use-consult'
 import { ResponseConsultList } from '@/shared/types/response-consult'
 import { categoryOptions, statusOptions } from '@/shared/utils/list-options'
 import { useQuery } from '@tanstack/react-query'
@@ -15,7 +14,11 @@ import { ViewSwitcher } from './ViewWatcher'
 export default function ConsultationContent({ consultations }: { consultations: ResponseConsultList[] }) {
   const { data: consultationsData = [] } = useQuery({
     queryKey: ['consultations'],
-    queryFn: getMyConsultationsAction,
+    queryFn: async () => {
+      const res = await getMyConsultationsAction();
+      if (!res.success) throw new Error(res.error);
+      return res.data;
+    },
     initialData: consultations,
   });
 

@@ -1,10 +1,19 @@
-import { ConsultationCategory } from "@/generated/prisma/enums";
-import { FormDataConsultation } from "@/schemas/schema-consultation";
+import "server-only";
+import { z } from "zod";
+import {
+  ConsultationCategory,
+  ConsultationStatus,
+} from "@/generated/prisma/enums";
+import { FormDataConsultation } from "../schemas/schema-consultation";
 import prisma from "@/shared/lib/prisma";
 import {
-  ResponseConsultDetail,
-  ResponseConsultList,
-} from "@/shared/types/response-consult";
+  ConsultationDetailDTO,
+  ConsultationDetailSchema,
+  ConsultationListDTO,
+  ConsultationListSchema,
+  UserStatsDTO,
+  UserStatsSchema,
+} from "../schemas/output-dto";
 import { InputJsonValue } from "@prisma/client/runtime/client";
 
 export const createConsultation = async (
@@ -40,8 +49,10 @@ export const deleteConsultation = async (consultationId: string) => {
   });
 };
 
-export const getMyConsultations = async (userId: string) => {
-  const res: ResponseConsultList[] = await prisma.consultation.findMany({
+export const getMyConsultations = async (
+  userId: string,
+): Promise<ConsultationListDTO[]> => {
+  const res = await prisma.consultation.findMany({
     where: {
       userId: userId,
     },
@@ -58,21 +69,12 @@ export const getMyConsultations = async (userId: string) => {
     },
   });
 
-  return res;
+  return z.array(ConsultationListSchema).parse(res);
 };
 
 export const getConsultationById = async (
   id: string,
-): Promise<ResponseConsultDetail | null> => {
-  const isExist = await prisma.consultation.findFirst({
-    where: {
-      id: id,
-    },
-  });
-  if (!isExist) {
-    return isExist;
-  }
-
+): Promise<ConsultationDetailDTO | null> => {
   const res = await prisma.consultation.findUnique({
     where: {
       id: id,
@@ -111,11 +113,15 @@ export const getConsultationById = async (
       },
     },
   });
-  return res as ResponseConsultDetail;
+
+  if (!res) return null;
+  return ConsultationDetailSchema.parse(res);
 };
 
-export const getPublicConsultations = async () => {
-  const res: ResponseConsultList[] = await prisma.consultation.findMany({
+export const getPublicConsultations = async (): Promise<
+  ConsultationListDTO[]
+> => {
+  const res = await prisma.consultation.findMany({
     where: {
       settings: {
         privacy: "public",
@@ -136,10 +142,10 @@ export const getPublicConsultations = async () => {
     take: 6,
   });
 
-  return res;
+  return z.array(ConsultationListSchema).parse(res);
 };
 
-export const getUserStats = async (userId: string) => {
+export const getUserStats = async (userId: string): Promise<UserStatsDTO> => {
   const [activeConsultations, totalComments] = await Promise.all([
     prisma.consultation.count({
       where: {
@@ -156,9 +162,36 @@ export const getUserStats = async (userId: string) => {
     }),
   ]);
 
-  return {
+  const stats = {
     activeConsultations,
     totalResponses: totalComments,
     communityImpact: "Top 10%",
   };
+
+  return UserStatsSchema.parse(stats);
+};
+
+export const updateConsultation = async (
+  consultationId: string,
+  data: FormDataConsultation,
+  body: InputJsonValue,
+) => {
+  return await prisma.consultation.update({
+    where: {
+      id: consultationId,
+    },
+    data: {
+      title: data.title,
+      body: body,
+      categories: data.categories as ConsultationCategory,
+      status: data.status as ConsultationStatus,
+      settings: {
+        update: {
+          privacy: data.privacy,
+          allowAnonymous: data.allowAnonymous,
+          viewComments: data.viewComments,
+        },
+      },
+    },
+  });
 };

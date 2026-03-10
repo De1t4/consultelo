@@ -11,19 +11,32 @@ export const SchemaConsultation = z.object({
     ),
   body: z
     .string()
-    .min(10, "Context is required")
+    .min(1, "Context is required")
     .refine((val) => {
       try {
-        JSON.parse(val);
-        return true;
+        const parsed = JSON.parse(val);
+        // Check if there is any text content in the Tiptap structure
+        interface TiptapNode {
+          text?: string;
+          content?: TiptapNode[];
+        }
+        const hasText = (nodes: TiptapNode[]): boolean => {
+          return nodes.some((node) => {
+            if (node.text && node.text.trim().length > 0) return true;
+            if (node.content) return hasText(node.content);
+            return false;
+          });
+        };
+        return parsed.content && hasText(parsed.content as TiptapNode[]);
       } catch {
         return false;
       }
-    }, "The body must be a valid JSON"),
+    }, "Context must not be empty"),
   categories: z.string().min(1, "Category is required"),
   privacy: z.enum(["public", "private"]),
   allowAnonymous: z.boolean(),
   viewComments: z.boolean(),
+  status: z.enum(["draft", "active", "closed", "archived"]).optional(),
 });
 
 export type FormDataConsultation = z.infer<typeof SchemaConsultation>;
@@ -35,4 +48,5 @@ export const initialValuesConsultation: FormDataConsultation = {
   privacy: "public",
   allowAnonymous: false,
   viewComments: false,
+  status: "active",
 };

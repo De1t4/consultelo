@@ -27,7 +27,7 @@ const RichTextDisplay = ({ content, classname }: { content: string, classname?: 
 
   return (
     <div
-      className={`${classname} tiptap-content text-gray-700 space-y-4 prose prose-sm max-w-none dark:text-gray-300`}
+      className={`${classname} tiptap-content text-gray-700 space-y-4 prose prose-sm max-w-none dark:text-gray-300 wrap-break-word overflow-hidden`}
       dangerouslySetInnerHTML={{ __html: output }}
     />
   )

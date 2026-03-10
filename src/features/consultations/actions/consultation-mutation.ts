@@ -5,6 +5,7 @@ import {
   createConsultation,
   deleteConsultation,
   getConsultationById,
+  getUserStats,
   updateConsultation,
 } from "../services/consultation-service";
 import { authOptions } from "@/shared/lib/auth";
@@ -14,6 +15,8 @@ import { InputJsonValue } from "@prisma/client/runtime/client";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
 
+const MAX_CONSULTATIONS = 5;
+
 export async function createConsultationAction(data: FormDataConsultation) {
   const session = await getServerSession(authOptions);
   const userId = session?.user?.id;
@@ -21,6 +24,16 @@ export async function createConsultationAction(data: FormDataConsultation) {
     return {
       data: null,
       error: "User not authenticated or session expired",
+      success: false as const,
+    };
+  }
+
+  const countConsultations = await getUserStats(userId);
+
+  if (countConsultations.activeConsultations >= MAX_CONSULTATIONS) {
+    return {
+      data: null,
+      error: `You have reached the maximum number of consultations allowed. (${MAX_CONSULTATIONS})`,
       success: false as const,
     };
   }

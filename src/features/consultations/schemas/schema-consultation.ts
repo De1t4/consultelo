@@ -36,6 +36,7 @@ export const SchemaConsultation = z.object({
   privacy: z.enum(["public", "private"]),
   allowAnonymous: z.boolean(),
   viewComments: z.boolean(),
+  status: z.enum(["draft", "active", "closed", "archived"]).optional(),
 });
 
 export type FormDataConsultation = z.infer<typeof SchemaConsultation>;
@@ -47,4 +48,5 @@ export const initialValuesConsultation: FormDataConsultation = {
   privacy: "public",
   allowAnonymous: false,
   viewComments: false,
+  status: "active",
 };

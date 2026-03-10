@@ -31,12 +31,13 @@ const UserSchema = z.object({
 export const ConsultationListSchema = z.object({
   id: z.string(),
   title: z.string(),
-  body: z.any(), // JSONContent
+  body: z.any(),
   userId: z.string(),
   categories: z.nativeEnum(ConsultationCategory),
   status: z.nativeEnum(ConsultationStatus),
   createdAt: z.date(),
   expiresAt: z.date().nullable(),
+  updatedAt: z.date(),
   settings: SettingsSchema.nullable(),
   _count: z.object({
     comments: z.number(),

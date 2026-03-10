@@ -88,6 +88,7 @@ model Consultation {
   status     ConsultationStatus   @default(active)
   createdAt  DateTime             @default(now()) @map("created_at") @db.Timestamptz
   expiresAt  DateTime?            @map("expires_at") @db.Timestamptz
+  updatedAt  DateTime             @default(now()) @updatedAt @map("updated_at") @db.Timestamptz
   user       User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
   settings   Settings?
   comments   Comment[]

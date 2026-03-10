@@ -2,19 +2,23 @@
 
 import RichTextDisplay from '@/components/ui/RichTextDisplay';
 import { ResponseConsultDetail } from '@/shared/types/response-consult';
+import { statusDot, statusStyles } from '@/shared/utils/card-utils';
 import { MoreHorizontal, Share2, User } from 'lucide-react';
 
 export default function PrincipalConsult({ consultation }: { consultation: ResponseConsultDetail }) {
+
+  const date = `${consultation.createdAt != consultation.updatedAt ? 'Updated' : 'Created'} ${new Date(consultation.updatedAt).toLocaleDateString()} ${new Date(consultation.updatedAt).getHours()}:${new Date(consultation.updatedAt).getMinutes() < 10 ? '0' + new Date(consultation.updatedAt).getMinutes() : new Date(consultation.updatedAt).getMinutes()}`
 
   return (
     <article className="bg-card border-border rounded-lg border p-6">
       <div className="flex items-center justify-between mb-4 max-md:flex-col max-md:items-start gap-2">
         <div className="flex items-center gap-2">
-          <span className="text-xs font-medium text-primary bg-teal-50 px-2 py-1 rounded">
-            {consultation.status === 'active' ? 'Open Request' : consultation.status}
+          <span className={`flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full ${statusStyles[consultation.status]}`}>
+            <span className={`h-1.5 w-1.5 rounded-full ${statusDot[consultation.status]}`} />
+            {consultation.status.toUpperCase()}
           </span>
           <span className="text-xs text-muted-foreground">
-            ID: #{consultation.id.slice(0, 8).toUpperCase()} • Created {new Date(consultation.createdAt).toLocaleDateString()}
+            ID: #{consultation.id.slice(0, 8).toUpperCase()} • {date}
           </span>
         </div>
       </div>
@@ -25,7 +29,9 @@ export default function PrincipalConsult({ consultation }: { consultation: Respo
 
       {/* Author Info */}
       <div className="flex items-start gap-4 mb-6">
-        <User className='h-10 w-10 rounded-full object-cover bg-muted p-1 text-muted-foreground' />
+        <div className="h-10 w-10 border border-border rounded-full overflow-hidden p-2 bg-card">
+          <User className='w-full h-full rounded-full object-cover bg-muted  text-muted-foreground' />
+        </div>
         <div className="flex-1">
           <div className="flex items-center gap-2">
             <h3 className="font-semibold text-foreground">{consultation.user?.username}</h3>
@@ -33,7 +39,7 @@ export default function PrincipalConsult({ consultation }: { consultation: Respo
               {consultation.user?.role}
             </span>
           </div>
-          <p className="text-sm text-muted-foreground">{consultation.user?.email} • Posted {new Date(consultation.createdAt).toLocaleDateString()}</p>
+          <p className="text-sm text-muted-foreground">{consultation.user?.email} • Posted {new Date(consultation.createdAt).toLocaleDateString()} {new Date(consultation.createdAt).getHours()}:{new Date(consultation.createdAt).getMinutes() < 10 ? '0' + new Date(consultation.createdAt).getMinutes() : new Date(consultation.createdAt).getMinutes()}</p>
         </div>
       </div>
 

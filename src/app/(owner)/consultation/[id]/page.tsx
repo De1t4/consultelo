@@ -20,6 +20,8 @@ export default function Page() {
   if (error) return <div>Error: {error.message}</div>
   if (consultation?.data == null) return notFound()
 
+  const isOwner = session?.user.id === consultation.data?.userId
+
   return (
     <>
       <title>{consultation.data?.title}</title>
@@ -32,7 +34,7 @@ export default function Page() {
         </section>
         {/* Right Sidebar */}
         <div className="space-y-6">
-          <ShareConsult consultationId={consultation.data?.id} isOwner={session?.user.id === consultation.data?.userId} />
+          <ShareConsult consultationId={consultation.data?.id} isOwner={isOwner} />
           <CaseInfoConsult consultation={consultation.data} />
         </div>
       </div>

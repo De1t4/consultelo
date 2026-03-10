@@ -1,6 +1,9 @@
 import "server-only";
 import { z } from "zod";
-import { ConsultationCategory } from "@/generated/prisma/enums";
+import {
+  ConsultationCategory,
+  ConsultationStatus,
+} from "@/generated/prisma/enums";
 import { FormDataConsultation } from "../schemas/schema-consultation";
 import prisma from "@/shared/lib/prisma";
 import {
@@ -181,6 +184,7 @@ export const updateConsultation = async (
       title: data.title,
       body: body,
       categories: data.categories as ConsultationCategory,
+      status: data.status as ConsultationStatus,
       settings: {
         update: {
           privacy: data.privacy,

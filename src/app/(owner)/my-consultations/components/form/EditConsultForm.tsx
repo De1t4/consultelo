@@ -8,6 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { BookOpen, Eye, Lock } from 'lucide-react'
 import { useForm, useWatch } from 'react-hook-form'
+import { categoryOptions, statusOptions } from '@/shared/utils/list-options'
 
 export default function EditConsultForm({ consultation, setIsOpen }: { consultation: ResponseConsultList, setIsOpen: (value: boolean) => void }) {
   const queryClient = useQueryClient();
@@ -53,6 +54,7 @@ export default function EditConsultForm({ consultation, setIsOpen }: { consultat
       privacy: consultation.settings?.privacy,
       allowAnonymous: consultation.settings?.allowAnonymous,
       viewComments: consultation.settings?.viewComments,
+      status: consultation.status,
     }
   })
 
@@ -107,13 +109,29 @@ export default function EditConsultForm({ consultation, setIsOpen }: { consultat
           defaultValue={consultation.categories}
           className="w-full px-3 py-2 border text-foreground bg-card border-border rounded-lg text-sm outline-none focus:border-primary transition-colors"
         >
-          <option value="">Select Category</option>
-          <option value="software">Software</option>
-          <option value="IA">IA</option>
-          <option value="business">Business</option>
-          <option value="company">Company</option>
-          <option value="strategy">Strategy</option>
-          <option value="other">Other</option>
+          <option value="" disabled>Select Status</option>
+          {categoryOptions.map((category) => (
+            <option key={category.value} value={category.value}>
+              {category.label}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div>
+        <label htmlFor='status' className="block text-sm font-medium text-muted-foreground mb-2">Status of Consultation</label>
+        <select
+          id="status"
+          {...register("status")}
+          defaultValue={consultation.status}
+          className="w-full px-3 py-2 border text-foreground bg-card border-border rounded-lg text-sm outline-none focus:border-primary transition-colors"
+        >
+          <option value="" disabled>Select Status</option>
+          {statusOptions.map((status) => (
+            <option key={status.value} value={status.value}>
+              {status.label}
+            </option>
+          ))}
         </select>
       </div>
 
@@ -175,19 +193,21 @@ export default function EditConsultForm({ consultation, setIsOpen }: { consultat
           </div>
         </div>
       </div>
-      <Button
-        variant='outline'
-        onClick={() => setIsOpen(false)}
-      >
-        Cancel
-      </Button>
-      <Button
-        variant='primary'
-        type='submit'
-        disabled={isPending}
-      >
-        Save Changes
-      </Button>
+      <div className="flex justify-between items-center">
+        <Button
+          variant='outline'
+          onClick={() => setIsOpen(false)}
+        >
+          Cancel
+        </Button>
+        <Button
+          variant='primary'
+          type='submit'
+          disabled={isPending}
+        >
+          Save Changes
+        </Button>
+      </div>
     </form>
   )
 }

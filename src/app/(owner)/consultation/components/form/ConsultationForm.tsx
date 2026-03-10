@@ -91,7 +91,7 @@ export default function ConsultationForm() {
               <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
                 CONSULTATION TITLE
               </p>
-              <h2 className="text-2xl font-bold text-foreground">
+              <h2 className="text-2xl font-bold text-foreground wrap-break-word">
                 {title}
               </h2>
             </div>
@@ -101,7 +101,9 @@ export default function ConsultationForm() {
               <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">
                 DESCRIPTION & CONTEXT
               </p>
-              <RichTextDisplay content={body} />
+              <div className="w-full bg-accent/20 border border-border rounded-lg px-4 py-3 wrap-break-word overflow-hidden font-mono text-sm shadow-inner">
+                <RichTextDisplay content={body} />
+              </div>
             </div>
 
             {/* Industry Categories */}

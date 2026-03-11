@@ -1,0 +1,194 @@
+"use client"
+
+import { ChevronDown, Instagram, Linkedin, Mail, MapPin, Phone, Send } from 'lucide-react'
+import { useState } from 'react'
+
+const faqItems = [
+  {
+    question: "How do I contact an expert directly?",
+    answer: "You can browse our expert directory, filter by specialty, and send a direct consultation request. Experts typically respond within 2–4 hours during business days.",
+  },
+  {
+    question: "What are the privacy options?",
+    answer: "We offer Private Mode to restrict visibility to invited participants only, and you can control Identity Visibility between Public Profile, Anonymous, or Custom alias.",
+  },
+  {
+    question: "How are payments handled?",
+    answer: "All transactions are processed securely via Stripe. You can pay per session or subscribe to a monthly plan. Invoices are sent automatically after each consultation.",
+  },
+  {
+    question: "Do you offer 24/7 technical support?",
+    answer: "Our technical support team is available Monday–Friday 9am–8pm EST. For urgent issues outside these hours, you can submit a priority ticket and we will respond within 4 hours.",
+  },
+]
+
+export default function Contact() {
+  const [openFaq, setOpenFaq] = useState<number | null>(null)
+  return (
+    <section className="bg-gray-100 border-t border-gray-200 py-12">
+      {/* Contact Section */}
+      <div className="max-w-7xl mx-auto px-6">
+        <article className="mb-8">
+          <div className="rounded-xl border border-gray-200 bg-white overflow-hidden">
+            <div className="grid md:grid-cols-2">
+              {/* Left: Contact info */}
+              <div className="p-6 md:p-8 flex flex-col gap-6 border-b border-gray-200 md:border-b-0 md:border-r">
+                <div>
+                  <span className="inline-block rounded-full border border-primary px-3 py-1 text-xs font-semibold tracking-widest text-primary uppercase mb-4">
+                    Contact Support
+                  </span>
+                  <h2 className="text-2xl font-bold text-gray-900 leading-tight">
+                    Get in <span className="text-primary">Touch</span>
+                  </h2>
+                  <p className="mt-2 text-sm text-gray-600 leading-relaxed">
+                    Our team of experts is ready to help your business grow. Reach out and we&apos;ll respond within 24 hours.
+                  </p>
+                </div>
+                <div className="flex flex-col gap-3">
+                  <div className="flex items-center gap-3 rounded-lg border border-gray-100 shadow-sm bg-gray-100 px-4 py-3">
+                    <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-gray-200 text-primary">
+                      <Mail className="size-4" />
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold text-gray-900">Email Us</p>
+                      <p className="text-xs text-gray-600">support@consultpro.com</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 rounded-lg border border-gray-100 shadow-sm bg-gray-100 px-4 py-3">
+                    <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-gray-200 text-primary">
+                      <Phone className="size-4" />
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold text-gray-900">Call Us</p>
+                      <p className="text-xs text-gray-600">+1 555-0123</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 rounded-lg border border-gray-100 shadow-sm bg-gray-100 px-4 py-3">
+                    <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-gray-200 text-primary">
+                      <MapPin className="size-4" />
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold text-gray-900">Visit Office</p>
+                      <p className="text-xs text-gray-600">123 Business Ave, Tech City</p>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <p className="text-xs font-semibold tracking-widest text-gray-800 uppercase mb-3">
+                    Follow Our Journey
+                  </p>
+                  <div className="flex items-center gap-2">
+                    {[
+                      { icon: <Linkedin className="size-5" />, label: "LinkedIn" },
+                      { icon: <Instagram className="size-5" />, label: "Instagram" },
+                    ].map(({ icon, label }) => (
+                      <button
+                        key={label}
+                        aria-label={label}
+                        className="flex size-8 items-center justify-center cursor-pointer rounded-lg border border-gray-200 bg-gray-200 text-gray-600 transition-colors hover:border-primary hover:text-primary"
+                      >
+                        {icon}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              {/* Right: Form */}
+              <div className="p-6 md:p-8">
+                <h3 className="text-base font-semibold text-gray-900 mb-5">Send us a message</h3>
+                <form
+                  className="flex flex-col gap-4"
+                  onSubmit={(e) => e.preventDefault()}
+                >
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    <div className="flex flex-col gap-1.5">
+                      <label className="text-xs font-medium text-gray-900">Full Name</label>
+                      <input
+                        type="text"
+                        placeholder="John Doe"
+                        className="rounded-lg border border-gray-200 bg-gray-100 px-3 py-2.5 text-sm text-gray-900 placeholder:text-gray-600 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+                      />
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                      <label className="text-xs font-medium text-gray-900">Professional Email</label>
+                      <input
+                        type="email"
+                        placeholder="john@company.com"
+                        className="rounded-lg border border-gray-200 bg-gray-100 px-3 py-2.5 text-sm text-gray-900 placeholder:text-gray-600 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+                      />
+                    </div>
+                  </div>
+                  <div className="flex flex-col gap-1.5">
+                    <label className="text-xs font-medium text-gray-900">Subject</label>
+                    <div className="relative">
+                      <select
+                        className="w-full appearance-none rounded-lg border border-gray-200 bg-gray-100 px-3 py-2.5 text-sm text-gray-900 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors pr-9"
+                      >
+                        <option value="">Select a topic</option>
+                        <option value="general">General Inquiry</option>
+                        <option value="support">Technical Support</option>
+                        <option value="billing">Billing</option>
+                        <option value="partnership">Partnership</option>
+                      </select>
+                      <ChevronDown className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-gray-800" />
+                    </div>
+                  </div>
+                  <div className="flex flex-col gap-1.5">
+                    <label className="text-xs font-medium text-gray-900">Message</label>
+                    <textarea
+                      rows={5}
+                      placeholder="How can we help you?"
+                      className="resize-none rounded-lg border border-gray-200 bg-gray-100 px-3 py-2.5 text-sm text-gray-900 placeholder:text-gray-600 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    className="flex items-center justify-center gap-2 rounded-lg bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90  cursor-pointer"
+                  >
+                    Send Message
+                    <Send className="size-4" />
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </article>
+        {/* FAQ Section */}
+        <article className="mb-8 ">
+          <div className="mb-6 text-center">
+            <h2 className="text-xl font-bold text-gray-900">
+              Frequently Asked <span className="text-primary">Questions</span>
+            </h2>
+            <div className="mx-auto mt-3 h-0.5 w-10 rounded-full bg-primary" />
+          </div>
+          <div className="flex flex-col gap-2">
+            {faqItems.map((item, i) => (
+              <div
+                key={i}
+                className="overflow-hidden rounded-xl border border-gray-200 bg-gray-200"
+              >
+                <button
+                  className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left transition-colors hover:bg-gray-200/80 cursor-pointer"
+                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                  aria-expanded={openFaq === i}
+                  type='button'
+                >
+                  <span className="text-sm font-medium text-gray-900">{item.question}</span>
+                  <ChevronDown
+                    className={`size-4 shrink-0 text-gray-800 transition-transform duration-200 ${openFaq === i ? "rotate-180" : ""
+                      }`}
+                  />
+                </button>
+                {openFaq === i && (
+                  <div className="border-t border-gray-200 px-5 py-4 bg-gray-100">
+                    <p className="text-sm text-gray-800 leading-relaxed">{item.answer}</p>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </article>
+      </div>
+    </section>
+  )
+}

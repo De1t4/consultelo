@@ -2,6 +2,7 @@ import ConsultationToogle from "@/app/(owner)/my-consultations/components/Consul
 import { ConsultationCategory, ConsultationStatus } from "@/generated/prisma/enums";
 import { ResponseConsultList } from "@/shared/types/response-consult";
 import { Calendar, MessageSquare } from "lucide-react";
+import Link from "next/link";
 
 const categoryStyles: Record<ConsultationCategory, string> = {
   'software': 'bg-orange-100 text-orange-600',
@@ -29,7 +30,7 @@ const statusDot: Record<ConsultationStatus, string> = {
 
 export default function RowConsult({ consultation }: { consultation: ResponseConsultList }) {
   return (
-    <div className="bg-card border border-border max-md:flex-col rounded-xl px-5 py-4 hover:shadow-sm transition-shadow flex items-center gap-4">
+    <Link href={`/consultation/${consultation.id}`} className="bg-card border border-border max-md:flex-col rounded-xl px-5 py-4 hover:shadow-sm transition-shadow flex items-center gap-4">
       <div className="flex-1 min-w-50 max-md:w-full">
         <div className="flex items-center gap-2 mb-0.5">
           <span className={`text-xs font-bold tracking-wide px-2 py-1 rounded-full ${categoryStyles[consultation.categories]}`}>
@@ -55,6 +56,6 @@ export default function RowConsult({ consultation }: { consultation: ResponseCon
         </span>
         <ConsultationToogle consultation={consultation} />
       </div>
-    </div>
+    </Link>
   );
 }

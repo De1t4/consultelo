@@ -13,17 +13,9 @@ export default function Footer() {
               </div>
               <span className="font-bold text-xl text-gray-900">ConsultPro</span>
             </div>
-            <p className="text-sm text-gray-600 mb-4">
+            <p className="text-sm text-gray-600">
               Empowering organizations with expert knowledge and data-driven solutions.
             </p>
-            <div className="flex gap-3">
-              <button className="h-8 w-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors">
-                <span className="text-gray-600 text-sm">𝕏</span>
-              </button>
-              <button className="h-8 w-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors">
-                <span className="text-gray-600 text-sm">@</span>
-              </button>
-            </div>
           </div>
 
           {/* Platform */}

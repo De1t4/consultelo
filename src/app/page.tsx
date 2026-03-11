@@ -1,3 +1,4 @@
+import Contact from "@/components/landing/Contact";
 import Choose from "@components/landing/Choose";
 import Footer from "@components/landing/Footer";
 import Header from "@components/landing/Header";
@@ -10,6 +11,7 @@ export default function Home() {
       <Header />
       <Hero />
       <Choose />
+      <Contact />
       <Footer />
     </div>
   )

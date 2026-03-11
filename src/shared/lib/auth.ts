@@ -34,6 +34,10 @@ export const authOptions: NextAuthOptions = {
         if (!isPasswordValid)
           throw new Error("User or password incorrect. Please try again.");
 
+        if (!user.isActive) {
+          throw new Error("This account was deleted");
+        }
+
         return {
           id: user.id.toString(),
           email: user.email,

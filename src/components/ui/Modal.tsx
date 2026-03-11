@@ -87,7 +87,7 @@ export function Modal({
         className={`
           relative bg-background border border-border rounded-xl shadow-2xl w-full
           ${sizeClasses[size]}
-          max-h-[85vh] flex flex-col
+          max-h-[85dvh] flex flex-col
           transition-all ease-out
           animate-in fade-in zoom-in duration-300
         `}

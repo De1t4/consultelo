@@ -26,8 +26,8 @@
       "@/*": [
         "./src/*"
       ],
-      "@hooks/*": [
-        "./src/hooks/*"
+      "@context/*": [
+        "./src/context/*"
       ],
       "@components/*": [
         "./src/components/*"

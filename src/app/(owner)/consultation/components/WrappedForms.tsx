@@ -1,10 +1,10 @@
 'use client'
 import { CreateConsultationResponseDTO, FormDataConsultation, useCreateConsultation } from '@/features/consultations'
-import { useFormConsult } from '@/hooks/context/FormConsultContext'
 import { useState } from 'react'
 import SuccessConsultPage from './SuccessPage'
 import ConsultationForm from './form/ConsultationForm'
 import SettingsForm from './form/SettingsForm'
+import { useFormConsult } from '@/context/FormConsultContext'
 
 export default function WrappedForms() {
   const [consult, setConsult] = useState<CreateConsultationResponseDTO | null>(null)

@@ -1,4 +1,4 @@
-import { useTheme } from "@/hooks/context/ThemeContext";
+import { useTheme } from "@/context/ThemeContext";
 
 type Theme = 'light' | 'dark';
 

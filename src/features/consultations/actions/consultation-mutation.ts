@@ -1,5 +1,12 @@
 "use server";
 
+import { STATUS_MESSAGE } from "@/shared/constants/status-response";
+import { authOptions } from "@/shared/lib/auth";
+import { executeAction } from "@/shared/utils/execution-action-db";
+import { isValidId } from "@/shared/utils/validates";
+import { InputJsonValue } from "@prisma/client/runtime/client";
+import { getServerSession } from "next-auth";
+import { revalidatePath } from "next/cache";
 import { FormDataConsultation } from "../schemas/schema-consultation";
 import {
   createConsultation,
@@ -8,12 +15,6 @@ import {
   getUserStats,
   updateConsultation,
 } from "../services/consultation-service";
-import { authOptions } from "@/shared/lib/auth";
-import { executeAction } from "@/shared/utils/execution-action-db";
-import { isValidId } from "@/shared/utils/validates";
-import { InputJsonValue } from "@prisma/client/runtime/client";
-import { getServerSession } from "next-auth";
-import { revalidatePath } from "next/cache";
 
 const MAX_CONSULTATIONS = 5;
 
@@ -23,7 +24,7 @@ export async function createConsultationAction(data: FormDataConsultation) {
   if (!userId) {
     return {
       data: null,
-      error: "User not authenticated or session expired",
+      error: STATUS_MESSAGE.UNAUTHORIZED,
       success: false as const,
     };
   }
@@ -62,15 +63,15 @@ export async function deleteConsultationAction(idConsultation: string) {
       const session = await getServerSession(authOptions);
       const userId = session?.user?.id;
       if (!userId) {
-        throw new Error("User not authenticated or session expired");
+        throw new Error(STATUS_MESSAGE.UNAUTHORIZED);
       }
 
       if (!idConsultation) {
-        throw new Error("No consultation ID was provided.");
+        throw new Error(STATUS_MESSAGE.BAD_REQUEST);
       }
 
       if (!isValidId(idConsultation)) {
-        throw new Error("The consultation ID format is invalid.");
+        throw new Error(STATUS_MESSAGE.VALIDATION_ERROR);
       }
 
       await checkConsultationOwner(idConsultation, userId);
@@ -96,15 +97,15 @@ export async function updateConsultationAction(
       const bodyParsed: InputJsonValue = JSON.parse(data.body);
 
       if (!userId) {
-        throw new Error("User not authenticated or session expired");
+        throw new Error(STATUS_MESSAGE.UNAUTHORIZED);
       }
 
       if (!idConsultation) {
-        throw new Error("No consultation ID was provided.");
+        throw new Error(STATUS_MESSAGE.BAD_REQUEST);
       }
 
       if (!isValidId(idConsultation)) {
-        throw new Error("The consultation ID format is invalid.");
+        throw new Error(STATUS_MESSAGE.VALIDATION_ERROR);
       }
 
       await checkConsultationOwner(idConsultation, userId);
@@ -126,10 +127,10 @@ const checkConsultationOwner = async (
   const getConsultation = await getConsultationById(idConsultation);
 
   if (!getConsultation) {
-    throw new Error("Consultation not found.");
+    throw new Error(STATUS_MESSAGE.NOT_FOUND);
   }
 
   if (getConsultation.userId !== userId) {
-    throw new Error("You are not authorized to delete this consultation.");
+    throw new Error(STATUS_MESSAGE.FORBIDDEN);
   }
 };

@@ -1,11 +1,15 @@
 "use server";
 
-import { FormDataComment } from "@/schemas/schema-comment";
-import { createComment, isCommentedByUser } from "@/services/comment-service";
+import { FormDataComment } from "@/features/comments/schemas/schema-comment";
+import {
+  createComment,
+  isCommentedByUser,
+} from "@/features/comments/service/comment-service";
 import { authOptions } from "@/shared/lib/auth";
 import { executeAction } from "@/shared/utils/execution-action-db";
 import { getServerSession } from "next-auth";
 import { cookies } from "next/headers";
+import { STATUS_MESSAGE } from "@/shared/constants/status-response";
 
 const COMMENT_COOKIE_PREFIX = "has_commented_";
 
@@ -13,7 +17,7 @@ export async function createCommentAction(data: FormDataComment) {
   const result = await executeAction({
     actionFn: async () => {
       if (!data.consultationId) {
-        throw new Error("No consultation ID was provided.");
+        throw new Error(STATUS_MESSAGE.BAD_REQUEST);
       }
 
       const session = await getServerSession(authOptions);
@@ -21,7 +25,7 @@ export async function createCommentAction(data: FormDataComment) {
 
       // 1. Validation for non-anonymous comments
       if (!data.isAnonymous && !userId) {
-        throw new Error("You must be logged in to comment.");
+        throw new Error(STATUS_MESSAGE.UNAUTHORIZED);
       }
 
       // 2. Check for existing comments (Cookie or DB)
@@ -51,14 +55,14 @@ async function checkExistentComment(consultationId: string, userId?: string) {
 
   // Check cookie (for guest users or as a first line of defense)
   if (cookieStore.get(cookieName)) {
-    throw new Error("You have already left a comment on this consultation.");
+    throw new Error(STATUS_MESSAGE.ALREADY_EXISTS);
   }
 
   // Check database if user is logged in
   if (userId) {
     const isCommented = await isCommentedByUser(userId, consultationId);
     if (isCommented) {
-      throw new Error("You have already left a comment on this consultation.");
+      throw new Error(STATUS_MESSAGE.ALREADY_EXISTS);
     }
   }
 }

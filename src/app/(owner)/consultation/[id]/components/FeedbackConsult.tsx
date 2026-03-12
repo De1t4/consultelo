@@ -3,10 +3,11 @@
 import LoginForm from '@/app/(auth)/components/LoginForm';
 import { Button } from '@/components/ui/Button';
 import { Modal } from '@/components/ui/Modal';
-import { useCreateComment } from '@/hooks/use/use-comment-mutation';
-import { FormDataComment, SchemaComment } from '@/schemas/schema-comment';
+import { useCreateComment } from '@/features/comments/hooks/use-comment-mutation';
+import { FormDataComment, SchemaComment } from '@/features/comments/schemas/schema-comment';
 import { ResponseConsultDetail } from '@/shared/types/response-consult';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useQueryClient } from '@tanstack/react-query';
 import { Info } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
@@ -16,17 +17,26 @@ export default function FeedbackConsult({ consultation }: { consultation: Respon
   const [open, setOpen] = useState(false);
   const { data: session } = useSession()
 
-  const { register, handleSubmit, formState: { errors } } = useForm<FormDataComment>({
+  const queryClient = useQueryClient();
+
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<FormDataComment>({
     resolver: zodResolver(SchemaComment),
   })
 
   const { createComment, isPending } = useCreateComment();
 
-  const onSubmit = async (data: FormDataComment) => {
-    await createComment({
+  const onSubmit = (data: FormDataComment) => {
+    createComment({
       ...data,
       consultationId: consultation.id,
       isAnonymous: consultation.settings?.allowAnonymous,
+    }, {
+      onSuccess: () => {
+        reset()
+        queryClient.invalidateQueries({
+          queryKey: ["consultation-detail", consultation.id],
+        });
+      }
     })
   }
 

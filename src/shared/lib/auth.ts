@@ -2,6 +2,7 @@ import prisma from "@/shared/lib/prisma";
 import bcrypt from "bcryptjs";
 import { type NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { STATUS_MESSAGE } from "../constants/status-response";
 
 export const authOptions: NextAuthOptions = {
   secret: process.env.AUTH_SECRET,
@@ -33,6 +34,10 @@ export const authOptions: NextAuthOptions = {
 
         if (!isPasswordValid)
           throw new Error("User or password incorrect. Please try again.");
+
+        if (!user.isActive) {
+          throw new Error(STATUS_MESSAGE.USER_DELETED);
+        }
 
         return {
           id: user.id.toString(),

@@ -1,12 +1,12 @@
 "use client";
 
-import { getPublicConsultationsAction, getUserStatsAction } from "@/features/consultations";
 import { Button } from "@/components/ui/Button";
 import { CardDashboard } from "@/components/ui/CardConsult/Card";
 import StatCard from "@/components/ui/StatCard";
+import { getPublicConsultationsAction, getUserStatsAction } from "@/features/consultations";
 import { useQuery } from "@tanstack/react-query";
 import {
-  ChevronDown,
+  ArrowRight,
   Folder,
   MessageSquare,
   Plus
@@ -95,11 +95,9 @@ export default function SectionDashboard() {
         <div className="flex flex-col gap-2">
           <h2 className="text-2xl tracking-tight text-foreground font-bold mb-2">Public Consultations</h2>
         </div>
-        <div className="flex items-center gap-2">
-          <button className="flex items-center gap-2 px-3 py-1.5 bg-card border border-border rounded-lg text-sm text-foreground hover:bg-accent transition-colors cursor-pointer">
-            <ChevronDown className="size-4" />
-            Category
-          </button>
+        <div className="flex gap-2  justify-center items-center cursor-pointer group/view-all hover:text-primary transition-colors">
+          <p className="text-muted-foreground text-md mt-1 font-medium max-md:text-center">View All</p>
+          <ArrowRight className="size-4 text-foreground mt-1 group-hover/view-all:translate-x-1 transition-all" />
         </div>
       </div>
 

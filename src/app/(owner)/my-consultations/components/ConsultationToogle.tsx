@@ -2,44 +2,26 @@
 
 import { ActionMenu, ActionMenuItem } from '@/components/ui/ActionMenu';
 import { Modal } from '@/components/ui/Modal';
-import { deleteConsultationAction } from '@/features/consultations';
+import { useDeleteConsultation } from '@/features/consultations';
 import { ResponseConsultList } from '@/shared/types/response-consult';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { Edit, MoreVertical, Trash2 } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { sileo } from 'sileo';
 import EditConsultForm from './form/EditConsultForm';
 
 export default function ConsultationToogle({ consultation }: { consultation: ResponseConsultList }) {
   const [isOpen, setIsOpen] = useState(false);
-  const router = useRouter();
   const queryClient = useQueryClient();
 
-  const { mutateAsync: deleteConsultation } = useMutation({
-    mutationFn: (idConsultation: string) => deleteConsultationAction(idConsultation),
-    onSuccess: (res) => {
-      if (res.success) {
+  const { deleteConsultation } = useDeleteConsultation();
+
+  const handleDeleteConsultation = () => {
+    deleteConsultation(consultation.id, {
+      onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['consultations'] });
-        sileo.success({
-          title: "Consultation deleted successfully",
-          description: "The consultation has been deleted successfully",
-        });
-        router.refresh();
-      } else {
-        sileo.error({
-          title: "Error deleting consultation",
-          description: res.error,
-        });
       }
-    },
-    onError: () => {
-      sileo.error({
-        title: "System Error",
-        description: "An unexpected error occurred while deleting.",
-      });
-    }
-  });
+    })
+  }
 
   return (
     <>
@@ -61,7 +43,7 @@ export default function ConsultationToogle({ consultation }: { consultation: Res
         </ActionMenuItem>
         <div className="h-px bg-border my-1.5" />
         <ActionMenuItem
-          onClick={() => deleteConsultation(consultation.id)}
+          onClick={() => handleDeleteConsultation()}
           className="text-red-600 hover:bg-red-50 hover:dark:bg-red-950 font-medium"
         >
           <div className="flex items-center gap-2.5">

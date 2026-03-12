@@ -10,6 +10,8 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { sileo } from 'sileo';
 
+const MAX_ATTEMPS = 3
+
 export default function LoginForm({ callbackUrl = "/dashboard", onSuccess }: { callbackUrl?: string, onSuccess?: () => void }) {
   const [error, setError] = useState<string | undefined>(undefined);
   const [attempt, setAttempt] = useState(0);
@@ -25,7 +27,7 @@ export default function LoginForm({ callbackUrl = "/dashboard", onSuccess }: { c
   const router = useRouter();
 
   const onSubmit = async (data: FormDataLogin) => {
-    if (attempt >= 3) {
+    if (attempt >= MAX_ATTEMPS) {
       setError("Too many attempts. Please try again later.");
       return;
     }

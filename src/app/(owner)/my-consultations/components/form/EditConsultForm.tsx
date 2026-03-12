@@ -1,42 +1,27 @@
-import { updateConsultationAction, FormDataConsultation, SchemaConsultation } from '@/features/consultations'
-import EditorText from '@/app/(owner)/consultation/components/EditorText'
+import EditorText from '@/components/ui/EditorText'
 import { Button } from '@/components/ui/Button'
 import { Toggle } from '@/components/ui/Toggle'
-import { sileo } from 'sileo'
+import { FormDataConsultation, SchemaConsultation, useUpdateConsultation } from '@/features/consultations'
 import { ResponseConsultList } from '@/shared/types/response-consult'
+import { categoryOptions, statusOptions } from '@/shared/utils/list-options'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useQueryClient } from '@tanstack/react-query'
 import { BookOpen, Eye, Lock } from 'lucide-react'
 import { useForm, useWatch } from 'react-hook-form'
-import { categoryOptions, statusOptions } from '@/shared/utils/list-options'
 
 export default function EditConsultForm({ consultation, setIsOpen }: { consultation: ResponseConsultList, setIsOpen: (value: boolean) => void }) {
   const queryClient = useQueryClient();
 
-  const { mutate: updateConsultation, isPending } = useMutation({
-    mutationFn: async (data: FormDataConsultation) => await updateConsultationAction(consultation.id, data),
-    onSuccess: (res) => {
-      if (res.success) {
-        setIsOpen(false)
-        sileo.success({
-          title: "Consultation updated",
-          description: "Your changes have been saved successfully.",
-        });
+  const { updateConsultation, isPending } = useUpdateConsultation({ consultation })
+
+  const onSubmit = async (data: FormDataConsultation) => {
+    updateConsultation(data, {
+      onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['consultations'] });
-      } else {
-        sileo.error({
-          title: "Update failed",
-          description: res.error,
-        });
+        setIsOpen(false)
       }
-    },
-    onError: () => {
-      sileo.error({
-        title: "System error",
-        description: "An unexpected error occurred. Please try again.",
-      });
-    }
-  })
+    })
+  }
 
   const {
     handleSubmit,
@@ -57,11 +42,6 @@ export default function EditConsultForm({ consultation, setIsOpen }: { consultat
       status: consultation.status,
     }
   })
-
-  const onSubmit = async (data: FormDataConsultation) => {
-    updateConsultation(data)
-  }
-
 
   const isPrivate = useWatch({ control, name: "privacy" })
   const isViewComments = useWatch({ control, name: "viewComments" })

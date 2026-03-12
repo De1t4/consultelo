@@ -1,9 +1,9 @@
 'use client'
 
-import { getMyConsultationsAction, useConsults } from '@/features/consultations'
 import { CardDefault } from '@/components/ui/CardConsult/Card'
 import { FilterSelect } from '@/components/ui/FilterSelect'
 import RowConsult from '@/components/ui/RowConsult'
+import { getMyConsultationsAction, useConsultsForm } from '@/features/consultations'
 import { ConsultationCategory, ConsultationStatus } from '@/generated/prisma/enums'
 import { ResponseConsultList } from '@/shared/types/response-consult'
 import { categoryOptions, statusOptions } from '@/shared/utils/list-options'
@@ -30,7 +30,7 @@ export default function ConsultationContent({ consultations }: { consultations: 
     setViewMode,
     viewMode,
     filteredConsultations
-  } = useConsults({ consultations: consultationsData });
+  } = useConsultsForm({ consultations: consultationsData });
 
   const hasConsultations = consultationsData.length > 0;
 

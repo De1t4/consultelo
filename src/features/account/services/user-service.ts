@@ -29,6 +29,17 @@ export async function updateUser(userId: string, data: FormDataAccount) {
   });
 }
 
+export async function updatePassword(userId: string, password: string) {
+  return await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      password: password,
+    },
+  });
+}
+
 export async function getUserById(userId: string) {
   return await prisma.user.findUnique({
     where: {

@@ -1,13 +1,15 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { signOut } from "next-auth/react";
 import { sileo } from "sileo";
 import {
   deleteUserAction,
+  resetPasswordAction,
   updateProfileAction,
 } from "../actions/user-mutation";
 import { FormDataAccount } from "../schemas/schema-account";
-import { signOut } from "next-auth/react";
+import { FormDataResetPassword } from "../schemas/schema-reset-password";
 
 export const useUpdateProfile = () => {
   const queryClient = useQueryClient();
@@ -59,4 +61,28 @@ export const useDeleteAccount = () => {
   });
 
   return { deleteAccount, isPending };
+};
+
+export const useResetPassword = () => {
+  const { mutate: resetPassword, isPending } = useMutation({
+    mutationFn: async (data: FormDataResetPassword) => {
+      const res = await resetPasswordAction(data.oldPassword, data.newPassword);
+      if (!res.success) throw new Error(res.error);
+      return res;
+    },
+    onSuccess: () => {
+      sileo.success({
+        title: "Success reset password",
+        description: "Password reset successfully",
+      });
+    },
+    onError: (error: Error) => {
+      sileo.error({
+        title: "Error reset password",
+        description: error.message || "Password could not be reset",
+      });
+    },
+  });
+
+  return { resetPassword, isPending };
 };

@@ -12,11 +12,13 @@ export const SchemaAccount = z.object({
   bio: z
     .string()
     .max(255, "Bio must be less than 255 characters")
-    .nullable().optional(),
+    .nullable()
+    .optional(),
   profession: z
     .string()
     .max(255, "Profession must be less than 255 characters")
-    .nullable().optional(),
+    .nullable()
+    .optional(),
 });
 
 export type FormDataAccount = z.infer<typeof SchemaAccount>;
@@ -24,5 +26,5 @@ export type FormDataAccount = z.infer<typeof SchemaAccount>;
 export const initialValuesAccount: FormDataAccount = {
   bio: "",
   profession: "",
-  username: ""
+  username: "",
 };

@@ -1,10 +1,11 @@
 "use server";
-import { authOptions } from "@/shared/lib/auth";
-import { getServerSession } from "next-auth";
-import { deleteUser, getUserById } from "../services/user-service";
-import { revalidatePath } from "next/cache";
 import { STATUS_MESSAGE } from "@/shared/constants/status-response";
+import { authOptions } from "@/shared/lib/auth";
 import { executeAction } from "@/shared/utils/execution-action-db";
+import { getServerSession } from "next-auth";
+import { revalidatePath } from "next/cache";
+import { FormDataAccount } from "../schemas/schema-account";
+import { deleteUser, getUserById, updateUser } from "../services/user-service";
 
 export const deleteUserAction = async () => {
   return await executeAction({
@@ -20,7 +21,52 @@ export const deleteUserAction = async () => {
 
       await deleteUser(userId);
       revalidatePath("/my-consultations");
-      
+
+      return {
+        success: true,
+      };
+    },
+  });
+};
+
+export const getProfileAction = async () => {
+  return await executeAction({
+    actionFn: async () => {
+      const session = await getServerSession(authOptions);
+      const userId = session?.user.id;
+
+      if (!session || !userId) {
+        throw new Error(STATUS_MESSAGE.UNAUTHORIZED);
+      }
+
+      const user = await isRegisteredUser(userId);
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { password, ...userWithoutPassword } = user;
+
+      return {
+        success: true,
+        user: userWithoutPassword,
+      };
+    },
+  });
+};
+
+export const updateProfileAction = async (data: FormDataAccount) => {
+  return await executeAction({
+    actionFn: async () => {
+      const session = await getServerSession(authOptions);
+      const userId = session?.user.id;
+
+      if (!session || !userId) {
+        throw new Error(STATUS_MESSAGE.UNAUTHORIZED);
+      }
+
+      await isRegisteredUser(userId);
+
+      await updateUser(userId, data);
+      revalidatePath("/profile");
+
       return {
         success: true,
       };

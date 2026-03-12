@@ -1,5 +1,12 @@
 "use server";
 
+import { STATUS_MESSAGE } from "@/shared/constants/status-response";
+import { authOptions } from "@/shared/lib/auth";
+import { executeAction } from "@/shared/utils/execution-action-db";
+import { isValidId } from "@/shared/utils/validates";
+import { InputJsonValue } from "@prisma/client/runtime/client";
+import { getServerSession } from "next-auth";
+import { revalidatePath } from "next/cache";
 import { FormDataConsultation } from "../schemas/schema-consultation";
 import {
   createConsultation,
@@ -8,13 +15,6 @@ import {
   getUserStats,
   updateConsultation,
 } from "../services/consultation-service";
-import { authOptions } from "@/shared/lib/auth";
-import { executeAction } from "@/shared/utils/execution-action-db";
-import { isValidId } from "@/shared/utils/validates";
-import { InputJsonValue } from "@prisma/client/runtime/client";
-import { getServerSession } from "next-auth";
-import { revalidatePath } from "next/cache";
-import { STATUS_MESSAGE } from "@/shared/constants/status-response";
 
 const MAX_CONSULTATIONS = 5;
 

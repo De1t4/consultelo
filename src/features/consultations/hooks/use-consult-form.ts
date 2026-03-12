@@ -13,7 +13,7 @@ interface UseConsultsProps {
   consultations: ResponseConsultList[];
 }
 
-export function useConsults({ consultations }: UseConsultsProps) {
+export function useConsultsForm({ consultations }: UseConsultsProps) {
   const [viewMode, setViewMode] = useState<ViewMode>("grid");
   const [filterStatus, setFilterStatus] = useState<ConsultationStatus | "">("");
   const [filterCategory, setFilterCategory] = useState<

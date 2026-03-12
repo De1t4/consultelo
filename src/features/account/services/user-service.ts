@@ -1,4 +1,5 @@
 import prisma from "@/shared/lib/prisma";
+import { FormDataAccount } from "../schemas/schema-account";
 
 export async function deleteUser(userId: string) {
   await prisma.consultation.deleteMany({
@@ -13,6 +14,17 @@ export async function deleteUser(userId: string) {
     },
     data: {
       isActive: false,
+    },
+  });
+}
+
+export async function updateUser(userId: string, data: FormDataAccount) {
+  return await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      ...data,
     },
   });
 }

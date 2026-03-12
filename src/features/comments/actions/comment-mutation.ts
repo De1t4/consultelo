@@ -1,7 +1,10 @@
 "use server";
 
-import { FormDataComment } from "@/schemas/schema-comment";
-import { createComment, isCommentedByUser } from "@/services/comment-service";
+import { FormDataComment } from "@/features/comments/schemas/schema-comment";
+import {
+  createComment,
+  isCommentedByUser,
+} from "@/features/comments/service/comment-service";
 import { authOptions } from "@/shared/lib/auth";
 import { executeAction } from "@/shared/utils/execution-action-db";
 import { getServerSession } from "next-auth";
@@ -51,7 +54,7 @@ async function checkExistentComment(consultationId: string, userId?: string) {
   const cookieName = `${COMMENT_COOKIE_PREFIX}${consultationId}`;
 
   // Check cookie (for guest users or as a first line of defense)
-    if (cookieStore.get(cookieName)) {
+  if (cookieStore.get(cookieName)) {
     throw new Error(STATUS_MESSAGE.ALREADY_EXISTS);
   }
 

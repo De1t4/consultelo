@@ -2,17 +2,17 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { sileo } from "sileo";
-import { deleteUserAction, updateProfileAction } from "../actions/user-action";
+import {
+  deleteUserAction,
+  updateProfileAction,
+} from "../actions/user-mutation";
 import { FormDataAccount } from "../schemas/schema-account";
 import { signOut } from "next-auth/react";
 
 export const useUpdateProfile = () => {
   const queryClient = useQueryClient();
 
-  const {
-    mutate: updateProfile,
-    isPending,
-  } = useMutation({
+  const { mutate: updateProfile, isPending } = useMutation({
     mutationFn: async (data: FormDataAccount) => {
       const res = await updateProfileAction(data);
       if (!res.success) throw new Error(res.error);
@@ -37,10 +37,7 @@ export const useUpdateProfile = () => {
 };
 
 export const useDeleteAccount = () => {
-  const {
-    mutate: deleteAccount,
-    isPending,
-  } = useMutation({
+  const { mutate: deleteAccount, isPending } = useMutation({
     mutationFn: async () => {
       const res = await deleteUserAction();
       if (!res.success) throw new Error(res.error);

@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { getProfileAction } from "../actions/user-action";
+import { getProfileAction } from "../actions/user-queries";
 
 export const useProfile = () => {
   const {

@@ -1,4 +1,4 @@
-import EditorText from '@/app/(owner)/consultation/components/EditorText'
+import EditorText from '@/components/ui/EditorText'
 import { Button } from '@/components/ui/Button'
 import { Toggle } from '@/components/ui/Toggle'
 import { FormDataConsultation, SchemaConsultation, useUpdateConsultation } from '@/features/consultations'

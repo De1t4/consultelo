@@ -1,10 +1,8 @@
-import { createCommentAction } from "@/actions/comment-mutation";
-import { useQueryClient, useMutation } from "@tanstack/react-query";
+import { createCommentAction } from "@/features/comments/actions/comment-mutation";
+import { useMutation } from "@tanstack/react-query";
 import { sileo } from "sileo";
 
 const useCreateComment = () => {
-  const queryClient = useQueryClient();
-
   const {
     mutateAsync: createComment,
     isPending,
@@ -23,9 +21,6 @@ const useCreateComment = () => {
       sileo.success({
         title: "Comment created successfully",
         description: "Your comment has been added to the consultation.",
-      });
-      queryClient.invalidateQueries({
-        queryKey: ["consultation-detail", res.data.consultationId],
       });
     },
     onError: (error) => {

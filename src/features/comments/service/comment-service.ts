@@ -1,4 +1,4 @@
-import { FormDataComment } from "@/schemas/schema-comment";
+import { FormDataComment } from "@/features/comments/schemas/schema-comment";
 import prisma from "@/shared/lib/prisma";
 
 export const createComment = async (
@@ -25,23 +25,3 @@ export const isCommentedByUser = async (
     },
   });
 };
-
-// export const getCommentsByConsultationId = async (consultationId: string) => {
-//   const comments: Comment[] | [] = await prisma.comment.findMany({
-//     where: {
-//       consultationId: consultationId,
-//     },
-//     select: {
-//       id: true,
-//       message: true,
-//       createdAt: true,
-//       userId: true,
-//       authorName: true,
-//     },
-//     orderBy: {
-//       createdAt: "desc",
-//     },
-//   });
-
-//   return comments;
-// };

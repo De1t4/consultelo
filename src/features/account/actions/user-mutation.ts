@@ -29,29 +29,6 @@ export const deleteUserAction = async () => {
   });
 };
 
-export const getProfileAction = async () => {
-  return await executeAction({
-    actionFn: async () => {
-      const session = await getServerSession(authOptions);
-      const userId = session?.user.id;
-
-      if (!session || !userId) {
-        throw new Error(STATUS_MESSAGE.UNAUTHORIZED);
-      }
-
-      const user = await isRegisteredUser(userId);
-
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { password, ...userWithoutPassword } = user;
-
-      return {
-        success: true,
-        user: userWithoutPassword,
-      };
-    },
-  });
-};
-
 export const updateProfileAction = async (data: FormDataAccount) => {
   return await executeAction({
     actionFn: async () => {
@@ -76,10 +53,8 @@ export const updateProfileAction = async (data: FormDataAccount) => {
 
 const isRegisteredUser = async (userId: string) => {
   const user = await getUserById(userId);
-
   if (!user) {
     throw new Error(STATUS_MESSAGE.NOT_FOUND);
   }
-
   return user;
 };

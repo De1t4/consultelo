@@ -1,3 +1,4 @@
+import { STATUS_CODE } from "@/shared/constants/status-response";
 import { ResponseConsultList } from "@/shared/types/response-consult";
 import { useMutation } from "@tanstack/react-query";
 import { sileo } from "sileo";
@@ -23,6 +24,13 @@ export const useCreateConsultation = () => {
             "Your consultation has been published and is now visible to experts.",
         });
       } else {
+        if (res.status === STATUS_CODE.LIMIT_CONSULTATIONS) {
+          sileo.warning({
+            title: "Limit consultations",
+            description: res.error,
+          });
+          return;
+        }
         sileo.error({
           title: "Error creating consultation",
           description: res.error,

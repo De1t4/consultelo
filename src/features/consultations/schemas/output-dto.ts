@@ -24,6 +24,9 @@ const UserSchema = z.object({
   username: z.string(),
   email: z.string().email(),
   updatedAt: z.date(),
+  phone: z.string().nullable(),
+  bio: z.string().nullable(),
+  profession: z.string().nullable(),
   isActive: z.boolean(),
 });
 
@@ -57,6 +60,12 @@ export const ConsultationDetailSchema = ConsultationListSchema.extend({
           .object({
             username: z.string(),
             email: z.string().email(),
+            bio: z.string().nullable(),
+            profession: z.string().nullable(),
+            createdAt: z.date(),
+            updatedAt: z.date(),
+            phone: z.string().nullable(),
+            isActive: z.boolean(),
           })
           .nullable(),
       }),

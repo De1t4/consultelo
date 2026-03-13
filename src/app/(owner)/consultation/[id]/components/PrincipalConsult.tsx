@@ -1,12 +1,10 @@
-'use client'
-
 import RichTextDisplay from '@/components/ui/RichTextDisplay';
 import { ResponseConsultDetail } from '@/shared/types/response-consult';
 import { statusDot, statusStyles } from '@/shared/utils/card-utils';
 import { MoreHorizontal, Share2, User } from 'lucide-react';
+import ProfileUser from './ProfileUser';
 
 export default function PrincipalConsult({ consultation }: { consultation: ResponseConsultDetail }) {
-
   const date = `${consultation.createdAt != consultation.updatedAt ? 'Updated' : 'Created'} ${new Date(consultation.updatedAt).toLocaleDateString()} ${new Date(consultation.updatedAt).getHours()}:${new Date(consultation.updatedAt).getMinutes() < 10 ? '0' + new Date(consultation.updatedAt).getMinutes() : new Date(consultation.updatedAt).getMinutes()}`
 
   return (
@@ -28,13 +26,13 @@ export default function PrincipalConsult({ consultation }: { consultation: Respo
       </h1>
 
       {/* Author Info */}
-      <div className="flex items-start gap-4 mb-6">
+      <div className="flex items-start gap-4 mb-6 ">
         <div className="h-10 w-10 border border-border rounded-full overflow-hidden p-2 bg-card">
           <User className='w-full h-full rounded-full object-cover bg-muted  text-muted-foreground' />
         </div>
-        <div className="flex-1">
+        <div className="flex-1 ">
           <div className="flex items-center gap-2">
-            <h3 className="font-semibold text-foreground">{consultation.user?.username}</h3>
+            <ProfileUser user={consultation.user} />
             <span className="text-xs bg-teal-100 text-teal-700 px-2 py-0.5 rounded uppercase">
               {consultation.user?.role}
             </span>

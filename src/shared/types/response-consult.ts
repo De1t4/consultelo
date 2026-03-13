@@ -41,7 +41,7 @@ export interface ResponseConsultDetail {
   expiresAt: Date | null;
   updatedAt: Date;
   settings: Settings | null;
-  user: User | null;
+  user: UserResponse | null;
   comments: Comment[] | null;
   _count: {
     comments: number;
@@ -68,12 +68,15 @@ interface Settings {
   consultationId: string;
 }
 
-interface User {
+export interface UserResponse {
   id: string;
   createdAt: Date;
   role: UserRole;
   username: string;
   email: string;
+  phone: string | null;
   updatedAt: Date;
   isActive: boolean;
+  bio: string | null;
+  profession: string | null;
 }

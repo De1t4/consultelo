@@ -152,7 +152,7 @@ export default function EditConsultForm({ consultation, setIsOpen }: { consultat
             </div>
           </div>
           <div>
-            <Toggle checked={isAnonymous === true} onChange={(checked) => setValue("allowAnonymous", checked ? true : false)}></Toggle>
+            <Toggle disabled checked={isAnonymous === true} onChange={(checked) => setValue("allowAnonymous", checked ? true : false)}></Toggle>
           </div>
 
         </div>

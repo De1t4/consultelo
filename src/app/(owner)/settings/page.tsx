@@ -29,7 +29,7 @@ export default function Page() {
       {/* Page Header */}
       <div className="mb-8">
         <h2 className="text-2xl tracking-tight text-foreground font-bold mb-2">Account Settings</h2>
-        <p className="text-sm text-muted-foreground">Manage your profile, security preferences, and notifications.</p>
+        <p className="text-sm text-muted-foreground">Manage your profile, security preferences, and other settings.</p>
       </div>
 
       <div className="flex gap-6 max-md:flex-col">

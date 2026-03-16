@@ -37,20 +37,20 @@ export default function ContactForm() {
         body: JSON.stringify(data),
       })
       const result = await response.json()
-      
+
       if (!response.ok) {
         throw new Error(result.error || 'Failed to send message')
       }
-      
-      setSubmitStatus({ 
-        type: 'success', 
-        message: 'Message sent successfully! We will get back to you soon.' 
+
+      setSubmitStatus({
+        type: 'success',
+        message: 'Message sent successfully! We will get back to you soon.'
       })
       reset()
     } catch (error: unknown) {
       const errorMessage = error instanceof Error ? error.message : 'An error occurred while sending the message.'
-      setSubmitStatus({ 
-        type: 'error', 
+      setSubmitStatus({
+        type: 'error',
         message: errorMessage
       })
     } finally {
@@ -109,7 +109,7 @@ export default function ContactForm() {
             defaultValue={""}
             className="w-full appearance-none rounded-lg border border-gray-200 bg-gray-100 px-3 py-2.5 text-sm text-gray-900 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors pr-9"
           >
-            <option value="" disabled selected>Select a topic</option>
+            <option value="" disabled>Select a subject</option>
             <option value="general">General Inquiry</option>
             <option value="support">Technical Support</option>
             <option value="billing">Billing</option>

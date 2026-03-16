@@ -11,7 +11,6 @@ import { sileo } from 'sileo';
 
 export default function RegisterForm() {
   const [error, setError] = useState<string | undefined>(undefined);
-  const [attempt, setAttempt] = useState(0);
 
   const router = useRouter()
   const {
@@ -23,10 +22,6 @@ export default function RegisterForm() {
   });
 
   const onSubmit = async (data: FormDataRegister) => {
-    if (attempt >= 3) {
-      setError("Too many attempts. Please try again later.");
-      return;
-    }
 
     const res = await fetch('/api/auth/register', {
       method: 'POST',
@@ -39,7 +34,6 @@ export default function RegisterForm() {
     if (!res.ok) {
       const error = await res.json()
       setError(error.error)
-      setAttempt(attempt + 1)
       throw new Error('Error registering the user');
     }
 

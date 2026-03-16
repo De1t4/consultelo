@@ -2,6 +2,8 @@
 
 import { ChevronDown, Instagram, Linkedin, Mail, MapPin, Phone, Send } from 'lucide-react'
 import { useState } from 'react'
+import { Button } from '../ui/Button'
+import ContactForm from './ContactForm'
 
 const faqItems = [
   {
@@ -96,59 +98,7 @@ export default function Contact() {
               {/* Right: Form */}
               <div className="p-6 md:p-8">
                 <h3 className="text-base font-semibold text-gray-900 mb-5">Send us a message</h3>
-                <form
-                  className="flex flex-col gap-4"
-                  onSubmit={(e) => e.preventDefault()}
-                >
-                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                    <div className="flex flex-col gap-1.5">
-                      <label className="text-xs font-medium text-gray-900">Full Name</label>
-                      <input
-                        type="text"
-                        placeholder="John Doe"
-                        className="rounded-lg border border-gray-200 bg-gray-100 px-3 py-2.5 text-sm text-gray-900 placeholder:text-gray-600 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
-                      />
-                    </div>
-                    <div className="flex flex-col gap-1.5">
-                      <label className="text-xs font-medium text-gray-900">Professional Email</label>
-                      <input
-                        type="email"
-                        placeholder="john@company.com"
-                        className="rounded-lg border border-gray-200 bg-gray-100 px-3 py-2.5 text-sm text-gray-900 placeholder:text-gray-600 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
-                      />
-                    </div>
-                  </div>
-                  <div className="flex flex-col gap-1.5">
-                    <label className="text-xs font-medium text-gray-900">Subject</label>
-                    <div className="relative">
-                      <select
-                        className="w-full appearance-none rounded-lg border border-gray-200 bg-gray-100 px-3 py-2.5 text-sm text-gray-900 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors pr-9"
-                      >
-                        <option value="">Select a topic</option>
-                        <option value="general">General Inquiry</option>
-                        <option value="support">Technical Support</option>
-                        <option value="billing">Billing</option>
-                        <option value="partnership">Partnership</option>
-                      </select>
-                      <ChevronDown className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-gray-800" />
-                    </div>
-                  </div>
-                  <div className="flex flex-col gap-1.5">
-                    <label className="text-xs font-medium text-gray-900">Message</label>
-                    <textarea
-                      rows={5}
-                      placeholder="How can we help you?"
-                      className="resize-none rounded-lg border border-gray-200 bg-gray-100 px-3 py-2.5 text-sm text-gray-900 placeholder:text-gray-600 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
-                    />
-                  </div>
-                  <button
-                    type="submit"
-                    className="flex items-center justify-center gap-2 rounded-lg bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90  cursor-pointer"
-                  >
-                    Send Message
-                    <Send className="size-4" />
-                  </button>
-                </form>
+                <ContactForm />
               </div>
             </div>
           </div>

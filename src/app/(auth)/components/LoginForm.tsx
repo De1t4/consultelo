@@ -10,7 +10,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { sileo } from 'sileo';
 
-const MAX_ATTEMPS = 3
+const MAX_ATTEMPS = 5
 
 export default function LoginForm({ callbackUrl = "/dashboard", onSuccess }: { callbackUrl?: string, onSuccess?: () => void }) {
   const [error, setError] = useState<string | undefined>(undefined);

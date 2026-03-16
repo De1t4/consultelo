@@ -1,4 +1,4 @@
-import { useTheme } from "@/hooks/context/ThemeContext";
+import { useTheme } from "@/context/ThemeContext";
 
 type Theme = 'light' | 'dark';
 
@@ -24,7 +24,7 @@ export default function Others() {
           </select>
         </div>
       </div>
-      <div className="mb-8">
+      {/* <div className="mb-8">
         <h3 className="text-sm font-semibold text-foreground mb-4">Change Language</h3>
         <div className="space-y-4 max-w-md w-full">
           <select
@@ -37,7 +37,7 @@ export default function Others() {
             <option value="en">English</option>
           </select>
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }

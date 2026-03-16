@@ -1,6 +1,9 @@
 "use server";
 
-import { STATUS_MESSAGE } from "@/shared/constants/status-response";
+import {
+  STATUS_CODE,
+  STATUS_MESSAGE,
+} from "@/shared/constants/status-response";
 import { authOptions } from "@/shared/lib/auth";
 import { executeAction } from "@/shared/utils/execution-action-db";
 import { isValidId } from "@/shared/utils/validates";
@@ -26,6 +29,7 @@ export async function createConsultationAction(data: FormDataConsultation) {
       data: null,
       error: STATUS_MESSAGE.UNAUTHORIZED,
       success: false as const,
+      status: STATUS_CODE.UNAUTHORIZED,
     };
   }
 
@@ -36,6 +40,7 @@ export async function createConsultationAction(data: FormDataConsultation) {
       data: null,
       error: `You have reached the maximum number of consultations allowed. (${MAX_CONSULTATIONS})`,
       success: false as const,
+      status: STATUS_CODE.LIMIT_CONSULTATIONS,
     };
   }
 

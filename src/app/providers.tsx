@@ -1,5 +1,5 @@
 'use client';
-import { ThemeProvider } from '@/hooks/context/ThemeContext';
+import { ThemeProvider } from '@/context/ThemeContext';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Session } from 'next-auth';
 import { SessionProvider } from "next-auth/react";

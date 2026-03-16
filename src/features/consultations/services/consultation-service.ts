@@ -86,6 +86,9 @@ export const getConsultationById = async (
           username: true,
           email: true,
           role: true,
+          bio: true,
+          phone: true,
+          profession: true,
           createdAt: true,
           updatedAt: true,
           isActive: true,
@@ -146,6 +149,7 @@ export const getPublicConsultations = async (): Promise<
 };
 
 export const getUserStats = async (userId: string): Promise<UserStatsDTO> => {
+  const date30DaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000); // 30 days
   const [activeConsultations, totalComments] = await Promise.all([
     prisma.consultation.count({
       where: {
@@ -153,10 +157,14 @@ export const getUserStats = async (userId: string): Promise<UserStatsDTO> => {
         status: "active",
       },
     }),
+
     prisma.comment.count({
       where: {
         consultation: {
           userId: userId,
+        },
+        createdAt: {
+          gte: date30DaysAgo,
         },
       },
     }),

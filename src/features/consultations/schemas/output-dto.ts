@@ -24,6 +24,9 @@ const UserSchema = z.object({
   username: z.string(),
   email: z.string().email(),
   updatedAt: z.date(),
+  phone: z.string().nullable(),
+  bio: z.string().nullable(),
+  profession: z.string().nullable(),
   isActive: z.boolean(),
 });
 

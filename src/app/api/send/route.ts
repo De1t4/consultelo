@@ -17,7 +17,7 @@ export async function POST(req: Request) {
     }
 
     const { data, error } = await resend.emails.send({
-      from: "Consultelo <onboarding@resend.dev>",
+      from: "Consultelo <[EMAIL_ADDRESS]>",
       to: process.env.EMAIL_ADDRESS || "delivered@resend.dev",
       subject: `New Contact | Subject: ${subject} | From: ${email}`,
       html: `

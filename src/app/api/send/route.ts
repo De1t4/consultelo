@@ -19,7 +19,6 @@ export async function POST(req: Request) {
     const { data, error } = await resend.emails.send({
       from: "Consultelo <onboarding@resend.dev>",
       to: process.env.EMAIL_ADDRESS || "delivered@resend.dev",
-      replyTo: email,
       subject: `New Contact | Subject: ${subject} | From: ${email}`,
       html: `
         <h2>New Contact Form Submission</h2>

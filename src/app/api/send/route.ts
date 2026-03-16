@@ -5,6 +5,8 @@ import { Resend } from "resend";
 const resend = new Resend(process.env.RESEND_KEY_EMAIL);
 
 export async function POST(req: Request) {
+  const EMAIL_ADDRESS = process.env.EMAIL_ADDRESS;
+
   try {
     const { fullname, email, subject, message }: FormDataContact =
       await req.json();
@@ -17,8 +19,8 @@ export async function POST(req: Request) {
     }
 
     const { data, error } = await resend.emails.send({
-      from: "Consultelo <[EMAIL_ADDRESS]>",
-      to: process.env.EMAIL_ADDRESS || "delivered@resend.dev",
+      from: `Consultelo <[${EMAIL_ADDRESS}]>`,
+      to: EMAIL_ADDRESS || "delivered@resend.dev",
       subject: `New Contact | Subject: ${subject} | From: ${email}`,
       html: `
         <h2>New Contact Form Submission</h2>

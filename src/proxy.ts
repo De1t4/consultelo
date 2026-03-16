@@ -3,9 +3,6 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "./shared/lib/auth";
 
-const PUBLIC_PATHS = ["/account"];
-const PRIVATE_PATHS = ["/dashboard"];
-
 export async function proxy(request: NextRequest) {
   const session = await getServerSession(authOptions);
   if (!session) {
@@ -23,7 +20,7 @@ export const config = {
   matcher: [
     "/dashboard/:path*",
     "/consultation",
-    "/profile",
     "/my-consultations",
+    "/settings",
   ],
 };

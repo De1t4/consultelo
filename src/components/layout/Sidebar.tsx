@@ -98,10 +98,10 @@ export function Sidebar() {
           <ul className="flex flex-col gap-0.5">
             <li>
               <SidebarNavItem
-                item={{ label: "Settings", icon: <Settings className="size-5" />, href: "/profile" }}
+                item={{ label: "Settings", icon: <Settings className="size-5" />, href: "/settings" }}
                 expanded={expanded}
-                isActive={false}
-                onClick={() => { }}
+                isActive={activeItem === "/settings"}
+                onClick={() => setActiveItem("/settings")}
               />
             </li>
             <li>
@@ -218,8 +218,8 @@ export function Sidebar() {
               {/* Mobile bottom */}
               <div className=" px-3 py-3">
                 <Link
-                  href="/profile"
-                  className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sidebar-foreground hover:bg-sidebar-accent transition-colors  ${activeItem === "/profile" ? "bg-sidebar-accent" : ""}`}
+                  href="/settings"
+                  className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sidebar-foreground hover:bg-sidebar-accent transition-colors  ${activeItem === "/settings" ? "bg-sidebar-accent" : ""}`}
                 >
                   <Settings />
                   <span className="text-sm font-medium">Settings</span>

@@ -1,8 +1,8 @@
 "use client"
 
-import Account from "@/app/(owner)/profile/components/Account";
-import Others from "@/app/(owner)/profile/components/Others";
-import Security from "@/app/(owner)/profile/components/Security";
+import Account from "@/app/(owner)/settings/components/Account";
+import Others from "@/app/(owner)/settings/components/Others";
+import Security from "@/app/(owner)/settings/components/Security";
 import { Lock, MonitorCog, User } from "lucide-react";
 import { useState } from "react";
 import { Tab, Tabs } from "./types/tab-types";

@@ -42,9 +42,9 @@ export default function ProfileForm() {
           {isEdit ? "Cancel" : "Edit Profile"}
         </Button>
       </div>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 max-md:space-y-4 mb-4">
         {/* Full Name & Professional Title */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-4 max-md:grid-cols-1">
           <div>
             <label htmlFor='username' className="block text-sm font-medium text-muted-foreground mb-2">Username</label>
             <input
@@ -88,7 +88,7 @@ export default function ProfileForm() {
           />
           <p className="text-xs text-muted-foreground mt-1">Brief description for your public profile</p>
         </div>
-        <div className="flex justify-end mt-6">
+        <div className="flex justify-end mt-6 max-md:w-full max-md:justify-center">
           <Button type='submit' disabled={!isEdit || isPending} variant='primary' className="px-6 py-2 disabled:cursor-not-allowed">
             Save Profile Changes
           </Button>

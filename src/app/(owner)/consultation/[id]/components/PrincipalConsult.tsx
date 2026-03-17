@@ -33,7 +33,7 @@ export default function PrincipalConsult({ consultation }: { consultation: Respo
         <div className="flex-1 ">
           <div className="flex items-center gap-2">
             <ProfileUser user={consultation.user} />
-            <span className="text-xs bg-teal-100 text-teal-700 px-2 py-0.5 rounded uppercase">
+            <span className="text-xs bg-teal-100 text-teal-700 px-2  py-0.5 rounded uppercase">
               {consultation.user?.role}
             </span>
           </div>

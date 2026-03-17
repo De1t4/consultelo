@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function Hero() {
   return (
     <section className=" bg-linear-to-br pt-12 pb-12 from-teal-50 via-teal-25 to-white max-md:h-auto">
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
           <div>
@@ -24,7 +24,7 @@ export default function Hero() {
             </div>
           </div>
           {/* Right Visual */}
-          <div className="relative bg-conic/[from_var(--border-angle)] from-teal-200/20 via-teal-400 to-teal-200/20 from-30% to-60% animate-rotate-border rounded-2xl p-[2px]">
+          <div className="max-sm:hidden relative bg-conic/[from_var(--border-angle)] from-teal-200/20 via-teal-400 to-teal-200/20 from-30% to-60% animate-rotate-border rounded-2xl p-[2px]">
             <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
               {/* Chart Visual */}
               <div className="mb-6  rounded-2xl  bg-zinc-50 ">

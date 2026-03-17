@@ -28,11 +28,11 @@ export default function CommentsConsult({ consultation }: { consultation: Respon
           ) : (
             comments.map((comment, index) => (
               <div key={comment.id} className={`${index > 0 ? 'pt-6 border-t border-border' : ''} flex items-start gap-4`}>
-                <div className="h-10 w-10 bg-teal-500 rounded-full flex items-center justify-center text-white font-semibold">
+                <div className="h-10 w-10 bg-teal-500 rounded-full  flex items-center justify-center text-white font-semibold">
                   {comment.user?.username?.slice(0, 2).toUpperCase() || <User size={20} />}
                 </div>
                 <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-1">
+                  <div className="flex items-center gap-2 mb-1 flex-wrap">
                     <h4 className="font-semibold text-foreground">
                       {
                         consultation.settings?.allowAnonymous ? "Anonymous" : comment.user?.username
@@ -40,7 +40,7 @@ export default function CommentsConsult({ consultation }: { consultation: Respon
                     </h4>
                     {
                       !consultation.settings?.allowAnonymous &&
-                      <p className="text-sm text-muted-foreground">{"• " + comment.user?.email}</p>
+                      <p className="text-sm text-muted-foreground">{comment.user?.email}</p>
                     }                  </div>
                   <p className="text-xs text-muted-foreground mb-3">
                     Posted on {new Date(comment.createdAt).toLocaleDateString()}

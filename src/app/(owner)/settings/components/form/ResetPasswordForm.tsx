@@ -26,9 +26,9 @@ export default function ResetPasswordForm() {
   }
 
   return (
-    <form className="mb-8" onSubmit={handleSubmit(onSumbit)}>
+    <form className="mb-8 " onSubmit={handleSubmit(onSumbit)}>
       <h3 className="text-sm font-semibold text-foreground mb-4">Change Password</h3>
-      <div className="space-y-4 max-w-md">
+      <div className="space-y-4">
         <div className="grid grid-cols-1 gap-4 max-md:grid-cols-1">
           <div>
             <label className="block text-sm font-medium text-muted-foreground mb-2">Old Password</label>
@@ -61,9 +61,11 @@ export default function ResetPasswordForm() {
             {errors.confirmPassword && <p className="text-red-500 text-sm">{errors.confirmPassword.message}</p>}
           </div>
         </div>
-        <Button variant='outline' disabled={isPending} type='submit' className="px-4 py-2">
-          {isPending ? 'Updating...' : 'Update Password'}
-        </Button>
+        <div className="w-full flex justify-start max-md:justify-center">
+          <Button variant='outline' disabled={isPending} type='submit' className="px-4 py-2">
+            {isPending ? 'Updating...' : 'Update Password'}
+          </Button>
+        </div>
       </div>
     </form>
   )

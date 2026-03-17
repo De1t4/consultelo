@@ -11,7 +11,7 @@ export default function Others() {
       {/* Change Password */}
       <div className="mb-8">
         <h3 className="text-sm font-semibold text-foreground mb-4">Change Theme</h3>
-        <div className="space-y-4 max-w-md w-full">
+        <div className="space-y-4 w-full">
           <select
             id="theme"
             value={theme}

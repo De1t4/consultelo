@@ -53,7 +53,7 @@ export default function Account() {
         <div className='flex flex-col gap-4 text-center'>
           <p className='text-foreground text-lg'>Are you sure you want to delete your account?</p>
           <p className='text-sm text-muted-foreground'>Your will lose all your data, including your consultations and messages.</p>
-          <div className='flex justify-between gap-2'>
+          <div className='flex justify-between gap-2 max-md:flex-col'>
             <Button onClick={() => setIsOpen(false)} variant='primary'>
               Cancel
             </Button>

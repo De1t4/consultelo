@@ -41,7 +41,7 @@ export default function SettingsForm({ isPending }: { isPending: boolean }) {
               <label className="block font-semibold text-foreground text-sm mb-3">
                 How do others respond?
               </label>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-3 max-sm:grid-cols-1">
                 <button
                   onClick={() => setValue("allowAnonymous", true)}
                   type='button'

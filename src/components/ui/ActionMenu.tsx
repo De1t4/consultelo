@@ -58,7 +58,7 @@ export function ActionMenu({ trigger, children, className = "", align = 'right' 
           <div
             onClick={(e) => e.stopPropagation()} // Stop bubbling from the dropdown container
             className={`absolute z-10 mt-2 min-w-40 bg-card border border-border rounded-xl shadow-xl overflow-hidden py-1.5 animate-in fade-in zoom-in duration-200 
-              ${align === 'right' ? 'right-0' : 'left-0'}
+              ${align === 'right' ? 'right-0' : '-left-10'}
             `}
           >
             {children}

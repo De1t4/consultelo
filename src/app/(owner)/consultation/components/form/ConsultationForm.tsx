@@ -14,7 +14,7 @@ export default function ConsultationForm() {
     <>
       <div className="lg:col-span-2">
         {currentStep === "drafting" ? (
-          <div className="bg-card rounded-lg border border-border p-8 space-y-8">
+          <div className="bg-card rounded-lg border border-border p-6 space-y-8">
             <div>
               <label htmlFor='title' className="block text-sm font-semibold text-foreground mb-3">
                 Consultation Title

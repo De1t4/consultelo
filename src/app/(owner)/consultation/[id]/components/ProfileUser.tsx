@@ -22,12 +22,12 @@ export default function ProfileUser({ user }: { user: UserResponse | null }) {
   return (
     <ActionMenu align='left' trigger={
       <div className="flex items-center gap-2 group cursor-pointer ">
-        <h3 className="font-medium text-foreground group-hover:text-primary transition-colors">
+        <h3 className="font-medium text-foreground group-hover:text-primary transition-colors underline">
           {user.username}
         </h3>
       </div>
     }>
-      <div className="w-80 p-0 overflow-hidden rounded-xl border-none">
+      <div className="max-md:min-w-[75dvw] max-w-[50dvw] min-w-[250px] p-0 overflow-hidden rounded-xl border-none">
         {/* Header/Banner sutil */}
         <div className="h-16 bg-linear-to-br from-primary to-primary/60" />
 

@@ -27,6 +27,8 @@ interface NavItem {
 const mainNavItems: NavItem[] = [
   { label: "Dashboard", icon: <LayoutDashboard className="size-5" />, href: "/dashboard", active: true },
   { label: "My Consultations", icon: <Folder className="size-5" />, href: "/my-consultations" },
+  { label: "Settings", icon: <Settings className="size-5" />, href: "/settings" },
+
 ]
 
 export function Sidebar() {
@@ -112,7 +114,7 @@ export function Sidebar() {
                 <span
                   className={`shrink-0 transition-colors text-muted-foreground`}
                 >
-                  <LogOut />
+                  <LogOut className="size-5" />
                 </span>
                 <span
                   className={`whitespace-nowrap transition-all duration-300 ${expanded ? "opacity-100 w-auto ml-2" : "opacity-0 w-0 overflow-hidden"}`}
@@ -126,35 +128,56 @@ export function Sidebar() {
       </aside >
 
       {/* Mobile bottom nav */}
-      < nav className="fixed bottom-0 bg-card left-0 right-0 z-50 flex items-center justify-around border-t border-border bg-sidebar px-1 py-1 md:hidden" >
-        {
-          mainNavItems.slice(0, 4).map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              onClick={() => setActiveItem(item.href)}
-              className={`flex flex-1 cursor-pointer hover:bg-sidebar-accent flex-col items-center gap-0.5 rounded-lg py-1.5 text-[10px] transition-colors ${activeItem === item.href ? "text-primary font-semibold" : "text-muted-foreground"}`}
-            >
-              <span
-                className={`flex items-center justify-center rounded-full px-4 py-1 transition-colors ${activeItem === item.href ? "bg-sidebar-accent" : ""}`}
-              >
-                {item.icon}
-              </span>
-              {item.label}
-            </Link>
-          ))
-        }
-        < button
-          onClick={() => setMobileOpen(true)
-          }
-          className="flex flex-1 flex-col cursor-pointer hover:bg-sidebar-accent  items-center gap-0.5 rounded-lg py-1.5 text-[10px] text-muted-foreground transition-colors"
+      <nav className="fixed bottom-0 bg-card left-0 right-0 z-50 flex h-16 items-center justify-between border-t border-border bg-sidebar px-1 md:hidden">
+        {mainNavItems.slice(0, 2).map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            onClick={() => setActiveItem(item.href)}
+            className={`flex flex-1 flex-col cursor-pointer items-center gap-1 rounded-lg py-1 text-[10px] max-sm:text-[9px] transition-colors ${activeItem === item.href ? "text-primary font-semibold" : "text-muted-foreground hover:bg-sidebar-accent"}`}
+          >
+            <span className={`flex items-center justify-center rounded-full px-4 py-1 transition-colors ${activeItem === item.href ? "bg-sidebar-accent" : ""}`}>
+              {item.icon}
+            </span>
+            <span className="line-clamp-1">{item.label}</span>
+          </Link>
+        ))}
+
+        {/* Floating Create Button */}
+        <div className="relative flex flex-1 flex-col items-center justify-center h-full">
+          <Link
+            href="/consultation"
+            onClick={() => setActiveItem("/consultation")}
+            className="absolute -top-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary  text-white shadow-lg shadow-primary/40 ring-[6px] ring-card transition-transform  active:scale-95"
+          >
+            <Plus className="size-8 stroke-[2.5]" />
+          </Link>
+        </div>
+
+        {mainNavItems.slice(2, 4).map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            onClick={() => setActiveItem(item.href)}
+            className={` flex flex-1 flex-col cursor-pointer items-center gap-1 rounded-lg py-1 text-[10px] max-sm:text-[9px] transition-colors ${activeItem === item.href ? "text-primary font-semibold" : "text-muted-foreground hover:bg-sidebar-accent"}`}
+          >
+            <span className={`flex items-center justify-center rounded-full px-4 py-1 transition-colors ${activeItem === item.href ? "bg-sidebar-accent" : ""}`}>
+              {item.icon}
+            </span>
+            <span className="line-clamp-1">{item.label}</span>
+          </Link>
+        ))}
+
+        <button
+          onClick={() => setMobileOpen(true)}
+          className="flex flex-1 flex-col cursor-pointer items-center gap-1 rounded-lg py-1 text-[10px] max-sm:text-[9px] text-muted-foreground hover:bg-sidebar-accent transition-colors"
         >
           <span className="flex items-center justify-center rounded-full px-4 py-1">
             <Menu className="size-5" />
           </span>
-          More
-        </button >
-      </nav >
+          <span className="line-clamp-1">More</span>
+        </button>
+      </nav>
 
       {/* Mobile drawer */}
       {
@@ -192,7 +215,7 @@ export function Sidebar() {
               {/* Mobile nav */}
               <nav className="flex-1 overflow-y-auto px-3">
                 <ul className="flex flex-col gap-0.5 ">
-                  {mainNavItems.map((item) => (
+                  {mainNavItems.slice(0, 2).map((item) => (
                     <li key={item.href}>
                       <Link
                         href={item.href}
@@ -216,12 +239,12 @@ export function Sidebar() {
               </nav>
 
               {/* Mobile bottom */}
-              <div className=" px-3 py-3">
+              <div className=" px-3 py-3 ">
                 <Link
                   href="/settings"
                   className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sidebar-foreground hover:bg-sidebar-accent transition-colors  ${activeItem === "/settings" ? "bg-sidebar-accent" : ""}`}
                 >
-                  <Settings />
+                  <Settings className="size-5" />
                   <span className="text-sm font-medium">Settings</span>
                 </Link>
               </div>
@@ -231,7 +254,7 @@ export function Sidebar() {
                   className="flex items-center gap-3 w-full rounded-lg cursor-pointer px-3 py-2.5 text-sidebar-foreground hover:bg-sidebar-accent transition-colors"
                 >
 
-                  <LogOut />
+                  <LogOut className="size-5" />
                   <span
                     className="text-sm font-medium"
                   >

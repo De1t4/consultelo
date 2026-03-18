@@ -7,14 +7,14 @@ export default function CaseInfoConsult({ consultation }: { consultation: Respon
       {/* Case Info */}
       <div className="bg-card rounded-lg border border-border p-4">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="font-semibold text-foreground text-sm">CASE INFO</h3>
-          <Info className="h-4 w-4 text-gray-400" />
+          <h2 className="font-semibold text-foreground text-sm">CASE INFO</h2>
+          <Info className="h-4 w-4 text-muted-foreground" />
         </div>
 
         <div className="space-y-3 text-sm">
           <div className="flex items-center justify-between">
             <span className="text-muted-foreground">Status</span>
-            <span className="text-teal-600 font-medium capitalize">{consultation.status}</span>
+            <span className="text-primary font-medium capitalize">{consultation.status}</span>
           </div>
           <div className="flex items-center justify-between">
             <span className="text-muted-foreground">Category</span>
@@ -41,7 +41,7 @@ export default function CaseInfoConsult({ consultation }: { consultation: Respon
         {/* Engagement Score */}
         <div className="mt-4 pt-4 border-t border-gray-200">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-teal-600">TOTAL COMMENTS</span>
+            <span className="text-xs font-semibold text-primary">TOTAL COMMENTS</span>
             <span className="text-sm font-semibold text-foreground">{consultation._count.comments}</span>
           </div>
         </div>

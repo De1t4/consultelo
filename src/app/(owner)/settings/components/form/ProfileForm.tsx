@@ -69,7 +69,7 @@ export default function ProfileForm() {
               {...register("profession")}
               disabled={!isEdit}
               maxLength={255}
-              placeholder='Ej: Chief Executive Officer'
+              placeholder='e.g. Chief Executive Officer'
               className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm text-foreground focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
             />
           </div>

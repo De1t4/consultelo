@@ -69,7 +69,7 @@ export default function RegisterForm() {
             {...register('email')}
             className={`w-full rounded-lg border px-4 py-2.5 text-gray-700 placeholder-gray-400 outline-none transition-all focus:border-primary/20 focus:ring-2 focus:ring-primary ${errors.email ? 'border-red-500 focus:ring-red-400' : 'border-gray-300'
               }`}
-            placeholder="juan.perez@ejemplo.com"
+            placeholder="john.doe@example.com"
           />
           {errors.email && (
             <p className="text-xs text-red-500">{errors.email.message}</p>
@@ -86,7 +86,7 @@ export default function RegisterForm() {
             {...register('username')}
             className={`w-full rounded-lg border px-4 py-2.5 text-gray-700 placeholder-gray-400 outline-none transition-all focus:border-primary/20 focus:ring-2 focus:ring-primary ${errors.username ? 'border-red-500 focus:ring-red-400' : 'border-gray-300'
               }`}
-            placeholder="juan.perez"
+            placeholder="john.doe"
           />
           {errors.username && (
             <p className="text-xs text-red-500">{errors.username.message}</p>

@@ -82,7 +82,7 @@ export function Sidebar() {
         {/* Navigation items */}
         <nav className="flex-1 px-3 py-2 overflow-y-auto  ">
           <ul className="flex flex-col gap-0.5 ">
-            {mainNavItems.map((item) => (
+            {mainNavItems.slice(0, 2).map((item) => (
               <li key={item.href}>
                 <SidebarNavItem
                   item={item}

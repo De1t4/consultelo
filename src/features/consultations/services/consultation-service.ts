@@ -148,6 +148,15 @@ export const getPublicConsultations = async (): Promise<
   return z.array(ConsultationListSchema).parse(res);
 };
 
+export const getActiveConsultationsCount = async (userId: string) => {
+  return await prisma.consultation.count({
+    where: {
+      userId: userId,
+      status: "active",
+    },
+  });
+};
+
 export const getUserStats = async (userId: string): Promise<UserStatsDTO> => {
   const date30DaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000); // 30 days
   const [activeConsultations, totalComments] = await Promise.all([

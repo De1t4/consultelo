@@ -20,29 +20,29 @@ export const STATUS_CODE = {
 
 export const STATUS_MESSAGE = {
   // Success
-  SUCCESS: "Operación realizada con éxito.",
-  CREATED: "Recurso creado exitosamente.",
-  UPDATED: "Cambios guardados correctamente.",
-  DELETED: "El recurso ha sido eliminado.",
+  SUCCESS: "Operation completed successfully.",
+  CREATED: "Resource created successfully.",
+  UPDATED: "Changes saved successfully.",
+  DELETED: "The resource has been deleted.",
 
   // Authentication & Authorization
   UNAUTHORIZED:
-    "No tienes permiso para realizar esta acción. Por favor, inicia sesión.",
+    "You do not have permission to perform this action. Please log in.",
   FORBIDDEN:
-    "No tienes los privilegios necesarios para acceder a este recurso.",
+    "You do not have the necessary privileges to access this resource.",
 
   // Client Errors
   USER_DELETED: "This account was deleted",
-  BAD_REQUEST: "La solicitud es inválida. Revisa los datos enviados.",
-  NOT_FOUND: "No se encontró el recurso solicitado.",
+  BAD_REQUEST: "The request is invalid. Please check the sent data.",
+  NOT_FOUND: "The requested resource was not found.",
   CONFLICT:
-    "No se pudo completar la operación debido a un conflicto (ej. duplicado).",
-  ALREADY_EXISTS: "Ya has realizado esta acción o el recurso ya existe.",
-  VALIDATION_ERROR: "Los datos proporcionados no son válidos.",
+    "The operation could not be completed due to a conflict (e.g., duplicate).",
+  ALREADY_EXISTS:
+    "You have already performed this action or the resource already exists.",
+  VALIDATION_ERROR: "The provided data is invalid.",
 
   // Server Errors
-  INTERNAL_ERROR:
-    "Ocurrió un error interno en el servidor. Por favor, intenta de nuevo más tarde.",
+  INTERNAL_ERROR: "An internal server error occurred. Please try again later.",
 } as const;
 
 export type StatusCode = (typeof STATUS_CODE)[keyof typeof STATUS_CODE];

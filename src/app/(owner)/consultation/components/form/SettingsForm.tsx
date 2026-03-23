@@ -33,7 +33,7 @@ export default function SettingsForm({ isPending }: { isPending: boolean }) {
                 <Toggle checked={isPrivate === "private"} onChange={(checked) => setValue("privacy", checked ? "private" : "public")} />
               </div>
               <p className="text-xs text-muted-foreground">
-                Only people you invite can view this consultation.
+                Choose whether the consultation is public for everyone to see, or private for invited participants only.
               </p>
             </div>
 
@@ -78,7 +78,7 @@ export default function SettingsForm({ isPending }: { isPending: boolean }) {
                   <Check className="h-3 w-3 text-white" />
                 </div>
                 <p className="text-xs text-accent-foreground">
-                  Your identity is safe with us in either mode.
+                  Determine if users can leave comments anonymously or if they must be registered.
                 </p>
               </div>
             </div>
@@ -97,7 +97,7 @@ export default function SettingsForm({ isPending }: { isPending: boolean }) {
                     <Toggle checked={isViewComments} onChange={(checked) => setValue("viewComments", checked)} />
                   </div>
                   <p className="text-xs text-muted-foreground">
-                    Optimize decision-making by allowing access to other users{"'"} responses.
+                    Allow users to see others{"'"} comments, or hide them to ensure independent responses without the influence of prior opinions.
                   </p>
                 </div>
               </div>
@@ -143,8 +143,8 @@ export default function SettingsForm({ isPending }: { isPending: boolean }) {
                   <Eye className="h-4 w-4 text-primary" />
                 </div>
                 <div>
-                  <p className="font-medium text-foreground text-sm">{isPrivate.charAt(0).toUpperCase() + isPrivate.slice(1)} Mode</p>
-                  <p className="text-xs text-muted-foreground">{isPrivate === "private" ? "Only you and users invited can see this consultation" : "Visible to all users"}</p>
+                  <p className="font-medium text-foreground text-sm">{isPrivate === "private" ? "Private Mode" : "Public Mode"}</p>
+                  <p className="text-xs text-muted-foreground">{isPrivate === "private" ? "Only invited participants can view this consultation." : "This consultation is visible to everyone."}</p>
                 </div>
               </div>
             </div>
@@ -162,8 +162,8 @@ export default function SettingsForm({ isPending }: { isPending: boolean }) {
                   <Users className="h-4 w-4 text-primary" />
                 </div>
                 <div>
-                  <p className="font-medium text-foreground text-sm">{isAnonymous ? "Anonymous" : "Registered"} Users</p>
-                  <p className="text-xs text-muted-foreground">{isAnonymous ? "Response only anonymous users" : "Response only registered users"}</p>
+                  <p className="font-medium text-foreground text-sm">{isAnonymous ? "Anonymous Users" : "Registered Users Only"}</p>
+                  <p className="text-xs text-muted-foreground">{isAnonymous ? "Users can leave comments anonymously." : "Only registered users can leave comments."}</p>
                 </div>
               </div>
             </div>
@@ -181,9 +181,9 @@ export default function SettingsForm({ isPending }: { isPending: boolean }) {
                   <MessageSquareLock className="h-4 w-4 text-primary" />
                 </div>
                 <div>
-                  <p className="font-medium text-foreground text-sm">Response {isViewComments ? "Visible" : "Hidden"}</p>
+                  <p className="font-medium text-foreground text-sm">{isViewComments ? "Comments Visible" : "Comments Hidden"}</p>
                   <p className="text-xs text-muted-foreground">
-                    Responses {isViewComments ? "Optimize decision-making by allowing access to other users' responses." : "Ensure the objectivity of participants by allowing independent responses, without the influence of prior opinions."}
+                    {isViewComments ? "Users can view comments from others to build upon previous feedback." : "Comments are hidden from other users to ensure independent feedback without prior influence."}
                   </p>
                 </div>
               </div>

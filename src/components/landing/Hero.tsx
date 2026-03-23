@@ -10,7 +10,7 @@ export default function Hero() {
           {/* Left Content */}
           <div>
             <h1 className="text-5xl lg:text-6xl max-md:text-4xl font-bold text-neutral-900 mb-6 leading-tight">
-              Connect and resolve your <span className="text-teal-600">doubts easily</span>
+              Get answers to your most <span className="text-teal-600">complex questions</span>
             </h1>
             <p className="text-lg text-gray-600 mb-8 max-w-xl leading-relaxed">
               Find professionals and get structured answers in real time, or manage your business profile to offer your expertise and handle client consultations seamlessly.

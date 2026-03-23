@@ -16,8 +16,10 @@ export default function EditConsultForm({ consultation, setIsOpen }: { consultat
 
   const onSubmit = async (data: FormDataConsultation) => {
     updateConsultation(data, {
-      onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['consultations'] });
+      onSuccess: (res) => {
+        if (res.success) {
+          queryClient.invalidateQueries({ queryKey: ['consultations'] });
+        }
         setIsOpen(false)
       }
     })
@@ -26,10 +28,9 @@ export default function EditConsultForm({ consultation, setIsOpen }: { consultat
   const {
     handleSubmit,
     setValue,
-    trigger,
     control,
     register,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm<FormDataConsultation>({
     resolver: zodResolver(SchemaConsultation),
     defaultValues: {
@@ -47,6 +48,8 @@ export default function EditConsultForm({ consultation, setIsOpen }: { consultat
   const isViewComments = useWatch({ control, name: "viewComments" })
   const isAnonymous = useWatch({ control, name: "allowAnonymous" })
 
+  console.log(isDirty)
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 my-4">
       <div >
@@ -56,7 +59,7 @@ export default function EditConsultForm({ consultation, setIsOpen }: { consultat
           id='title'
           defaultValue={consultation.title}
           {...register("title")}
-          placeholder='Ej: How to build a website'
+          placeholder='e.g. How to build a website'
           className="w-full px-3 py-2 bg-background border text-wrap border-border rounded-lg text-sm text-foreground focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
         />
         {errors.title && (
@@ -70,8 +73,7 @@ export default function EditConsultForm({ consultation, setIsOpen }: { consultat
         <EditorText
           body={JSON.stringify(consultation.body)}
           setValue={(value) => {
-            setValue("body", value)
-            if (errors.body) trigger("body")
+            setValue("body", value, { shouldDirty: true, shouldValidate: true })
           }}
         />
         {errors.body && (
@@ -132,11 +134,11 @@ export default function EditConsultForm({ consultation, setIsOpen }: { consultat
             </div>
             <div>
               <p className="text-sm font-medium text-foreground">Private Mode</p>
-              <p className="text-xs text-muted-foreground mt-0.5">Only people you invite can view this consultation.</p>
+              <p className="text-xs text-muted-foreground mt-0.5">Choose whether the consultation is public for everyone to see, or private for invited participants only.</p>
             </div>
           </div>
           <div>
-            <Toggle checked={isPrivate === "private"} onChange={(checked) => setValue("privacy", checked ? "private" : "public")}></Toggle>
+            <Toggle checked={isPrivate === "private"} onChange={(checked) => setValue("privacy", checked ? "private" : "public", { shouldDirty: true })}></Toggle>
           </div>
         </div>
 
@@ -148,11 +150,11 @@ export default function EditConsultForm({ consultation, setIsOpen }: { consultat
             </div>
             <div>
               <p className="text-sm font-medium text-foreground">How do others respond?</p>
-              <p className="text-xs text-muted-foreground mt-0.5">Choose how others respond to your consultation.</p>
+              <p className="text-xs text-muted-foreground mt-0.5">Determine if users can leave comments anonymously or if they must be registered.</p>
             </div>
           </div>
           <div>
-            <Toggle disabled checked={isAnonymous === true} onChange={(checked) => setValue("allowAnonymous", checked ? true : false)}></Toggle>
+            <Toggle disabled checked={isAnonymous === true} onChange={(checked) => setValue("allowAnonymous", checked ? true : false, { shouldDirty: true })}></Toggle>
           </div>
 
         </div>
@@ -164,12 +166,12 @@ export default function EditConsultForm({ consultation, setIsOpen }: { consultat
               <BookOpen className="size-4" />
             </div>
             <div>
-              <p className="text-sm font-medium text-foreground">Knowledge Sharing</p>
-              <p className="text-xs text-muted-foreground mt-0.5">Allow community to view anonymized responses.</p>
+              <p className="text-sm font-medium text-foreground">Shared responses</p>
+              <p className="text-xs text-muted-foreground mt-0.5">Allow users to see others{"'"} comments, or hide them to ensure independent responses without the influence of prior opinions.</p>
             </div>
           </div>
           <div>
-            <Toggle checked={isViewComments ?? false} onChange={(checked) => setValue("viewComments", checked)}></Toggle>
+            <Toggle checked={isViewComments ?? false} onChange={(checked) => setValue("viewComments", checked, { shouldDirty: true })}></Toggle>
           </div>
         </div>
       </div>
@@ -183,9 +185,9 @@ export default function EditConsultForm({ consultation, setIsOpen }: { consultat
         <Button
           variant='primary'
           type='submit'
-          disabled={isPending}
+          disabled={isPending || !isDirty}
         >
-          Save Changes
+          {isPending ? 'Saving...' : 'Save Changes'}
         </Button>
       </div>
     </form>

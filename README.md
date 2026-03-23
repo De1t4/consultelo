@@ -47,7 +47,7 @@ Para correr este proyecto en tu entorno local, sigue estos pasos:
 1. **Clona el repositorio e ingresa a la carpeta:**
 
    ```bash
-   git clone <URL_DEL_REPOSITORIO>
+   git clone <"https://github.com/De1t4/consultelo">
    cd consultelo
    ```
 

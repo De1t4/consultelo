@@ -6,6 +6,7 @@ export * from "./actions/consultation-mutation";
 export * from "./hooks/use-consult-form";
 export * from "./hooks/use-consult-mutation";
 export * from "./hooks/use-consultation-id";
+export * from "./hooks/use-consult-dashboard";
 
 // Schemas
 export * from "./schemas/schema-consultation";

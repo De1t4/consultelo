@@ -14,6 +14,7 @@ import { FormDataConsultation } from "../schemas/schema-consultation";
 import {
   createConsultation,
   deleteConsultation,
+  getActiveConsultationsCount,
   getConsultationById,
   getUserStats,
   updateConsultation,
@@ -113,7 +114,20 @@ export async function updateConsultationAction(
         throw new Error(STATUS_MESSAGE.VALIDATION_ERROR);
       }
 
-      await checkConsultationOwner(idConsultation, userId);
+      const activeConsultationsCount =
+        await getActiveConsultationsCount(userId);
+
+      const consultation = await checkConsultationOwner(idConsultation, userId);
+
+      if (
+        activeConsultationsCount >= MAX_CONSULTATIONS &&
+        data.status === "active" &&
+        consultation.status !== "active"
+      ) {
+        throw new Error(
+          `You have reached the maximum number of active consultations allowed. (${MAX_CONSULTATIONS})`,
+        );
+      }
 
       await updateConsultation(idConsultation, data, bodyParsed);
     },
@@ -138,4 +152,6 @@ const checkConsultationOwner = async (
   if (getConsultation.userId !== userId) {
     throw new Error(STATUS_MESSAGE.FORBIDDEN);
   }
+
+  return getConsultation;
 };

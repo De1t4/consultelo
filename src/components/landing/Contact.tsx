@@ -1,32 +1,32 @@
 "use client"
 
-import { ChevronDown, Instagram, Linkedin, Mail, MapPin, Phone } from 'lucide-react'
+import { ChevronDown, Instagram, Linkedin, Mail, Phone } from 'lucide-react'
 import { useState } from 'react'
 import ContactForm from './ContactForm'
 
 const faqItems = [
   {
-    question: "How do I contact an expert directly?",
-    answer: "You can browse our expert directory, filter by specialty, and send a direct consultation request. Experts typically respond within 2–4 hours during business days.",
+    question: "How do I ask a question as a user?",
+    answer: "You can find professionals in our directory, ask your questions clearly, and receive structured answers in real time.",
   },
   {
-    question: "What are the privacy options?",
-    answer: "We offer Private Mode to restrict visibility to invited participants only, and you can control Identity Visibility between Public Profile, Anonymous, or Custom alias.",
+    question: "Is my personal data protected?",
+    answer: "Yes! Security and privacy are our top priorities. Your information and all of your consultations are always protected.",
   },
   {
-    question: "How are payments handled?",
-    answer: "All transactions are processed securely via Stripe. You can pay per session or subscribe to a monthly plan. Invoices are sent automatically after each consultation.",
+    question: "Are there tools for professionals and businesses?",
+    answer: "Absolutely. You can manage your profile, administer customer consultations, use rich text tools to reply, and keep track of your schedule and team.",
   },
   {
-    question: "Do you offer 24/7 technical support?",
-    answer: "Our technical support team is available Monday–Friday 9am–8pm EST. For urgent issues outside these hours, you can submit a priority ticket and we will respond within 4 hours.",
+    question: "Can I use Consultelo on my phone?",
+    answer: "Yes, our interface is extremely fast, dynamic, and friendly, specifically designed to adapt seamlessly to any device.",
   },
 ]
 
 export default function Contact() {
   const [openFaq, setOpenFaq] = useState<number | null>(null)
   return (
-    <section className="bg-gray-100 border-t border-gray-200 py-20">
+    <section className="bg-gray-100 border-t border-gray-200 py-20" id='contact'>
       {/* Contact Section */}
       <div className="max-w-7xl mx-auto px-4">
         <article className="mb-8 w-full border border-gray-200 bg-white">
@@ -42,7 +42,7 @@ export default function Contact() {
                     Get in <span className="text-primary">Touch</span>
                   </h2>
                   <p className="mt-2 text-sm text-gray-600 leading-relaxed">
-                    Our team of experts is ready to help your business grow. Reach out and we&apos;ll respond within 24 hours.
+                    Whether you are a professional offering services or a user looking for answers, our team is ready to help you. Reach out and we&apos;ll respond within 24 hours.
                   </p>
                 </div>
                 <div className="flex flex-col gap-3 ">
@@ -52,7 +52,7 @@ export default function Contact() {
                     </div>
                     <div className=''>
                       <p className="text-xs font-semibold text-gray-900">Email Us</p>
-                      <p className="text-xs text-gray-600 break-all whitespace-normal">support@consultpro.com</p>
+                      <p className="text-xs text-gray-600 break-all whitespace-normal">support@consultelo.com</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3 rounded-lg border border-gray-100 shadow-sm bg-gray-100 px-4 py-3">
@@ -62,15 +62,6 @@ export default function Contact() {
                     <div>
                       <p className="text-xs font-semibold text-gray-900">Call Us</p>
                       <p className="text-xs text-gray-600">+1 555-0123</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3 rounded-lg border border-gray-100 shadow-sm bg-gray-100 px-4 py-3">
-                    <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-gray-200 text-primary">
-                      <MapPin className="size-4" />
-                    </div>
-                    <div>
-                      <p className="text-xs font-semibold text-gray-900">Visit Office</p>
-                      <p className="text-xs text-gray-600">123 Business Ave, Tech City</p>
                     </div>
                   </div>
                 </div>

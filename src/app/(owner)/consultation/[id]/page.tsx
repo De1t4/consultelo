@@ -20,22 +20,23 @@ export default function Page() {
   if (error) return <div>Error: {error.message}</div>
   if (consultation?.data == null) return notFound()
 
-  const isOwner = session?.user.id === consultation.data?.userId
+  const { data } = consultation;
+  const isOwner = session?.user.id === data.userId
 
   return (
     <>
-      <title>{consultation.data?.title}</title>
+      <title>{data.title}</title>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left Column - Main Content */}
         <section className="lg:col-span-2 space-y-6">
-          <PrincipalConsult consultation={consultation.data} />
-          <CommentsConsult consultation={consultation.data} />
-          <FeedbackConsult consultation={consultation.data} />
+          <PrincipalConsult consultation={data} />
+          <CommentsConsult consultation={data} />
+          {data.status === "active" && <FeedbackConsult consultation={data} />}
         </section>
         {/* Right Sidebar */}
         <div className="space-y-6">
-          <ShareConsult consultationId={consultation.data?.id} isOwner={isOwner} />
-          <CaseInfoConsult consultation={consultation.data} />
+          <ShareConsult consultationId={data.id} isOwner={isOwner} />
+          <CaseInfoConsult consultation={data} />
         </div>
       </div>
     </>

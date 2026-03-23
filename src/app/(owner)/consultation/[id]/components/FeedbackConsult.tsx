@@ -68,7 +68,7 @@ export default function FeedbackConsult({ consultation }: { consultation: Respon
               <Info className="h-4 w-4" />
               <span>All contributions are subject to professional review guidelines.</span>
             </div>
-            <Button disabled={isPending} onClick={async () => {
+            <Button disabled={isPending || consultation.status !== "active"} onClick={async () => {
               if (!consultation.settings?.allowAnonymous && !session?.user) {
                 setOpen(true)
               } else {

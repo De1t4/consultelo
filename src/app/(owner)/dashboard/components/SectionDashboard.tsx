@@ -3,8 +3,7 @@
 import { Button } from "@/components/ui/Button";
 import { CardDashboard } from "@/components/ui/CardConsult/Card";
 import StatCard from "@/components/ui/StatCard";
-import { getPublicConsultationsAction, getUserStatsAction } from "@/features/consultations";
-import { useQuery } from "@tanstack/react-query";
+import { usePublicConsultations, useStatsDashboard } from "@/features/consultations";
 import {
   ArrowRight,
   Folder,
@@ -16,25 +15,9 @@ import Link from "next/link";
 
 export default function SectionDashboard() {
   const { data: session } = useSession();
+  const { stats, statsLoading } = useStatsDashboard(session)
+  const { publicConsultations, consultationsLoading } = usePublicConsultations()
 
-  const { data: stats, isLoading: statsLoading } = useQuery({
-    queryKey: ["user-stats"],
-    queryFn: async () => {
-      const res = await getUserStatsAction();
-      if (!res.success) throw new Error(res.error);
-      return res.data;
-    },
-    enabled: !!session,
-  });
-
-  const { data: publicConsultations, isLoading: consultationsLoading } = useQuery({
-    queryKey: ["public-consultations"],
-    queryFn: async () => {
-      const res = await getPublicConsultationsAction();
-      if (!res.success) throw new Error(res.error);
-      return res.data;
-    },
-  });
 
   if (!session) {
     return (
@@ -81,13 +64,6 @@ export default function SectionDashboard() {
           trend="30 Days"
           isLoading={statsLoading}
         />
-        {/* <StatCard
-          icon={<TrendingUp className="size-6 text-amber-500" />}
-          label="Community Impact"
-          value={stats?.communityImpact ?? "Top 10%"}
-          badge="Elite Solver"
-          isLoading={statsLoading}
-        /> */}
       </div>
 
       {/* Recent Public Inquiries Header */}

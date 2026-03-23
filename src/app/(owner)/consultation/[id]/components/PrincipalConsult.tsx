@@ -1,7 +1,7 @@
 import RichTextDisplay from '@/components/ui/RichTextDisplay';
 import { ResponseConsultDetail } from '@/shared/types/response-consult';
 import { statusDot, statusStyles } from '@/shared/utils/card-utils';
-import { MoreHorizontal, Share2, User } from 'lucide-react';
+import { User } from 'lucide-react';
 import ProfileUser from './ProfileUser';
 
 export default function PrincipalConsult({ consultation }: { consultation: ResponseConsultDetail }) {
@@ -52,14 +52,14 @@ export default function PrincipalConsult({ consultation }: { consultation: Respo
             {consultation.categories}
           </span>
         </div>
-        <div className="flex items-center gap-2 ml-auto">
+        {/* <div className="flex items-center gap-2 ml-auto">
           <button className="p-2 text-gray-400 hover:text-gray-600">
             <Share2 className="h-4 w-4" />
           </button>
           <button className="p-2 text-gray-400 hover:text-gray-600">
             <MoreHorizontal className="h-4 w-4" />
           </button>
-        </div>
+        </div> */}
       </div>
     </article>
   )

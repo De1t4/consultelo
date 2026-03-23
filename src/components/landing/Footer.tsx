@@ -11,10 +11,10 @@ export default function Footer() {
               <div className="h-8 w-8 rounded-lg bg-teal-500 flex items-center justify-center">
                 <span className="text-white font-bold text-lg">C</span>
               </div>
-              <span className="font-bold text-xl text-gray-900">ConsultPro</span>
+              <span className="font-bold text-xl text-gray-900">Consultelo</span>
             </div>
             <p className="text-sm text-gray-600">
-              Empowering organizations with expert knowledge and data-driven solutions.
+              Empowering professionals with expert knowledge and tailored solutions.
             </p>
           </div>
 
@@ -22,7 +22,7 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold text-gray-900 mb-4">Platform</h4>
             <ul className="space-y-3">
-              <li><Link href="#" className="text-sm text-gray-600 hover:text-teal-600 transition-colors">Browse Experts</Link></li>
+              <li><Link href="#" className="text-sm text-gray-600 hover:text-teal-600 transition-colors">Browse Professionals</Link></li>
               <li><Link href="#" className="text-sm text-gray-600 hover:text-teal-600 transition-colors">How it Works</Link></li>
               {/* <li><Link href="#" className="text-sm text-gray-600 hover:text-teal-600 transition-colors">Pricing</Link></li> */}
             </ul>
@@ -33,7 +33,6 @@ export default function Footer() {
             <h4 className="font-semibold text-gray-900 mb-4">Resources</h4>
             <ul className="space-y-3">
               <li><Link href="#" className="text-sm text-gray-600 hover:text-teal-600 transition-colors">Blog</Link></li>
-              <li><Link href="#" className="text-sm text-gray-600 hover:text-teal-600 transition-colors">Community</Link></li>
               <li><Link href="#" className="text-sm text-gray-600 hover:text-teal-600 transition-colors">Help Center</Link></li>
             </ul>
           </div>
@@ -43,17 +42,15 @@ export default function Footer() {
             <h4 className="font-semibold text-gray-900 mb-4">Company</h4>
             <ul className="space-y-3">
               <li><Link href="#" className="text-sm text-gray-600 hover:text-teal-600 transition-colors">About Us</Link></li>
-              <li><Link href="#" className="text-sm text-gray-600 hover:text-teal-600 transition-colors">Legal</Link></li>
-              <li><Link href="#" className="text-sm text-gray-600 hover:text-teal-600 transition-colors">Contact</Link></li>
+              <li><Link href="#contact" className="text-sm text-gray-600 hover:text-teal-600 transition-colors">Contact</Link></li>
             </ul>
           </div>
         </div>
 
         {/* Bottom Footer */}
         <div className="pt-8 border-t border-gray-200 flex items-center justify-between">
-          <p className="text-sm text-gray-500">© {new Date().getFullYear()} ConsultPro Inc. All rights reserved.</p>
+          <p className="text-sm text-gray-500">© {new Date().getFullYear()} Consultelo Inc. All rights reserved.</p>
           <div className="flex gap-6">
-            <Link href="#" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Privacy Policy</Link>
             <Link href="#" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Terms of Service</Link>
           </div>
         </div>

@@ -10,10 +10,10 @@ export default function Hero() {
           {/* Left Content */}
           <div>
             <h1 className="text-5xl lg:text-6xl max-md:text-4xl font-bold text-neutral-900 mb-6 leading-tight">
-              Get answers to your most <span className="text-teal-600">complex questions</span>
+              Connect and resolve your <span className="text-teal-600">doubts easily</span>
             </h1>
             <p className="text-lg text-gray-600 mb-8 max-w-xl leading-relaxed">
-              Connect with your prospects or customers with the goal of obtaining answers to your questions. Make the decision on how your organization will move forward.
+              Find professionals and get structured answers in real time, or manage your business profile to offer your expertise and handle client consultations seamlessly.
             </p>
             <div className="flex gap-4 justify-center ">
               <Link href="/account?auth=register">
@@ -44,7 +44,7 @@ export default function Hero() {
                 </div>
               </div>
               <p className=" text-gray-500 max-w-xl leading-5 text-sm">
-                Boost your operational performance, get immediate answers, and accelerate your business growth.
+                A modern platform tailored for professionals offering services and users seeking clear answers.
               </p>
             </div>
           </div>

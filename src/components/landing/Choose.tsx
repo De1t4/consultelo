@@ -2,22 +2,22 @@ import { RefreshCw, TrendingUp, Users } from 'lucide-react'
 
 const chooses = [
   {
-    title: "Expert Network",
-    description: "Access a vetted global network of 50,000+ data scientists, industry leaders, and technical researchers ready to tackle your problems.",
+    title: "Detailed Consultations",
+    description: "Easily create, categorize, and track your questions and comments in a clear and organized way.",
     icon: Users,
     iconColor: "text-teal-600",
     bgColor: "bg-teal-100"
   },
   {
-    title: "Real-time Collaboration",
-    description: "Seamlessly share datasets, notebooks, and code in real-time environments designed for complex technical consultation.",
+    title: "Fluid Experience",
+    description: "Enjoy a lightning-fast, dynamic, and friendly interface perfectly optimized for any smart device.",
     icon: RefreshCw,
     iconColor: "text-blue-600",
     bgColor: "bg-blue-100"
   },
   {
-    title: "Data Insights",
-    description: "Transform raw consultations into actionable business intelligence with our automated summary and insight extraction tools.",
+    title: "Security & Privacy",
+    description: "Rest easy knowing that your personal information and all your consultations are always fully protected.",
     icon: TrendingUp,
     iconColor: "text-purple-600",
     bgColor: "bg-purple-100"
@@ -29,10 +29,10 @@ export default function Choose() {
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            Why do the best companies choose it?
+            Why choose Consultelo?
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            We provide the necessary infrastructure for decision-making.
+            The modern platform to connect professionals with users needing expert advice.
           </p>
         </div>
 

@@ -11,7 +11,7 @@ import {
   getPublicConsultations,
   getRelatedConsultations,
   getUserStats,
-} from "../services/consultation-service";
+} from "../services/consultation-queries";
 
 export async function getMyConsultationsAction() {
   return await executeAction({

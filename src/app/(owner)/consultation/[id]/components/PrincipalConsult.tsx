@@ -1,6 +1,6 @@
 import RichTextDisplay from '@/components/ui/RichTextDisplay';
 import { ResponseConsultDetail } from '@/shared/types/response-consult';
-import { statusDot, statusStyles } from '@/shared/utils/card-utils';
+import { categoryStyles, statusDot, statusStyles } from '@/shared/utils/card-utils';
 import { User } from 'lucide-react';
 import ProfileUser from './ProfileUser';
 
@@ -33,9 +33,9 @@ export default function PrincipalConsult({ consultation }: { consultation: Respo
         <div className="flex-1 ">
           <div className="flex items-center gap-2">
             <ProfileUser user={consultation.user} />
-            <span className="text-xs bg-teal-100 text-teal-700 px-2  py-0.5 rounded uppercase">
+            {/* <span className="text-xs bg-teal-100 text-teal-700 px-2  py-0.5 rounded uppercase">
               {consultation.user?.role}
-            </span>
+            </span> */}
           </div>
           <p className="text-sm text-muted-foreground">{consultation.user?.email} • Posted {new Date(consultation.createdAt).toLocaleDateString()} {new Date(consultation.createdAt).getHours()}:{new Date(consultation.createdAt).getMinutes() < 10 ? '0' + new Date(consultation.createdAt).getMinutes() : new Date(consultation.createdAt).getMinutes()}</p>
         </div>
@@ -48,8 +48,8 @@ export default function PrincipalConsult({ consultation }: { consultation: Respo
       {/* Tags */}
       <div className="flex items-center gap-4 pt-4 border-t border-gray-200">
         <div className="flex gap-2">
-          <span className="text-xs bg-teal-50 text-teal-700 px-3 py-1 rounded-full capitalize">
-            {consultation.categories}
+          <span className={`px-3 py-1 rounded-full capitalize ${categoryStyles[consultation.categories]}`}>
+            <p className='text-[10px] font-bold tracking-wide'>{consultation.categories.toUpperCase()}</p>
           </span>
         </div>
         {/* <div className="flex items-center gap-2 ml-auto">

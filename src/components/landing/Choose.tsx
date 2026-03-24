@@ -1,4 +1,4 @@
-import { RefreshCw, TrendingUp, Users } from 'lucide-react'
+import { RefreshCw, Shield, Users } from 'lucide-react'
 
 const chooses = [
   {
@@ -18,7 +18,7 @@ const chooses = [
   {
     title: "Security & Privacy",
     description: "Rest easy knowing that your personal information and all your consultations are always fully protected.",
-    icon: TrendingUp,
+    icon: Shield,
     iconColor: "text-purple-600",
     bgColor: "bg-purple-100"
   }

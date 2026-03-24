@@ -7,7 +7,7 @@ import Hero from "@components/landing/Hero";
 export default function Home() {
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-dvh bg-background text-foreground">
       <Header />
       <Hero />
       <Choose />

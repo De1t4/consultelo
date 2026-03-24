@@ -48,8 +48,6 @@ export default function EditConsultForm({ consultation, setIsOpen }: { consultat
   const isViewComments = useWatch({ control, name: "viewComments" })
   const isAnonymous = useWatch({ control, name: "allowAnonymous" })
 
-  console.log(isDirty)
-
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 my-4">
       <div >

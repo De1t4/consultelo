@@ -7,6 +7,7 @@ import SkeletonConsult from "@/components/skeletons/SkeletonConsult"
 import { useConsultationId } from "@/features/consultations"
 import { useSession } from "next-auth/react"
 import { notFound, useParams } from "next/navigation"
+import RelatedConsult from "./components/RelatedConsult"
 import ShareConsult from "./components/ShareConsult"
 
 export default function Page() {
@@ -37,6 +38,7 @@ export default function Page() {
         <div className="space-y-6">
           <ShareConsult consultationId={data.id} isOwner={isOwner} />
           <CaseInfoConsult consultation={data} />
+          <RelatedConsult consultation={data} />
         </div>
       </div>
     </>

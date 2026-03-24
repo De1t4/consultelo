@@ -47,6 +47,20 @@ export const ConsultationListSchema = z.object({
   }),
 });
 
+export const RelatedConsultationListSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  userId: z.string(),
+  categories: z.nativeEnum(ConsultationCategory),
+  status: z.nativeEnum(ConsultationStatus),
+  createdAt: z.date(),
+  expiresAt: z.date().nullable(),
+  updatedAt: z.date(),
+  _count: z.object({
+    comments: z.number(),
+  }),
+});
+
 export const ConsultationDetailSchema = ConsultationListSchema.extend({
   user: UserSchema.nullable(),
   comments: z
@@ -75,6 +89,9 @@ export const UserStatsSchema = z.object({
 
 // Types inferred from schemas
 export type ConsultationListDTO = z.infer<typeof ConsultationListSchema>;
+export type RelatedConsultationListDTO = z.infer<
+  typeof RelatedConsultationListSchema
+>;
 export type ConsultationDetailDTO = z.infer<typeof ConsultationDetailSchema>;
 export type UserStatsDTO = z.infer<typeof UserStatsSchema>;
 export type CreateConsultationResponseDTO = {

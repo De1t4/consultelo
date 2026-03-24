@@ -9,6 +9,7 @@ import {
   getConsultationById,
   getMyConsultations,
   getPublicConsultations,
+  getRelatedConsultations,
   getUserStats,
 } from "../services/consultation-service";
 
@@ -49,6 +50,25 @@ export async function getUserStatsAction() {
         throw new Error(STATUS_MESSAGE.UNAUTHORIZED);
       }
       return await getUserStats(session.user.id);
+    },
+  });
+}
+
+interface RelatedConsultation {
+  idConsultation: string;
+  idUser: string;
+  category: string;
+}
+
+export async function getRelatedConsultationsAction(
+  relatedConsultation: RelatedConsultation,
+) {
+  return await executeAction({
+    actionFn: async () => {
+      if (!isValidId(relatedConsultation.idConsultation)) {
+        throw new Error(STATUS_MESSAGE.VALIDATION_ERROR);
+      }
+      return await getRelatedConsultations(relatedConsultation);
     },
   });
 }

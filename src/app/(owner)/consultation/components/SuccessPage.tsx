@@ -16,7 +16,7 @@ export default function SuccessConsultPage({ consult }: { consult: CreateConsult
   }
 
   return (
-    <div className="min-h-screen bg-linear-to-b to-background  from-background">
+    <div className="min-h-dvh bg-linear-to-b to-background  from-background">
       {/* Main Content */}
       <main className="max-w-3xl mx-auto px-6 py-12">
         {/* Success Icon */}

@@ -1,20 +1,22 @@
-import "server-only";
-import { z } from "zod";
 import {
   ConsultationCategory,
   ConsultationStatus,
 } from "@/generated/prisma/enums";
-import { FormDataConsultation } from "../schemas/schema-consultation";
 import prisma from "@/shared/lib/prisma";
+import { InputJsonValue } from "@prisma/client/runtime/client";
+import "server-only";
+import { z } from "zod";
 import {
   ConsultationDetailDTO,
   ConsultationDetailSchema,
   ConsultationListDTO,
   ConsultationListSchema,
+  RelatedConsultationListDTO,
+  RelatedConsultationListSchema,
   UserStatsDTO,
   UserStatsSchema,
 } from "../schemas/output-dto";
-import { InputJsonValue } from "@prisma/client/runtime/client";
+import { FormDataConsultation } from "../schemas/schema-consultation";
 
 export const createConsultation = async (
   data: FormDataConsultation,
@@ -211,4 +213,43 @@ export const updateConsultation = async (
       },
     },
   });
+};
+
+export const getRelatedConsultations = async ({
+  idConsultation,
+  idUser,
+  category,
+}: {
+  idConsultation: string;
+  idUser: string;
+  category: string;
+}): Promise<RelatedConsultationListDTO[]> => {
+  const res = await prisma.consultation.findMany({
+    where: {
+      id: {
+        not: idConsultation,
+      },
+      status: "active",
+      settings: {
+        privacy: "public",
+      },
+      OR: [
+        { categories: category as ConsultationCategory },
+        { userId: idUser },
+      ],
+    },
+    include: {
+      _count: {
+        select: {
+          comments: true,
+        },
+      },
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+    take: 6,
+  });
+
+  return z.array(RelatedConsultationListSchema).parse(res);
 };

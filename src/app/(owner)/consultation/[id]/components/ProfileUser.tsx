@@ -8,8 +8,10 @@ import {
   Info,
   ShieldCheck
 } from 'lucide-react'
+import { useSession } from 'next-auth/react'
 
 export default function ProfileUser({ user }: { user: UserResponse | null }) {
+  const { data: session } = useSession()
   if (!user) return null
 
   const initials = user.username
@@ -25,6 +27,12 @@ export default function ProfileUser({ user }: { user: UserResponse | null }) {
         <h2 className="font-medium text-foreground group-hover:text-primary transition-colors underline">
           {user.username}
         </h2>
+        {user.id === session?.user.id && (
+          <span className="text-xs flex items-center gap-1 bg-teal-100 text-teal-700 px-2  py-1 rounded uppercase">
+            <ShieldCheck className="w-3 h-3 -mt-0.5" />
+            You
+          </span>
+        )}
       </div>
     }>
       <div className="max-md:min-w-[75dvw] max-w-[50dvw] min-w-[250px] p-0 overflow-hidden rounded-xl border-none">

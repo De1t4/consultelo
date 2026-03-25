@@ -30,11 +30,7 @@ export default function RelatedConsult({ consultation }: { consultation: Respons
         </div>
         {
           relatedConsultationsData.length === 0 && (
-            <div className="space-y-4">
-              <div className="bg-muted rounded-lg p-4">
-                <h3 className="font-semibold text-foreground text-sm">No related consultations</h3>
-              </div>
-            </div>
+            <p className="text-sm text-muted-foreground text-center py-6 mt-2">No related consultations</p>
           )
         }
         {relatedConsultationsData.length > 0 && (

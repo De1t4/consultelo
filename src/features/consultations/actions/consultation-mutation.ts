@@ -14,11 +14,13 @@ import { FormDataConsultation } from "../schemas/schema-consultation";
 import {
   createConsultation,
   deleteConsultation,
+  updateConsultation,
+} from "../services/consultation-mutations";
+import {
   getActiveConsultationsCount,
   getConsultationById,
   getUserStats,
-  updateConsultation,
-} from "../services/consultation-service";
+} from "../services/consultation-queries";
 
 const MAX_CONSULTATIONS = 5;
 

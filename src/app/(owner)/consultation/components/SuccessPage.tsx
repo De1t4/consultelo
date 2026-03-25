@@ -1,7 +1,7 @@
 "use client"
 
 import { CreateConsultationResponseDTO } from "@/features/consultations"
-import { ArrowRight, Check, Copy, Share2 } from "lucide-react"
+import { ArrowRight, Check, Copy } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
 
@@ -18,7 +18,7 @@ export default function SuccessConsultPage({ consult }: { consult: CreateConsult
   return (
     <div className="min-h-dvh bg-linear-to-b to-background  from-background">
       {/* Main Content */}
-      <main className="max-w-3xl mx-auto px-6 py-12">
+      <main className="max-w-3xl mx-auto px-6 pt-12">
         {/* Success Icon */}
         <div className="flex justify-center mb-12">
           <div className="relative">
@@ -77,7 +77,7 @@ export default function SuccessConsultPage({ consult }: { consult: CreateConsult
         </div>
 
         {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 mb-16">
+        <div className="flex flex-col sm:flex-row gap-4">
           <Link
             href={`/consultation/${consult.consultationId}`}
             className="flex-1 flex items-center justify-center gap-2 px-6 py-3.5 bg-primary hover:bg-primary/80 text-white rounded-lg transition-colors font-semibold text-center shadow-sm"
@@ -91,19 +91,6 @@ export default function SuccessConsultPage({ consult }: { consult: CreateConsult
           >
             Back to Dashboard
           </Link>
-        </div>
-
-        {/* What's Next */}
-        <div className="text-center">
-          <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-6">
-            WHAT{"'"}S NEXT?
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="flex items-center justify-center gap-2 px-6 py-3 bg-card border border-border text-foreground rounded-lg hover:bg-accent/20 transition-colors font-medium">
-              <Share2 className="h-4 w-4 text-primary" />
-              Share with a friend
-            </button>
-          </div>
         </div>
       </main>
     </div>

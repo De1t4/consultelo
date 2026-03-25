@@ -12,6 +12,7 @@ export const FilterSelect = ({ label, value, onChange, options, disabled }: Filt
   <select
     disabled={disabled}
     value={value}
+    name={label}
     onChange={(e) => onChange(e.target.value)}
     className='w-full md:w-40 px-3 py-2 bg-card border border-border rounded-xl text-sm text-foreground hover:border-primary/50 transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed outline-none focus:ring-2 focus:ring-primary/20'
   >

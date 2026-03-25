@@ -5,7 +5,10 @@ import { User } from 'lucide-react';
 import ProfileUser from './ProfileUser';
 
 export default function PrincipalConsult({ consultation }: { consultation: ResponseConsultDetail }) {
-  const date = `${consultation.createdAt != consultation.updatedAt ? 'Updated' : 'Created'} ${new Date(consultation.updatedAt).toLocaleDateString()} ${new Date(consultation.updatedAt).getHours()}:${new Date(consultation.updatedAt).getMinutes() < 10 ? '0' + new Date(consultation.updatedAt).getMinutes() : new Date(consultation.updatedAt).getMinutes()}`
+
+  const isSameDate = new Date(consultation.createdAt).getTime() === new Date(consultation.updatedAt).getTime()
+  const date = `${!isSameDate ? ` • Updated at ${new Date(consultation.updatedAt).toLocaleDateString()} ${new Date(consultation.updatedAt).getHours()}:${new Date(consultation.updatedAt).getMinutes() < 10 ? '0' + new Date(consultation.updatedAt).getMinutes() : new Date(consultation.updatedAt).getMinutes()}` : ''}`
+
 
   return (
     <article className="bg-card border-border rounded-lg border p-6">
@@ -16,7 +19,7 @@ export default function PrincipalConsult({ consultation }: { consultation: Respo
             {consultation.status.toUpperCase()}
           </span>
           <span className="text-xs text-muted-foreground">
-            ID: #{consultation.id.slice(0, 8).toUpperCase()} • {date}
+            ID: #{consultation.id.slice(0, 8).toUpperCase()}{date}
           </span>
         </div>
       </div>
@@ -33,16 +36,12 @@ export default function PrincipalConsult({ consultation }: { consultation: Respo
         <div className="flex-1 ">
           <div className="flex items-center gap-2">
             <ProfileUser user={consultation.user} />
-            {/* <span className="text-xs bg-teal-100 text-teal-700 px-2  py-0.5 rounded uppercase">
-              {consultation.user?.role}
-            </span> */}
           </div>
           <p className="text-sm text-muted-foreground">{consultation.user?.email} • Posted {new Date(consultation.createdAt).toLocaleDateString()} {new Date(consultation.createdAt).getHours()}:{new Date(consultation.createdAt).getMinutes() < 10 ? '0' + new Date(consultation.createdAt).getMinutes() : new Date(consultation.createdAt).getMinutes()}</p>
         </div>
       </div>
 
       {/* Description */}
-
       <RichTextDisplay content={JSON.stringify(consultation.body)} />
 
       {/* Tags */}

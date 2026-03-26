@@ -1,6 +1,7 @@
 "use client"
 
-import { ChevronDown, Instagram, Linkedin, Mail, Phone } from 'lucide-react'
+import { ChevronDown, Linkedin, Mail, Phone } from 'lucide-react'
+import Link from 'next/link'
 import { useState } from 'react'
 import ContactForm from './ContactForm'
 
@@ -52,7 +53,7 @@ export default function Contact() {
                     </div>
                     <div className=''>
                       <p className="text-xs font-semibold text-gray-900">Email Us</p>
-                      <p className="text-xs text-gray-600 break-all whitespace-normal">support@consultelo.com</p>
+                      <p className="text-xs text-gray-600 break-all whitespace-normal">mauriciochambicaceres@gmail.com</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3 rounded-lg border border-gray-100 shadow-sm bg-gray-100 px-4 py-3">
@@ -61,7 +62,7 @@ export default function Contact() {
                     </div>
                     <div>
                       <p className="text-xs font-semibold text-gray-900">Call Us</p>
-                      <p className="text-xs text-gray-600">+1 555-0123</p>
+                      <p className="text-xs text-gray-600">+54-11-6191-0935</p>
                     </div>
                   </div>
                 </div>
@@ -71,16 +72,16 @@ export default function Contact() {
                   </p>
                   <div className="flex items-center gap-2">
                     {[
-                      { icon: <Linkedin className="size-5" />, label: "LinkedIn" },
-                      { icon: <Instagram className="size-5" />, label: "Instagram" },
-                    ].map(({ icon, label }) => (
-                      <button
-                        key={label}
-                        aria-label={label}
-                        className="flex size-8 items-center justify-center cursor-pointer rounded-lg border border-gray-200 bg-gray-200 text-gray-600 transition-colors hover:border-primary hover:text-primary"
-                      >
-                        {icon}
-                      </button>
+                      { icon: <Linkedin className="size-5" />, label: "LinkedIn", href: "https://www.linkedin.com/in/mauriciochambi/" },
+                    ].map(({ icon, label, href }) => (
+                      <Link href={href} key={label} target='_blank'>
+                        <button
+                          aria-label={label}
+                          className="flex size-8 items-center justify-center cursor-pointer rounded-lg border border-gray-200 bg-gray-200 text-gray-600 transition-colors hover:border-primary hover:text-primary"
+                        >
+                          {icon}
+                        </button>
+                      </Link>
                     ))}
                   </div>
                 </div>

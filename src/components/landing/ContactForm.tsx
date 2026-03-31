@@ -7,7 +7,7 @@ import { Button } from '../ui/Button'
 
 const SchemaContact = z.object({
   fullname: z.string().min(1, "Full name is required"),
-  email: z.string().email("Invalid email address"),
+  email: z.string().min(1, "Email is required").email("Invalid email address"),
   subject: z.string().min(1, "Subject is required"),
   message: z.string().min(1, "Message is required"),
 })
@@ -64,7 +64,7 @@ export default function ContactForm() {
       onSubmit={handleSubmit(onSubmit)}
     >
       {submitStatus && (
-        <div className={`p-3 rounded-lg text-sm ${submitStatus.type === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+        <div data-testid="submit-status" className={`p-3 rounded-lg text-sm ${submitStatus.type === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
           {submitStatus.message}
         </div>
       )}
@@ -79,7 +79,7 @@ export default function ContactForm() {
             className="rounded-lg border border-gray-200 bg-gray-100 px-3 py-2.5 text-sm text-gray-900 placeholder:text-gray-600 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
           />
           {errors.fullname && (
-            <p className="text-red-500 text-sm mt-1">
+            <p data-testid="error-fullname" className="text-red-500 text-sm mt-1">
               {errors.fullname.message}
             </p>
           )}
@@ -94,7 +94,7 @@ export default function ContactForm() {
             className="rounded-lg border border-gray-200 bg-gray-100 px-3 py-2.5 text-sm text-gray-900 placeholder:text-gray-600 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
           />
           {errors.email && (
-            <p className="text-red-500 text-sm mt-1">
+            <p data-testid="error-email" className="text-red-500 text-sm mt-1">
               {errors.email.message}
             </p>
           )}
@@ -118,7 +118,7 @@ export default function ContactForm() {
           <ChevronDown className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-gray-800" />
         </div>
         {errors.subject && (
-          <p className="text-red-500 text-sm mt-1">
+          <p data-testid="error-subject" className="text-red-500 text-sm mt-1">
             {errors.subject.message}
           </p>
         )}
@@ -133,7 +133,7 @@ export default function ContactForm() {
           className="resize-none rounded-lg border border-gray-200 bg-gray-100 px-3 py-2.5 text-sm text-gray-900 placeholder:text-gray-600 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
         />
         {errors.message && (
-          <p className="text-red-500 text-sm mt-1">
+          <p data-testid="error-message" className="text-red-500 text-sm mt-1">
             {errors.message.message}
           </p>
         )}

@@ -48,12 +48,13 @@ export function Sidebar() {
       <aside
         onMouseEnter={() => setExpanded(true)}
         onMouseLeave={() => setExpanded(false)}
+        id="sidebar"
         className={`fixed left-0 top-0 z-30 bg-card hidden h-screen flex-col border-r border-border bg-sidebar transition-all duration-300 ease-in-out md:flex ${expanded ? "w-60" : "w-[72px]"}`}
       >
         {/* Logo */}
         <div className="flex h-16 items-center px-6">
           <Link href="/dashboard" className="flex items-center gap-3">
-            <MenuIcon className="" />
+            <MenuIcon />
             <span
               className={`text-2xl font-bold tracking-tight text-primary whitespace-nowrap transition-all duration-300 ${expanded ? "opacity-100 w-auto" : "opacity-0 w-0 overflow-hidden"}`}
             >
@@ -109,6 +110,7 @@ export function Sidebar() {
             <li>
               <button
                 onClick={() => signOut()}
+                id="logout-button"
                 className={`flex items-center w-full cursor-pointer rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${expanded ? "justify-start " : "justify-center"} text-sidebar-foreground hover:bg-sidebar-accent`}
               >
                 <span
@@ -255,9 +257,9 @@ export function Sidebar() {
               <div className="border-t border-border px-3 py-2 w-full ">
                 <button
                   onClick={() => signOut()}
+                  id="logout-button-mobile"
                   className="flex items-center gap-3 w-full rounded-lg cursor-pointer px-3 py-2.5 text-sidebar-foreground hover:bg-sidebar-accent transition-colors"
                 >
-
                   <LogOut className="size-5" />
                   <span
                     className="text-sm font-medium"
@@ -266,8 +268,6 @@ export function Sidebar() {
                   </span>
                 </button>
               </div>
-
-
             </div>
           </div>
         )

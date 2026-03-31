@@ -37,6 +37,7 @@ next-env.d.ts
 
 # Environment Variables (CRITICAL: Do not commit secrets)
 .env
+.env.test
 .env*.local
 .env.local
 .env.development.local

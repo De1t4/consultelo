@@ -20,7 +20,7 @@ export default function Header() {
             <div className="flex items-center gap-4">
               {
                 session ?
-                  <Link href="/dashboard">
+                  <Link id="btn-dashboard" href="/dashboard">
                     <Button variant="primary" className="flex items-center gap-2 w-32 max-md:w-28 cursor-pointer font-semibold ">
                       Dashboard
                     </Button>

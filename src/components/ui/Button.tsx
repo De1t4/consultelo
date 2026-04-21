@@ -12,6 +12,7 @@ interface ActionButtonProps {
   disabled?: boolean
   type?: "button" | "submit" | "reset"
   form?: string
+  id?: string
 }
 
 export function Button({
@@ -22,7 +23,8 @@ export function Button({
   className = "",
   disabled = false,
   type = "button",
-  form
+  form,
+  id
 }: ActionButtonProps) {
   const variants = {
     primary: "bg-primary hover:bg-primary/90 text-white shadow-sm",
@@ -38,6 +40,7 @@ export function Button({
       disabled={disabled}
       type={type}
       form={form}
+      id={id}
       className={`
         inline-flex items-center justify-center px-4 py-2 
         font-medium rounded-lg transition-all duration-200

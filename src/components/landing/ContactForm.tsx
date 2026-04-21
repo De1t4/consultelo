@@ -6,10 +6,10 @@ import z from 'zod'
 import { Button } from '../ui/Button'
 
 const SchemaContact = z.object({
-  fullname: z.string().min(1, "Full name is required"),
-  email: z.string().min(1, "Email is required").email("Invalid email address"),
-  subject: z.string().min(1, "Subject is required"),
-  message: z.string().min(1, "Message is required"),
+  fullname: z.string().min(1, "Full name is required").max(50, "Full name must be at most 50 characters long"),
+  email: z.string().min(1, "Email is required").email("Invalid email address").max(100, "Email must be at most 100 characters long"),
+  subject: z.string().min(1, "Subject is required").max(50, "Subject must be at most 50 characters long"),
+  message: z.string().min(1, "Message is required").max(255, "Message must be at most 255 characters long"),
 })
 
 export type FormDataContact = z.infer<typeof SchemaContact>

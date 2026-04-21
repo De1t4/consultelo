@@ -17,10 +17,10 @@ describe('ContactForm Component (Integration)', () => {
   it('shows validation errors when submitting empty form', async () => {
     render(<ContactForm />);
     fireEvent.click(screen.getByRole('button', { name: /Send Message/i }));
-    
+
     // Debería mostrar los mensajes de error asincrónicamente
     expect(await screen.findByText('Full name is required')).toBeInTheDocument();
-    expect(await screen.findByText('Invalid email address')).toBeInTheDocument();
+    expect(await screen.findByText('Email is required')).toBeInTheDocument();
   });
 
   it('shows success message on successful API submission', async () => {

@@ -22,12 +22,13 @@ interface NavItem {
   icon: React.ReactNode
   href: string
   active?: boolean
+  id?: string
 }
 
 const mainNavItems: NavItem[] = [
-  { label: "Dashboard", icon: <LayoutDashboard className="size-5" />, href: "/dashboard", active: true },
-  { label: "My Consultations", icon: <Folder className="size-5" />, href: "/my-consultations" },
-  { label: "Settings", icon: <Settings className="size-5" />, href: "/settings" },
+  { label: "Dashboard", icon: <LayoutDashboard className="size-5" />, id: "dashboard-button", href: "/dashboard", active: true },
+  { label: "My Consultations", icon: <Folder className="size-5" />, id: "consultation-button", href: "/my-consultations" },
+  { label: "Settings", icon: <Settings className="size-5" />, id: "settings-button", href: "/settings" },
 
 ]
 
@@ -65,7 +66,7 @@ export function Sidebar() {
 
         {/* Create button */}
         <div className="px-3 mt-1 mb-2">
-          <Link href="/consultation" >
+          <Link href="/consultation" id="btn-create-consultation">
             <button
               type="button"
               className={`flex items-center cursor-pointer justify-center gap-0 rounded-full bg-primary text-primary-foreground font-medium transition-all duration-300 hover:opacity-90 active:scale-95 ${expanded ? "w-full px-5 py-2.5 justify-start" : "w-11 h-11 justify-center mx-auto"}`}
@@ -87,6 +88,7 @@ export function Sidebar() {
               <li key={item.href}>
                 <SidebarNavItem
                   item={item}
+                  idItem={item.id}
                   expanded={expanded}
                   isActive={activeItem === item.href}
                   onClick={() => setActiveItem(item.href)}
@@ -102,6 +104,7 @@ export function Sidebar() {
             <li>
               <SidebarNavItem
                 item={{ label: "Settings", icon: <Settings className="size-5" />, href: "/settings" }}
+                idItem="settings-button"
                 expanded={expanded}
                 isActive={activeItem === "/settings"}
                 onClick={() => setActiveItem("/settings")}
@@ -135,6 +138,7 @@ export function Sidebar() {
           <Link
             key={item.href}
             href={item.href}
+            id={`${item.id}-mobile-nav`}
             onClick={() => setActiveItem(item.href)}
             className={`flex flex-1 flex-col cursor-pointer items-center gap-1 rounded-lg py-1 text-[10px] max-sm:text-[9px] transition-colors ${activeItem === item.href ? "text-primary font-semibold" : "text-muted-foreground hover:bg-sidebar-accent"}`}
           >
@@ -149,6 +153,7 @@ export function Sidebar() {
         <div className="relative flex flex-1 flex-col items-center justify-center h-full">
           <Link
             href="/consultation"
+            id="btn-create-consultation-mobile-nav"
             onClick={() => setActiveItem("/consultation")}
             className="absolute -top-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary  text-white shadow-lg shadow-primary/40 ring-[6px] ring-card transition-transform  active:scale-95"
           >
@@ -160,6 +165,7 @@ export function Sidebar() {
           <Link
             key={item.href}
             href={item.href}
+            id={`${item.id}-mobile-nav`}
             onClick={() => setActiveItem(item.href)}
             className={` flex flex-1 flex-col cursor-pointer items-center gap-1 rounded-lg py-1 text-[10px] max-sm:text-[9px] transition-colors ${activeItem === item.href ? "text-primary font-semibold" : "text-muted-foreground hover:bg-sidebar-accent"}`}
           >
@@ -172,6 +178,7 @@ export function Sidebar() {
 
         <button
           onClick={() => setMobileOpen(true)}
+          id="more-button-mobile"
           className="flex flex-1 flex-col cursor-pointer items-center gap-1 rounded-lg py-1 text-[10px] max-sm:text-[9px] text-muted-foreground hover:bg-sidebar-accent transition-colors"
         >
           <span className="flex items-center justify-center rounded-full px-4 py-1">
@@ -208,7 +215,7 @@ export function Sidebar() {
 
               {/* Mobile create */}
               <div className="px-3 py-3">
-                <Link href={"/consultation"} className="flex cursor-pointer w-full items-center gap-3 rounded-full bg-primary px-5 py-2.5 text-primary-foreground font-medium hover:opacity-90 transition-opacity">
+                <Link href={"/consultation"} id="btn-create-consultation-mobile" className="flex cursor-pointer w-full items-center gap-3 rounded-full bg-primary px-5 py-2.5 text-primary-foreground font-medium hover:opacity-90 transition-opacity">
                   <Plus className="size-5 text-white" />
                   <span className="text-sm text-white">Create</span>
                 </Link>
@@ -221,6 +228,7 @@ export function Sidebar() {
                     <li key={item.href}>
                       <Link
                         href={item.href}
+                        id={`${item.id}-mobile`}
                         onClick={() => {
                           setActiveItem(item.href)
                           setMobileOpen(false)
@@ -244,6 +252,7 @@ export function Sidebar() {
               <div className=" px-3 py-3 ">
                 <Link
                   href="/settings"
+                  id="settings-button-mobile"
                   onClick={() => {
                     setActiveItem("/settings")
                     setMobileOpen(false)
@@ -281,16 +290,19 @@ function SidebarNavItem({
   expanded,
   isActive,
   onClick,
+  idItem,
 }: {
   item: NavItem
   expanded: boolean
   isActive: boolean
   onClick: () => void
+  idItem?: string
 }) {
   return (
     <Link
       href={item.href}
       onClick={onClick}
+      id={idItem}
       className={`flex items-center rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${expanded ? "justify-start " : "justify-center"} ${isActive ? "bg-sidebar-accent text-primary" : "text-sidebar-foreground hover:bg-sidebar-accent"}`}
     >
       <span
